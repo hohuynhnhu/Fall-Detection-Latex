@@ -1,0 +1,39 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Đặc tả UC-01 - Xử lý xe máy vào}}{33}{table.caption.24}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Đặc tả UC-02 - Nhận dạng biển số}}{33}{table.caption.25}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Đặc tả UC-03 - Chụp khuôn mặt người lái}}{34}{table.caption.26}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Đặc tả UC-04 - Xử lý xe máy ra}}{34}{table.caption.27}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Đặc tả UC-05 - Cảnh báo lỗi}}{35}{table.caption.28}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces Đặc tả UC-06 - Xử lý xe ô tô vào}}{37}{table.caption.30}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces Đặc tả UC-07 - Chụp ảnh ô tô}}{37}{table.caption.31}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces Đặc tả UC-08 - Nhận dạng biển số xe}}{38}{table.caption.32}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces Đặc tả UC-09 - Nhận dạng logo xe}}{38}{table.caption.33}%
+\contentsline {table}{\numberline {2.10}{\ignorespaces Đặc tả UC-10 - Nhận dạng đặc trưng xe Siamese}}{39}{table.caption.34}%
+\contentsline {table}{\numberline {2.11}{\ignorespaces Đặc tả UC-11 - Xử lý xe ô tô ra}}{40}{table.caption.35}%
+\contentsline {table}{\numberline {2.12}{\ignorespaces Đặc tả UC-12 - So sánh đặc trưng xe Siamese}}{41}{table.caption.36}%
+\contentsline {table}{\numberline {2.13}{\ignorespaces Đặc tả UC-13 - Cảnh báo lỗi}}{41}{table.caption.37}%
+\contentsline {table}{\numberline {2.14}{\ignorespaces Đặc tả UC-14 - Đăng ký}}{43}{table.caption.39}%
+\contentsline {table}{\numberline {2.15}{\ignorespaces Đặc tả UC-15 - Đăng nhập}}{44}{table.caption.40}%
+\contentsline {table}{\numberline {2.16}{\ignorespaces Đặc tả UC-16 - Xem trạng thái bãi đỗ}}{44}{table.caption.41}%
+\contentsline {table}{\numberline {2.17}{\ignorespaces Đặc tả UC-17 - Xác nhận "rời đi"}}{45}{table.caption.42}%
+\contentsline {table}{\numberline {2.18}{\ignorespaces Đặc tả UC-18 - Cảnh báo phát hiện bất thường}}{46}{table.caption.43}%
+\contentsline {table}{\numberline {2.19}{\ignorespaces Đặc tả UC-19 - Đăng xuất}}{47}{table.caption.44}%
+\contentsline {table}{\numberline {2.20}{\ignorespaces Đặc tả UC-20 - Đăng nhập (Bảo vệ)}}{49}{table.caption.46}%
+\contentsline {table}{\numberline {2.21}{\ignorespaces Đặc tả UC-21 - Xem tất cả xe trong bãi đỗ}}{50}{table.caption.47}%
+\contentsline {table}{\numberline {2.22}{\ignorespaces Đặc tả UC-22 - Xem lịch sử ra vào}}{51}{table.caption.48}%
+\contentsline {table}{\numberline {2.23}{\ignorespaces Đặc tả UC-23 - Cảnh báo phát hiện bất thường (Bảo vệ)}}{52}{table.caption.49}%
+\contentsline {table}{\numberline {2.24}{\ignorespaces Đặc tả UC-24 - Đăng xuất (Bảo vệ)}}{53}{table.caption.50}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Kết quả kiểm thử Desktop Application}}{78}{table.caption.78}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Kết quả kiểm thử Mobile Application}}{79}{table.caption.79}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Kết quả huấn luyện YOLO – Nhận diện biển số}}{79}{table.caption.80}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Kết quả huấn luyện YOLO – Nhận diện vùng ký tự}}{80}{table.caption.82}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Kết quả huấn luyện YOLO – Nhận diện logo xe}}{82}{table.caption.84}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces Kết quả huấn luyện CNN – Đọc ký tự}}{83}{table.caption.86}%
+\contentsline {table}{\numberline {3.7}{\ignorespaces Kết quả huấn luyện Siamese Network – So sánh đầu xe ô tô}}{84}{table.caption.88}%
+\contentsline {table}{\numberline {3.8}{\ignorespaces Kết quả kiểm thử DeepFace}}{85}{table.caption.90}%
+\contentsline {table}{\numberline {3.9}{\ignorespaces Hiệu năng API}}{86}{table.caption.91}%
+\contentsline {table}{\numberline {3.10}{\ignorespaces Tương thích thiết bị}}{87}{table.caption.92}%
+\contentsline {table}{\numberline {3.11}{\ignorespaces Kiểm thử kết nối mạng}}{87}{table.caption.93}%
+\addvspace {10\p@ }

@@ -1,0 +1,264 @@
+\documentclass[12pt]{report}  
+
+% ===== ĐỊNH DẠNG =====
+\usepackage[a4paper,
+  top=3.5cm,
+  bottom=3cm,
+  left=3.5cm,
+  right=2cm]{geometry}
+
+% ===== FONT VÀ TIẾNG VIỆT =====
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% ===== SPACING VÀ FORMAT =====
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{indentfirst}% thụt đầu dòng đoạn đầu tiên
+
+\usepackage{titlesec}
+\usepackage{float}
+
+% ===== ĐỒ HỌA =====
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta}
+\usetikzlibrary{shapes.multipart}
+\usepackage{url}
+\usepackage{booktabs}
+
+\usepackage{csvsimple}
+% ===== BẢNG =====
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{amsmath, amssymb}
+
+\usepackage{caption}
+
+
+% ===== MỤC LỤC =====
+\usepackage{tocloft}
+
+% Format cho Chapter trong mục lục
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+% Khoảng cách giữa các dòng
+\setlength{\cftbeforechapskip}{8pt}
+\setlength{\cftbeforesecskip}{4pt}
+\setlength{\cftbeforesubsecskip}{2pt}
+
+% Indent (thụt lề)
+\setlength{\cftsecindent}{1.5cm}
+\setlength{\cftsubsecindent}{3cm}
+
+% Font size
+\renewcommand{\cftsecfont}{\normalsize}
+\renewcommand{\cftsubsecfont}{\small}
+
+% Khoảng cách dấu chấm
+\renewcommand{\cftdotsep}{1}
+
+% ===== HYPERLINK (ĐẶT CUỐI) =====
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
+
+% ===== CUSTOM TÊN =====
+% ===== CUSTOM TÊN =====
+% ===== CUSTOM TÊN =====
+\renewcommand{\figurename}{Hình}
+\renewcommand{\tablename}{Bảng}
+\renewcommand{\contentsname}{MỤC LỤC}
+\renewcommand{\listfigurename}{DANH MỤC HÌNH ẢNH}
+\renewcommand{\listtablename}{DANH MỤC BẢNG}
+\renewcommand{\bibname}{TÀI LIỆU THAM KHẢO}
+
+% Format tiêu đề - BỎ thụt lề, căng giữa, 14pt in đậm
+\renewcommand{\cfttoctitlefont}{\hfill\fontsize{14pt}{18pt}\selectfont\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\mbox{}}
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftaftertoctitleskip}{20pt}
+% ===== FORMAT MỤC LỤC - Thêm chữ CHƯƠNG =====
+\renewcommand{\cftchappresnum}{CHƯƠNG }
+\renewcommand{\cftchapaftersnum}{:}
+\setlength{\cftchapnumwidth}{3cm}  % Tăng độ rộng để chứa "CHƯƠNG X:"
+
+\renewcommand{\cftloftitlefont}{\hfill\fontsize{14pt}{18pt}\selectfont\bfseries}
+\renewcommand{\cftafterloftitle}{\hfill\mbox{}}
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftafterloftitleskip}{20pt}
+
+\renewcommand{\cftlottitlefont}{\hfill\fontsize{14pt}{18pt}\selectfont\bfseries}
+\renewcommand{\cftafterlottitle}{\hfill\mbox{}}
+\setlength{\cftbeforelottitleskip}{0pt}
+\setlength{\cftafterlottitleskip}{20pt}
+
+% ===== FORMAT CHAPTER =====
+% \titleformat{\chapter}[block]
+%   {\bfseries\fontsize{14pt}{18pt}\selectfont\centering}
+%   {CHƯƠNG \thechapter}
+%   {0.5em}
+%   {\MakeUppercase}
+
+% \titlespacing*{\chapter}{0pt}{0pt}{20pt}
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+
+\titleformat{\chapter}[block]
+  {\bfseries\fontsize{14pt}{18pt}\selectfont\centering} % chapter 14pt, dòng cách 18pt
+  {CHƯƠNG \thechapter}
+  {0.5em}
+  {\MakeUppercase}
+
+\titleformat{\section}
+  {\bfseries\fontsize{13pt}{16pt}\selectfont}            % section 13pt, dòng cách 16pt
+  {\thesection}
+  {1em}
+  {}
+\titleformat{\subsection}
+  {\bfseries\itshape\fontsize{13pt}{16pt}\selectfont} % in đậm + in nghiêng + cỡ 13pt, dòng cách 16pt
+  {\thesubsection}
+  {1em}
+  {}
+
+\titlespacing*{\subsection}{0pt}{10pt}{5pt}
+
+% Nếu vẫn không work, thêm dòng này:
+\titleformat*{\subsection}{\bfseries\itshape\fontsize{13pt}{16pt}\selectfont}
+
+
+% ===== định dạng bảng và hình =====
+
+\renewcommand{\cftfigpresnum}{Hình }
+\renewcommand{\cfttabpresnum}{Bảng }
+% Tên Hình và Bảng in nghiêng
+\captionsetup{
+  labelfont=it,
+  textfont=it
+}
+
+
+% Tăng độ rộng số để chứa "Hình X.X" và "Bảng X.X"
+\setlength{\cftfignumwidth}{2cm}
+\setlength{\cfttabnumwidth}{2cm}
+
+% Optional: Thêm dấu hai chấm sau số
+% \renewcommand{\cftfigaftersnum}{:}
+% \renewcommand{\cfttabaftersnum}{:}
+% ===== BẮT ĐẦU DOCUMENT =====
+\begin{document}
+\setlength{\parindent}{1.25cm} % độ thụt đầu dòng chuẩn
+\setlength{\leftskip}{1.25pt} 
+% ===== ĐẶT CỠ CHỮ 13PT =====
+\fontsize{13pt}{20pt}\selectfont
+
+% ===== PHẦN ĐẦU (KHÔNG ĐÁNH SỐ) =====
+\pagenumbering{gobble}
+
+% 1. TRANG BÌA
+\input{cover}
+
+% 2. NHẬN XÉT GVHD
+\input{review_teacher}
+
+
+% 3. NHẬN XÉT PHẢN BIỆN
+\input{review_reviewer}
+
+\clearpage
+
+% 4. LỜI CẢM ƠN
+\input{thanks}
+
+\clearpage
+
+% 5. LỜI CAM ĐOAN
+\input{commitment}
+
+\clearpage
+
+% ===== PHẦN ĐẦU (LA MÃ) =====
+\clearpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% 6. MỤC LỤC
+\tableofcontents
+
+\clearpage
+
+% 7. DANH MỤC TỪ VIẾT TẮT
+\input{abbreviations}
+
+\clearpage
+
+% 8. DANH MỤC HÌNH ẢNH
+\listoffigures
+\addcontentsline{toc}{chapter}{DANH MỤC HÌNH ẢNH}
+\clearpage
+
+% 9. DANH MỤC BẢNG
+\listoftables
+\addcontentsline{toc}{chapter}{DANH MỤC BẢNG}
+\clearpage
+
+% ===== NỘI DUNG CHÍNH (Ả RẬP) =====
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% Trong file intro.tex
+\chapter*{LỜI MỞ ĐẦU}
+\addcontentsline{toc}{chapter}{LỜI MỞ ĐẦU}
+\input{intro}
+% Nội dung lời mở đầu...
+
+% 11. CHƯƠNG 1
+\input{chapters/chapter1}
+
+% 12. CHƯƠNG 2
+\input{chapters/chapter2}
+
+% 13. CHƯƠNG 3
+\input{chapters/chapter3}
+
+% 14. KẾT LUẬN
+\input{conclusion}
+
+% 15. TÀI LIỆU THAM KHẢO
+\clearpage
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{TÀI LIỆU THAM KHẢO}
+
+\bibitem{siamese_gfg}
+GeeksforGeeks, ``Siamese neural network in deep learning,'' \textit{GeeksforGeeks}, 2024. [Online]. Available: https://www.geeksforgeeks.org/nlp/siamese-neural-network-in-deep-learning/. Accessed: Dec. 20, 2024.
+
+\bibitem{yolov8_ultralytics}
+Ultralytics, ``YOLOv8 models,'' \textit{Ultralytics Documentation}, 2024. [Online]. Available: https://docs.ultralytics.com/vi/models/yolov8/. Accessed: Dec. 20, 2024.
+
+\bibitem{siamese_hackernoon}
+A. Rosebrock, ``One-shot learning with siamese networks in PyTorch,'' \textit{HackerNoon}, 2021. [Online]. Available: https://hackernoon.com/one-shot-learning-with-siamese-networks-in-pytorch-8ddaab10340e. Accessed: Dec. 20, 2024.
+
+\bibitem{cnn_linkedin}
+LinkedIn Learning, ``How can you train a convolutional neural network,'' \textit{LinkedIn}, 2023. [Online]. Available: https://www.linkedin.com/advice/3/how-can-you-train-convolutional-neural-network-dtcye. Accessed: Dec. 20, 2024.
+
+\bibitem{deepface_viso}
+Viso.ai, ``DeepFace: Face recognition with deep learning,'' \textit{Viso.ai Computer Vision Blog}, 2023. [Online]. Available: https://viso.ai/computer-vision/deepface/. Accessed: Dec. 20, 2024.
+
+\bibitem{jetpack_compose_mvvm}
+T. Gis, ``Creating lists in Android Jetpack Compose using MVVM with ViewModel in Kotlin,'' \textit{Medium}, Aug. 2023. [Online]. Available: https://tomasgis.com/creating-lists-in-android-jetpack-compose-using-mvvm-with-viewmodel-in-kotlin-dcfc76945ae7. Accessed: Dec. 20, 2024.
+
+\bibitem{flask_restful_api}
+Auth0, ``Developing RESTful APIs with Python and Flask,'' \textit{Auth0 Blog}, 2023. [Online]. Available: https://auth0.com/blog/developing-restful-apis-with-python-and-flask/. Accessed: Dec. 20, 2024.
+
+\end{thebibliography}
+
+\end{document}

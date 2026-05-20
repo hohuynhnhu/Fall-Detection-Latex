@@ -1,0 +1,431 @@
+
+\chapter{CÀI ĐẶT VÀ KIỂM THỬ}
+
+\section{Môi trường và công cụ}
+
+\subsection{Môi trường phát triển Desktop Application}
+
+\begin{itemize}
+    \item Hệ điều hành: Windows 11 Pro
+    \item Ngôn ngữ: Python 3.11
+    \item IDE: PyCharm Professional 2024.2
+\end{itemize}
+
+\subsection{Môi trường phát triển Backend}
+
+\begin{itemize}
+    \item Hệ điều hành: Windows 11 Pro
+    \item Framework: FlaskAPI 0.109.0
+    \item IDE: PyCharm Professional 2024.2
+\end{itemize}
+
+\subsection{Môi trường phát triển Mobile Application}
+
+\begin{itemize}
+    \item Ngôn ngữ: Kotlin 1.9
+    \item IDE: Android Studio Hedgehog 2023.1
+    \item SDK: Android 8.0 - Android 14
+\end{itemize}
+
+\subsection{Cơ sở dữ liệu và AI Tools}
+
+\begin{itemize}
+    \item MongoDB 7.0 - Lưu trữ người dùng
+    \item Firebase Realtime Database - Đồng bộ real-time
+    \item Firestore - Lưu trữ lịch sử
+    \item Cloudinary - Quản lý hình ảnh
+    \item YOLOv8, TensorFlow 2.15, PyTorch 2.1, DeepFace - AI/ML
+\end{itemize}
+
+\section{Cài đặt hệ thống}
+
+\subsection{Cài đặt Desktop Application}
+
+\begin{enumerate}
+    \item Clone repository và tạo môi trường ảo Python
+    \item Cài đặt dependencies: pip install -r requirements.txt
+    \item Download pretrained models (YOLOv8, CNN, Siamese, DeepFace)
+    \item Cấu hình file config.yaml với thông tin camera và API
+    \item Chạy: python run.py
+\end{enumerate}
+
+\subsection{Cài đặt Backend Server}
+
+\begin{enumerate}
+    \item Clone repository backend
+    \item Cấu hình file .env với MongoDB, Firebase, Cloudinary
+    \item Cài đặt: pip install -r requirements.txt
+   
+\end{enumerate}
+
+\subsection{Cài đặt Mobile Application}
+
+\begin{enumerate}
+    \item Clone repository và mở trong Android Studio
+    \item Đồng bộ Gradle dependencies
+    \item Build: ./gradlew installDebug hoặc ./gradlew assembleRelease
+\end{enumerate}
+
+\section{Kiểm thử giao diện}
+
+\subsection{Kiểm thử Desktop Application}
+
+\begin{table}[H]
+    \caption{Kết quả kiểm thử Desktop Application}
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{3cm}|}
+\hline
+Chức năng & Mô tả kiểm thử & Trạng thái \\
+\hline
+Hiển thị video & Luồng camera real-time & Đạt \\
+\hline
+Nhận diện biển số & Hiển thị kết quả trên màn hình & Đạt \\
+\hline
+Thống kê xe & Số lượng xe vào/ra real-time & Đạt \\
+\hline
+Cảnh báo & Hiển thị popup cảnh báo & Đạt \\
+\hline
+\end{tabular}
+
+\end{table}
+
+\subsection{Kiểm thử Mobile Application}
+
+\begin{table}[H]
+    \caption{Kết quả kiểm thử Mobile Application}
+\centering
+\begin{tabular}{|p{3cm}|p{5cm}|p{3cm}|}
+\hline
+Chức năng & Mô tả kiểm thử & Trạng thái \\
+\hline
+Đăng nhập/Đăng ký & Xác thực và chuyển trang & Đạt \\
+\hline
+Quản lý xe & Thêm, sửa, xóa thông tin xe & Đạt \\
+\hline
+Xác nhận rời bãi & Đạt \\
+\hline
+Lịch sử đỗ xe & Xem lịch sử vào/ra & Đạt \\
+\hline
+Xử lý cảnh báo & Xem và phê duyệt cảnh báo & Đạt \\
+\hline
+\end{tabular}
+
+\end{table}
+
+\section{Kiểm thử hiệu năng}
+
+\subsection{Kiểm thử AI Models}
+\textbf{YOLO – Nhận diện biển số}
+\begin{table}[H]
+\centering
+\caption{Kết quả huấn luyện YOLO – Nhận diện biển số}
+\label{tab:yolo_lp}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Epoch} & \textbf{Train Loss} & \textbf{Val Loss} & \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} \\ 
+\hline
+1  & 0.6933 & 0.6457 & 0.9654 & 0.9091 & 0.9716 & 0.7895 \\ \hline
+5  & 0.6675 & 0.5984 & 0.9702 & 0.9643 & 0.9862 & 0.8406 \\ \hline
+10 & 0.6133 & 0.5525 & 0.9823 & 0.9656 & 0.9892 & 0.8583 \\ \hline
+15 & 0.5843 & 0.4944 & 0.9800 & 0.9690 & 0.9905 & 0.8676 \\ \hline
+20 & 0.5596 & 0.4874 & 0.9770 & 0.9796 & 0.9910 & 0.8807 \\ \hline
+25 & 0.5405 & 0.4858 & 0.9835 & 0.9791 & 0.9912 & 0.8816 \\ \hline
+30 & 0.5202 & 0.4540 & 0.9895 & 0.9743 & 0.9927 & 0.8977 \\ \hline
+35 & 0.5096 & 0.4457 & 0.9858 & 0.9813 & 0.9923 & 0.9022 \\ \hline
+40 & 0.4885 & 0.4446 & 0.9824 & 0.9900 & 0.9926 & 0.9022 \\ \hline
+45 & 0.4306 & 0.4317 & 0.9850 & 0.9879 & 0.9922 & 0.9086 \\ \hline
+50 & 0.4087 & 0.4249 & 0.9889 & 0.9853 & 0.9923 & 0.9135 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+Biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện biển số
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/bsx.png}
+    \caption{Biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện biển số}
+    \label{fig:architecture}
+\end{figure}
+\textit{Nhận xét:} Mô hình hội tụ tốt sau 50 epochs với mAP50 đạt 99.23\% và mAP50-95 đạt 91.35\%. Train loss và validation loss giảm đều đặn không có dấu hiệu overfitting. Precision và Recall đều trên 98\%, cho thấy khả năng nhận diện biển số xe rất chính xác.
+
+\vspace{0.5cm}
+
+\textbf{YOLO – Nhận diện vùng ký tự}
+\begin{table}[H]
+\centering
+\caption{Kết quả huấn luyện YOLO – Nhận diện vùng ký tự}
+\label{tab:yolo_char}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Epoch} & \textbf{Train Loss} & \textbf{Val Loss} & \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} \\ 
+\hline
+1  & 1.1925 & 0.9819 & 0.0246 & 1.0000 & 0.6042 & 0.4307 \\ \hline
+5  & 0.9159 & 1.2791 & 0.4872 & 0.3853 & 0.3084 & 0.2201 \\ \hline
+10 & 0.9071 & 0.9219 & 0.7313 & 0.8872 & 0.7986 & 0.5922 \\ \hline
+15 & 0.8572 & 0.8575 & 0.7494 & 0.8656 & 0.8144 & 0.6223 \\ \hline
+20 & 0.8336 & 0.8406 & 0.8235 & 0.8858 & 0.9167 & 0.7102 \\ \hline
+25 & 0.8158 & 0.8831 & 0.7289 & 0.8515 & 0.7964 & 0.5995 \\ \hline
+30 & 0.8347 & 0.8793 & 0.7545 & 0.7165 & 0.7981 & 0.5920 \\ \hline
+35 & 0.8075 & 0.8194 & 0.7873 & 0.9304 & 0.8988 & 0.7102 \\ \hline
+40 & 0.7880 & 0.9069 & 0.8073 & 0.9079 & 0.8894 & 0.6614 \\ \hline
+45 & 0.7862 & 0.8232 & 0.8159 & 0.8912 & 0.8956 & 0.7017 \\ \hline
+50 & 0.7757 & 0.8548 & 0.8473 & 0.6986 & 0.8608 & 0.6630 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+Biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện vùng ký tự
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/vung_kytu.png}
+    \caption{Biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện vùng ký tự}
+    \label{fig:architecture}
+\end{figure}
+\textit{Nhận xét:} Mô hình gặp khó khăn trong giai đoạn đầu huấn luyện do tính phức tạp của việc phát hiện từng ký tự riêng lẻ. Tuy nhiên, từ epoch 20 trở đi, mô hình ổn định với mAP50 dao động quanh 86-91\%. Độ chính xác cuối cùng đạt mAP50-95 là 66.30\%, phù hợp cho bài toán phát hiện vùng ký tự có kích thước nhỏ.
+
+\vspace{0.5cm}
+
+\textbf{YOLO – Nhận diện logo xe}
+\begin{table}[H]
+\centering
+\caption{Kết quả huấn luyện YOLO – Nhận diện logo xe}
+\label{tab:yolo_logo}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Epoch} & \textbf{Train Loss} & \textbf{Val Loss} & \textbf{Precision} & \textbf{Recall} & \textbf{mAP@50} & \textbf{mAP@50--95} \\ 
+\hline
+1  & 225.1690 & 19.6060  & 0.2347 & 0.2363 & 0.1711 & 0.0728 \\ \hline
+5  & 20.8660  & 191.5660 & 0.5310 & 0.3913 & 0.4345 & 0.1962 \\ \hline
+10 & 19.3360  & 182.2720 & 0.6530 & 0.5121 & 0.5681 & 0.2704 \\ \hline
+15 & 186.0490 & 18.0310  & 0.7502 & 0.5861 & 0.6557 & 0.3102 \\ \hline
+20 & 179.8250 & 175.8070 & 0.7428 & 0.6192 & 0.7004 & 0.3298 \\ \hline
+25 & 173.7750 & 175.8680 & 0.7773 & 0.6494 & 0.7315 & 0.3496 \\ \hline
+30 & 168.2360 & 175.2640 & 0.8136 & 0.6775 & 0.7597 & 0.3574 \\ \hline
+35 & 162.6990 & 175.8210 & 0.8097 & 0.6794 & 0.7670 & 0.3633 \\ \hline
+40 & 155.7570 & 175.6170 & 0.8059 & 0.7073 & 0.7683 & 0.3667 \\ \hline
+45 & 144.1050 & 177.4670 & 0.7823 & 0.7118 & 0.7686 & 0.3648 \\ \hline
+50 & 136.3520 & 178.5010 & 0.7953 & 0.7005 & 0.7631 & 0.3656 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+Biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện logo xe oto
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/logo.png}
+    \caption{biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện logo xe oto}
+    \label{fig:architecture}
+\end{figure}
+\textit{Nhận xét:} Bài toán nhận diện logo xe có độ khó cao do logo thường có kích thước nhỏ và đa dạng về hình dạng. Mặc dù mô hình đạt mAP@50 = 75\%, tuy nhiên mAP@50--95 chỉ đạt 35\%, cho thấy khả năng phát hiện đối tượng là tốt nhưng độ chính xác định vị bounding box tại các ngưỡng IoU cao vẫn còn hạn chế.
+
+
+\vspace{0.5cm}
+
+\textbf{CNN – Đọc ký tự biển số}
+
+\begin{table}[H]
+\centering
+\caption{Kết quả huấn luyện CNN – Đọc ký tự}
+\label{tab:cnn_ocr}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Epoch} & \textbf{Train Loss} & \textbf{Train Acc (\%)} & \textbf{Test Loss} & \textbf{Test Acc (\%)} \\ 
+\hline
+1  & 1.0439 & 67.0930 & 0.1293 & 96.4415 \\ \hline
+5  & 0.2049 & 92.8576 & 0.0218 & 99.4313 \\ \hline
+10 & 0.0746 & 97.5359 & 0.0129 & 99.6581 \\ \hline
+15 & 0.0454 & 98.6033 & 0.0084 & 99.7488 \\ \hline
+20 & 0.0306 & 99.0017 & 0.0090 & 99.7523 \\ \hline
+25 & 0.0259 & 99.1502 & 0.0071 & 99.7732 \\ \hline
+30 & 0.0236 & 99.3046 & 0.0119 & 99.7035 \\ \hline
+35 & 0.0219 & 99.3266 & 0.0099 & 99.7314 \\ \hline
+40 & 0.0206 & 99.3943 & 0.0097 & 99.7697 \\ \hline
+45 & 0.0182 & 99.4472 & 0.0082 & 99.7977 \\ \hline
+50 & 0.0165 & 99.5104 & 0.0079 & 99.7942 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+Biểu đồ biểu diễn quá trình huấn luyện CNN - Đọc ký tự
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/ky_tu.png}
+    \caption{Biểu đồ biểu diễn quá trình huấn luyện CNN - Đọc ký tự}
+    \label{fig:architecture}
+\end{figure}
+\textit{Nhận xét:} Mô hình CNN cho kết quả ấn tượng với độ chính xác test đạt 99.79\% sau 50 epochs. Train accuracy và test accuracy cùng tăng đều đặn, không có hiện tượng overfitting. Kết quả này cho thấy mô hình có khả năng nhận dạng ký tự biển số rất tốt với sai số cực thấp.
+
+\vspace{0.5cm}
+
+\textbf{Siamese Network – So sánh đầu xe oto}
+
+\begin{table}[H]
+\centering
+\caption{Kết quả huấn luyện Siamese Network – So sánh đầu xe ô tô}
+\label{tab:siamese}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Epoch} & \textbf{Train Loss} & \textbf{Test Loss} & \textbf{Test Accuracy} & \textbf{Test AUC ROC} \\ 
+\hline
+1  & 1.7199 & 0.1719 & 0.7695 & 0.9209 \\ \hline
+5  & 0.0810 & 0.0425 & 0.9840 & 0.9998 \\ \hline
+10 & 0.0317 & 0.0254 & 0.9920 & 0.9998 \\ \hline
+15 & 0.0150 & 0.0119 & 0.9980 & 1.0000 \\ \hline
+20 & 0.0087 & 0.0073 & 0.9980 & 1.0000 \\ \hline
+25 & 0.0055 & 0.0042 & 1.0000 & 1.0000 \\ \hline
+30 & 0.0042 & 0.0034 & 1.0000 & 1.0000 \\ \hline
+35 & 0.0026 & 0.0019 & 1.0000 & 1.0000 \\ \hline
+40 & 0.0014 & 0.0011 & 1.0000 & 1.0000 \\ \hline
+45 & 0.0008 & 0.0005 & 1.0000 & 1.0000 \\ \hline
+50 & 0.0008 & 0.0025 & 0.9975 & 1.0000 \\ 
+\hline
+\end{tabular}
+\end{table}
+
+Biểu đồ biểu diễn quá trình huấn luyện Siamese - So sánh đầu xe oto
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/siamese.png}
+    \caption{Biểu đồ biểu diễn quá trình huấn luyện Siamese - So sánh đầu xe oto}
+    \label{fig:architecture}
+\end{figure}
+\textit{Nhận xét:} Siamese Network cho kết quả xuất sắc với độ chính xác đạt 100\% từ epoch 25 và AUC-ROC score đạt 1.0. Mô hình hội tụ rất nhanh chỉ sau 15 epochs đã đạt 99.8\% accuracy. Kết quả này chứng tỏ kiến trúc Siamese Network rất hiệu quả cho bài toán so sánh và xác thực đầu xe.\\
+\textbf{DeepFace – Face Recognition}
+
+\begin{table}[H]
+    \caption{Kết quả kiểm thử DeepFace}
+    \label{tab:deepface_test}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Lần test} & \textbf{Số cặp test} & \textbf{Nhận đúng} & \textbf{Nhận sai} & \textbf{Accuracy (\%)} \\
+\hline
+1  & 10 & 10 & 0 & 100.0 \\
+\hline
+2  & 10 & 9  & 1 & 90.0  \\
+\hline
+3  & 10 & 10 & 0 & 100.0 \\
+\hline
+4  & 10 & 10 & 0 & 100.0 \\
+\hline
+5  & 10 & 9  & 1 & 90.0  \\
+\hline
+6  & 10 & 10 & 0 & 100.0 \\
+\hline
+7  & 10 & 10 & 0 & 100.0 \\
+\hline
+8  & 10 & 10 & 0 & 100.0 \\
+\hline
+9  & 10 & 9  & 1 & 90.0  \\
+\hline
+10 & 10 & 10 & 0 & 100.0 \\
+\hline
+\hline
+\textbf{Tổng} & \textbf{100} & \textbf{98} & \textbf{2} & \textbf{98.00} \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Phân tích kết quả}
+
+Thống kê tổng hợp:
+\begin{itemize}
+    \item Tổng số lần test: 100 (10 cặp ảnh $\times$ 10 lần)
+    \item Tổng số nhận dạng đúng: 98/100
+    \item Độ chính xác trung bình: 98.00\%
+    \item Tỷ lệ lỗi: 2.00\%
+    \item Số lần test đạt 100\%: 7/10 lần (70\%)
+    \item Số lần test có lỗi: 3/10 lần (30\%)
+\end{itemize}
+
+Độ ổn định của mô hình:
+\begin{itemize}
+    \item Mô hình cho kết quả ổn định qua 10 lần kiểm thử
+    \item Accuracy dao động trong khoảng từ 90\% đến 100\%
+    \item Các lỗi xuất hiện không ngẫu nhiên mà tập trung ở một số cặp ảnh nhất định
+\end{itemize}
+
+Phân tích lỗi:
+\begin{itemize}
+    \item Số cặp ảnh gây lỗi: 1 cặp trong 10 cặp ảnh
+    \item Nguyên nhân chủ yếu:
+    \begin{itemize}
+        \item Chất lượng ảnh thấp (mờ, thiếu sáng)
+        \item Góc chụp khác biệt 
+    \end{itemize}
+    \item Distance score của các trường hợp lỗi nằm gần ngưỡng quyết định (threshold)
+\end{itemize}
+
+Đánh giá:
+\begin{itemize}
+    \item \textbf{Ưu điểm:}
+    \begin{itemize}
+        \item Độ chính xác cao (98.00\%), đáp ứng yêu cầu hệ thống (≥98\%)
+        \item Hoạt động ổn định, kết quả lặp lại tốt qua nhiều lần test
+        \item Thời gian xử lý nhanh, trung bình khoảng 0.5–1 giây cho mỗi cặp ảnh
+    \end{itemize}
+\end{itemize}
+
+Mô hình DeepFace sử dụng Facenet512 đạt độ chính xác 98.00\% trên 100 lượt kiểm thử với 10 cặp ảnh, đáp ứng yêu cầu đề ra của hệ thống. Kết quả cho thấy mô hình hoạt động ổn định và đủ tin cậy để triển khai trong môi trường thực tế. Tuy nhiên, cần mở rộng thêm tập dữ liệu kiểm thử để đánh giá toàn diện hơn trong các điều kiện đa dạng.
+
+\subsection{Kiểm thử API}
+
+\begin{table}[H]
+    \caption{Hiệu năng API}
+\centering
+\begin{tabular}{|p{5cm}|p{2.5cm}|p{2.5cm}|}
+\hline
+API Endpoint & Thời gian & Trạng thái \\
+\hline
+POST /api/parking/entry & 2.1s & Đạt \\
+\hline
+POST /api/parking/exit & 2.5s & Đạt \\
+\hline
+GET /api/vehicles/current & 1.8s & Đạt \\
+\hline
+POST /api/auth/login & 0.8s & Đạt \\
+\hline
+\end{tabular}
+
+\end{table}
+\section{Kiểm thử đa thiết bị}
+
+\subsection{Kiểm thử tương thích Android}
+
+\begin{table}[H]
+    \caption{Tương thích thiết bị}
+\centering
+\begin{tabular}{|p{4cm}|p{3cm}|p{3cm}|}
+\hline
+Thiết bị & Android Version & Kết quả \\
+\hline
+Samsung Galaxy S23 & Android 14 & Tốt \\
+\hline
+Xiaomi Redmi Note 12 & Android 13 & Tốt \\
+\hline
+Google Pixel 7 & Android 14 & Tốt \\
+\hline
+Samsung Galaxy A54 & Android 13 & Tốt \\
+\hline
+\end{tabular}
+
+\end{table}
+
+\subsection{Kiểm thử kết nối mạng}
+
+\begin{table}[H]
+    \caption{Kiểm thử kết nối mạng}
+\centering
+\begin{tabular}{|p{3cm}|p{3cm}|p{4cm}|}
+\hline
+Loại kết nối & Tốc độ & Kết quả \\
+\hline
+WiFi 5GHz & 100 Mbps & Hoạt động mượt mà \\
+\hline
+4G LTE & 20-50 Mbps & Hoạt động tốt \\
+\hline
+3G & 1-5 Mbps & Chấp nhận được \\
+\hline
+\end{tabular}
+
+\end{table}

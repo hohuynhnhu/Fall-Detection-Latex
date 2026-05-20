@@ -1,0 +1,1445 @@
+% \chapter{PHÂN TÍCH, THIẾT KẾ VÀ XÂY DỰNG HỆ THỐNG}
+
+% \section{Yêu cầu chức năng}
+% \section{Yêu cầu phi chức năng}
+% \section{Kiến trúc hệ thống}
+% \section{Sơ đồ Use Case}
+% \section{Sơ đồ lớp}
+% \section{Sơ đồ activity}
+% \section{Thiết kế cơ sở dữ liệu}
+% \section{Thiết kế giao diện}
+
+
+\chapter{PHÂN TÍCH, THIẾT KẾ VÀ XÂY DỰNG HỆ THỐNG}
+
+\section{Yêu cầu chức năng}
+
+Dựa trên phân tích nghiệp vụ và khảo sát thực tế, hệ thống quản lý bãi đỗ xe thông minh cần đáp ứng các yêu cầu chức năng sau đây.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/fdd.jpg}
+    \caption{Sơ đồ phân tách chức năng hệ thống (FDD)}
+    \label{fig:fdd}
+\end{figure}
+
+Hệ thống được phân tách thành 5 nhóm chức năng chính như Hình \ref{fig:fdd}: (1) Quản lý người dùng, (2) Quản lý trạng thái xe trong bãi đỗ, (3) Nhận diện và xác thực, (4) Cảnh báo và thông báo, (5) Quản lý dữ liệu và báo cáo. Các chức năng này được triển khai trên ba thành phần chính của hệ thống: Desktop Application, Mobile Application cho người dùng, và Mobile Application cho bảo vệ. Dưới đây là mô tả chi tiết yêu cầu chức năng theo từng thành phần ứng dụng.
+\subsection{Yêu cầu chức năng cho Desktop Application}
+
+\begin{itemize}
+    \item Nhận diện biển số xe:
+    \begin{itemize}
+        \item Tự động phát hiện và đọc biển số xe khi xe vào/ra bãi đỗ
+        \item Hỗ trợ nhận diện biển số xe Việt Nam các loại
+        \item Lưu trữ ảnh biển số và thông tin nhận diện
+        \item Độ chính xác tối thiểu 95\%
+    \end{itemize}
+    
+    \item Nhận diện khuôn mặt cho xe máy:
+    \begin{itemize}
+        \item Phát hiện và trích xuất đặc trưng khuôn mặt người lái xe
+        \item Chụp và lưu trữ ảnh khuôn mặt khi xe vào bãi
+        \item So khớp với cơ sở dữ liệu khuôn mặt đã đăng ký
+        \item Xác thực danh tính khi xe vào và ra khỏi bãi
+        \item Cảnh báo khi phát hiện khuôn mặt không khớp
+    \end{itemize}
+    
+    \item Xác minh xe máy khi ra bãi:
+    \begin{itemize}
+        \item So sánh khuôn mặt người lái khi ra với khuôn mặt khi vào
+        \item Tính toán độ tương đồng khuôn mặt (similarity score)
+        \item Xác minh biển số xe khớp với thông tin đã lưu
+        \item Cảnh báo khi độ tương đồng cao hơn ngưỡng cho phép  
+        \item Yêu cầu xác nhận từ chủ xe qua mobile app nếu phát hiện bất thường
+    \end{itemize}
+    
+    \item Nhận diện logo và đặc trưng xe ô tô:
+    \begin{itemize}
+        \item Phát hiện và nhận dạng logo thương hiệu xe ô tô
+        \item Chụp và lưu trữ ảnh crop và toàn cảnh xe khi vào  bãi
+        \item Trích xuất đặc trưng đầu xe bằng Siamese Network
+        \item Lưu trữ vào database
+    \end{itemize}
+    
+    \item Xác minh xe ô tô khi ra bãi:
+    \begin{itemize}
+        \item Chụp ảnh xe hiện tại và trích xuất đặc trưng
+        \item So sánh đặc trưng xe ra với đặc trưng xe vào bằng Siamese Network
+        \item Tính toán độ tương đồng giữa hai ảnh xe 
+        \item So sánh logo xe vào và xe ra
+        \item Xác minh biển số xe khớp với thông tin đã lưu
+        \item Cảnh báo khi độ tương đồng cao hơn ngưỡng cho phép 
+        \item Yêu cầu xác nhận từ chủ xe qua mobile app nếu phát hiện bất thường
+    \end{itemize}
+    
+    \item Quản lý cảnh báo:
+    \begin{itemize}
+        \item Phát hiện xe ra không có xác nhận từ mobile app
+        \item Phát hiện khuôn mặt/xe không khớp với dữ liệu vào
+        \item Tạo và gửi cảnh báo đến ứng dụng bảo vệ
+        \item Hiển thị thông tin chi tiết về cảnh báo (ảnh so sánh, độ tương đồng)
+        \item Chặn xe khi phát hiện bất thường nghiêm trọng
+    \end{itemize}
+    
+    \item Giao diện giám sát:
+    \begin{itemize}
+        \item Hiển thị luồng video từ camera real-time
+        \item Hiển thị kết quả nhận diện trên màn hình
+        \item Hiển thị kết quả so sánh khi xe ra (khuôn mặt, xe, độ tương đồng)
+        \item Log các sự kiện hệ thống
+    \end{itemize}
+\end{itemize}
+
+\subsection{Yêu cầu chức năng cho Mobile Application (Người dùng)}
+
+\begin{itemize}
+    \item Quản lý tài khoản:
+    \begin{itemize}
+        \item Đăng ký tài khoản mới
+        \item Đăng nhập/đăng xuất
+        \item Cập nhật thông tin cá nhân
+        \item Đổi mật khẩu
+    \end{itemize}
+    
+    \item Quản lý phương tiện:
+    \begin{itemize}
+        \item Đăng ký biển số xe 
+        \item Đăng ký khuôn mặt cho xe máy 
+        \item Chỉnh sửa thông tin xe
+        \item Xóa xe khỏi hệ thống
+    \end{itemize}
+    
+    \item Xác nhận rời bãi đỗ xe:
+    \begin{itemize}
+        \item Hiển thị danh sách xe đang đỗ trong bãi
+        \item Chọn xe và bấm nút "Xác nhận rời đi"
+        \item Hiển thị thông tin thời gian đỗ
+    \end{itemize}
+    
+    \item Xem lịch sử:
+    \begin{itemize}
+        \item Xem lịch sử các lần vào/ra bãi đỗ
+        \item Lọc theo thời gian, xe
+        \item Xem chi tiết từng lần đỗ (thời gian vào, ra)
+        \item Xuất báo cáo định kỳ
+    \end{itemize}
+    
+    \item Nhận thông báo:
+    \begin{itemize}
+        \item Thông báo khi xe được xác nhận vào bãi
+        \item Thông báo khi có cảnh báo về xe
+        \item Nhắc nhở khi xe đỗ quá thời gian cho phép
+
+    \end{itemize}
+\end{itemize}
+
+\subsection{Yêu cầu chức năng cho Mobile Application (Bảo vệ)}
+
+\begin{itemize}
+    \item Đăng nhập và xác thực:
+    \begin{itemize}
+        \item Đăng nhập với tài khoản bảo vệ
+      
+        \item Quản lý phiên làm việc
+    \end{itemize}
+    
+    \item Giám sát xe trong bãi:
+    \begin{itemize}
+        \item Xem danh sách tất cả xe đang đỗ
+        \item Hiển thị thông tin: biển số, loại xe, thời gian vào, vị trí
+        \item Tìm kiếm xe theo biển số
+        \item Lọc theo loại xe, khu vực
+        \item Xem sơ đồ bãi đỗ với vị trí các xe
+        \item Cập nhật real-time khi có xe vào/ra
+    \end{itemize}
+    
+    \item Xem lịch sử ra vào:
+    \begin{itemize}
+        \item Tra cứu lịch sử của từng xe cụ thể
+        \item Lọc theo khoảng thời gian
+        \item Xem ảnh chụp khi xe vào/ra
+        \item Xem video giám sát (nếu có)
+        \item Xuất báo cáo chi tiết
+        \item Thống kê theo ngày/tuần/tháng
+    \end{itemize}
+    
+    \item Xử lý cảnh báo:
+    \begin{itemize}
+        \item Nhận thông báo cảnh báo real-time
+   
+        \item Phê duyệt hoặc từ chối cho xe ra
+        \item Cập nhật trạng thái cảnh báo
+       
+        \item Báo cáo cho bảo vệ
+    \end{itemize}
+    
+    
+\end{itemize}
+
+\section{Yêu cầu phi chức năng}
+
+\subsection{Hiệu năng }
+
+\begin{itemize}
+    \item Thời gian phản hồi:
+    \begin{itemize}
+        \item Nhận diện biển số xe: $\leq 10$ giây
+        \item Nhận diện khuôn mặt: $\leq 5$ giây
+        \item Nhận diện logo: $\leq 2$ giây
+        \item So sánh Siamese Network: $\leq 7$ giây
+        \item Tải danh sách xe trong bãi: $\leq 3$ giây
+    \end{itemize}
+    
+    \item Độ chính xác AI Models:
+    \begin{itemize}
+        \item Nhận diện biển số: $\geq 95\%$
+        \item Nhận diện khuôn mặt: $\geq 98\%$ (False Acceptance Rate < 0.1\%)
+        \item Nhận diện logo xe: $\geq 90\%$
+        \item So sánh Siamese : $\geq 95\%$ (threshold similarity < 0.5)
+    \end{itemize}
+    
+    
+    
+    \item Dung lượng lưu trữ:
+    \begin{itemize}
+        \item Lưu trữ tối thiểu 100,000 bản ghi lịch sử
+        \item Lưu trữ ảnh/video tối đa 30 ngày
+        
+    \end{itemize}
+\end{itemize}
+
+
+\section{Kiến trúc hệ thống}
+
+\subsection{Tổng quan kiến trúc}
+
+Hệ thống gồm ba thành phần chính: ứng dụng desktop, backend server và ứng dụng mobile. Mỗi thành phần đảm nhiệm một vai trò riêng nhưng phối hợp chặt chẽ thông qua các giao thức và API thống nhất.
+
+\begin{itemize}
+    \item Ứng dụng desktop đóng vai trò client chính, thực hiện các tác vụ xử lý trí tuệ nhân tạo và giao tiếp trực tiếp với camera.
+    \item Backend server chịu trách nhiệm xử lý nghiệp vụ, quản lý dữ liệu và cung cấp API cho các client.
+    \item Ứng dụng mobile cho phép người dùng và nhân viên bảo vệ tương tác, theo dõi trạng thái và nhận thông báo theo thời gian thực.
+\end{itemize}
+
+\subsection{Kiến trúc ứng dụng Desktop}
+
+Ứng dụng desktop được phát triển bằng Python, đảm nhiệm các tác vụ xử lý nặng như:
+\begin{itemize}
+    \item Nhận diện biển số xe bằng mô hình YOLOv8.
+    \item Nhận diện khuôn mặt cho bãi xe máy.
+    \item Nhận diện logo và so khớp xe ô tô bằng mạng Siamese.
+    \item Xử lý luồng video từ camera theo thời gian thực.
+\end{itemize}
+
+Sau khi xử lý, kết quả được gửi về backend thông qua FLASK API để lưu trữ và đồng bộ với các client khác.
+
+\subsection{Kiến trúc Backend}
+
+Backend server được xây dựng theo mô hình kiến trúc MVC, trong đó:
+\begin{itemize}
+    \item Model quản lý dữ liệu và kết nối với các hệ cơ sở dữ liệu.
+    \item Controller xử lý logic nghiệp vụ, tiếp nhận và phản hồi các request từ client.
+    \item View được thể hiện dưới dạng dữ liệu JSON trả về cho các ứng dụng client.
+\end{itemize}
+
+
+\subsection{Kiến trúc ứng dụng Mobile}
+
+Ứng dụng mobile được phát triển bằng Kotlin theo mô hình MVVM, bao gồm:
+\begin{itemize}
+    \item View hiển thị giao diện người dùng.
+    \item ViewModel xử lý logic hiển thị và quản lý trạng thái.
+    \item Model đại diện cho dữ liệu và giao tiếp với backend thông qua API.
+\end{itemize}
+
+Kiến trúc MVVM giúp tách biệt rõ ràng giữa giao diện và logic xử lý, tăng khả năng mở rộng và dễ bảo trì.
+
+\subsection{Kiến trúc lưu trữ dữ liệu}
+
+Hệ thống sử dụng nhiều nền tảng lưu trữ phù hợp với từng loại dữ liệu:
+\begin{itemize}
+    \item Firebase Realtime Database để đồng bộ trạng thái xe và cảnh báo theo thời gian thực.
+    \item MongoDB để lưu trữ thông tin người dùng, phương tiện và lịch sử ra vào.
+    \item Cloudinary để lưu trữ và quản lý hình ảnh biển số, khuôn mặt và phương tiện.
+\end{itemize}
+
+Dưới đây là sơ đồ kiến trúc tổng thể của hệ thống quản lý bãi đỗ xe thông minh:
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    box/.style={draw, rectangle, rounded corners, minimum width=2.5cm, minimum height=0.8cm, align=center, font=\small},
+    arrow/.style={->, thick}
+]
+
+% Camera
+\node[box] (camera) {Camera};
+
+% Desktop
+\node[box, below=1.2cm of camera] (desktop) {Desktop App\\AI Processing\\YOLOv8, Deep Learning};
+
+% Backend
+\node[box, right=2.5cm of desktop] (backend) {Backend Server\\MVC Architecture};
+
+% Mobile
+\node[box, below=1.2cm of backend] (mobile) {Mobile App\\Kotlin -- MVVM};
+
+% Databases - DI CHUYỂN QUA TRÁI
+\node[box, right=2.5cm of backend] (db1) {Realtime Database};
+\node[box, below=0.8cm of db1] (db2) {MongoDB};
+\node[box, below=0.8cm of db2] (cloud) {Cloudinary};
+
+% Arrows
+\draw[arrow] (camera) -- (desktop);
+\draw[arrow] (desktop) -- node[above, font=\tiny]{FlaskAPI} (backend);
+\draw[arrow] (backend) -- (mobile);
+
+\draw[arrow] (backend) -- (db1);
+\draw[arrow] (backend) -- (db2);
+\draw[arrow] (backend) -- (cloud);
+
+\end{tikzpicture}
+\caption{Kiến trúc tổng thể hệ thống quản lý bãi đỗ xe thông minh}
+\end{figure}
+
+
+
+\section{Sơ đồ Use Case tổng quát}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/tq.jpg}
+    \caption{Sơ đồ Use Case  tổng quát}
+    \label{fig:usecase_tq}
+\end{figure}
+
+\subsection{Các actor trong hệ thống}
+
+Hệ thống quản lý bãi đỗ xe thông minh bao gồm 4 actor chính như được thể hiện trong Hình \ref{fig:usecase_tq}:
+
+\begin{itemize}
+    \item \textbf{Người dùng (Chủ xe):} Người sở hữu phương tiện và sử dụng dịch vụ bãi đỗ xe. Actor này tương tác với hệ thống thông qua mobile application để đăng ký tài khoản, quản lý thông tin xe, xác nhận rời bãi đỗ, xem lịch sử và nhận thông báo về trạng thái xe.
+    
+    \item \textbf{Bảo vệ:} Nhân viên bảo vệ quản lý và giám sát bãi đỗ xe. Actor này sử dụng mobile application để xem danh sách xe trong bãi, tra cứu lịch sử ra vào, xử lý các cảnh báo bất thường và phê duyệt xe ra trong trường hợp cần thiết. Bảo vệ được cấp tài khoản riêng với quyền hạn cao hơn người dùng thường.
+    
+    \item \textbf{Camera System xe máy:} Hệ thống camera tự động tại cổng xe máy, chịu trách nhiệm chụp ảnh, nhận diện biển số xe và khuôn mặt người lái khi xe vào/ra. Hệ thống sẽ so sánh khuôn mặt người lái khi ra với dữ liệu đã lưu khi vào để phát hiện bất thường. Camera system là actor không phải con người, tự động hóa hoàn toàn.
+    
+    \item \textbf{Camera System xe ô tô:} Hệ thống camera tự động tại cổng xe ô tô, thực hiện chụp ảnh, nhận diện biển số xe, logo thương hiệu và đặc trưng toàn bộ xe sử dụng Siamese Network. Khi xe ra, hệ thống sẽ so sánh hình ảnh xe hiện tại với ảnh đã lưu khi vào để xác minh và phát hiện bất thường.
+\end{itemize}
+
+\textit{Lưu ý:} Camera System được xem là một actor trong hệ thống vì có khả năng tương tác chủ động và trực tiếp mà không cần sự can thiệp của con người. Hệ thống camera tự động thu thập dữ liệu (biển số, khuôn mặt, đặc trưng phương tiện), xử lý bằng các mô hình AI như YOLOv8, CNN, DeepFace và Siamese Network, từ đó kích hoạt các use case như nhận diện, xác minh và cảnh báo. Đây là một actor phi con người (non-human actor), hoạt động độc lập và tự động hóa toàn bộ quy trình kiểm soát xe ra vào. Người dùng chỉ cần đăng ký thông tin một lần và xác nhận lấy xe qua ứng dụng di động. Và bảo vệ thực hiện giám sát và xử lý các tình huống bất thường.
+
+
+
+
+\subsection{Sơ đồ Use Case chi tiết cho camera systemxe máy }
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/usecase_xemay.jpg}
+    \caption{Sơ đồ Use Case chi tiết cho camera system xe máy }
+    \label{fig:usecase_xemay}
+\end{figure}
+ 
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-01 - Xử lý xe máy vào}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-01 \\ \hline
+\textbf{Tên Use Case} & Xử lý xe máy vào \\ \hline
+\textbf{Actor} & Camera System Xe Máy \\ \hline
+\textbf{Mô tả} & Hệ thống xử lý xe máy vào bãi đỗ, bao gồm chụp ảnh, nhận dạng biển số, nhận dạng khuôn mặt, ghi nhận vào log và hiển thị thông tin \\ \hline
+\textbf{Tiền điều kiện} & Camera hoạt động bình thường, hệ thống AI đã được khởi động \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Camera phát hiện xe máy tiếp cận
+\item Hệ thống chụp ảnh xe máy
+\item Nhận dạng biển số xe (include UC-02)
+\item Chụp khuôn mặt người lái (include UC-03)
+\item Ghi nhận thông tin vào log
+\item Hiển thị thông tin trên màn hình
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu nhận dạng thất bại, hiển thị lỗi và yêu cầu xử lý thủ công \\ \hline
+\textbf{Hậu điều kiện} & Thông tin xe được lưu vào database, barrier mở cho xe vào \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-02 - Nhận dạng biển số}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-02 \\ \hline
+\textbf{Tên Use Case} & Nhận dạng biển số \\ \hline
+\textbf{Actor} & Hệ thống AI \\ \hline
+\textbf{Mô tả} & Sử dụng YOLOv8 và CNN để phát hiện và đọc biển số xe \\ \hline
+\textbf{Tiền điều kiện} & Có ảnh xe chất lượng tốt \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Nhận ảnh từ camera
+\item YOLOv8 phát hiện vị trí biển số
+\item CNN nhận diện từng ký tự
+\item Trả về chuỗi biển số
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu không phát hiện được biển số hoặc độ tin cậy thấp, trả về lỗi \\ \hline
+\textbf{Hậu điều kiện} & Biển số được trích xuất thành công \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\caption{Đặc tả UC-03 - Chụp khuôn mặt người lái}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-03 \\ \hline
+\textbf{Tên Use Case} & Chụp khuôn mặt người lái \\ \hline
+\textbf{Actor} & Camera System, Hệ thống AI \\ \hline
+\textbf{Mô tả} & Chụp và lưu trữ ảnh khuôn mặt người lái xe để so sánh khi ra \\ \hline
+\textbf{Tiền điều kiện} & Camera hoạt động, có người lái trong tầm nhìn \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Camera chụp ảnh người lái
+\item DeepFace phát hiện khuôn mặt
+\item Trích xuất embedding khuôn mặt
+\item Lưu ảnh và embedding vào database
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu không phát hiện khuôn mặt, yêu cầu chụp lại \\ \hline
+\textbf{Hậu điều kiện} & Ảnh khuôn mặt được lưu thành công \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-04 - Xử lý xe máy ra}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-04 \\ \hline
+\textbf{Tên Use Case} & Xử lý xe máy ra \\ \hline
+\textbf{Actor} & Camera System Xe Máy \\ \hline
+\textbf{Mô tả} & Hệ thống xử lý xe máy ra khỏi bãi đỗ, kiểm tra xác nhận, so sánh khuôn mặt. \\ \hline
+\textbf{Tiền điều kiện} & Xe đang có trong bãi đỗ, camera hoạt động bình thường \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Camera phát hiện xe máy đến cổng ra
+\item Chụp ảnh xe máy
+\item Nhận dạng biển số (include UC-02)
+\item Chụp khuôn mặt người lái hiện tại (include UC-03)
+\item Tra cứu thông tin xe trong bãi đỗ
+\item So sánh khuôn mặt ra-vào
+\item Ghi nhận vào log
+\item Hiển thị thông tin
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu không tìm thấy xe: Hiển thị lỗi
+\item Nếu khuôn mặt không khớp: Tạo cảnh báo (UC-05), chờ xác nhận từ chủ xe
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Phiên đỗ xe kết thúc, barrier mở, thông tin được cập nhật \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-05 - Cảnh báo lỗi}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-05 \\ \hline
+\textbf{Tên Use Case} & Cảnh báo lỗi \\ \hline
+\textbf{Actor} & Camera System Xe Máy \\ \hline
+\textbf{Mô tả} & Hệ thống phát hiện bất thường và gửi cảnh báo \\ \hline
+\textbf{Tiền điều kiện} & Có sự kiện bất thường xảy ra (nhận dạng thất bại, khuôn mặt không khớp, xe không có trong database) \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Hệ thống phát hiện bất thường
+\item Tạo thông báo cảnh báo
+\item Gửi cảnh báo đến bảo vệ và chủ xe
+\item Ghi log sự kiện
+\item Chờ xử lý thủ công
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Cảnh báo được ghi nhận, chờ bảo vệ hoặc chủ xe xử lý \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Sơ đồ Use Case chi tiết cho camera system xe oto }
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/usecase_xeoto.jpg}
+    \caption{Sơ đồ Use Case chi tiết cho camera system xe oto }
+    \label{fig:architecture}
+\end{figure}
+
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-06 - Xử lý xe ô tô vào}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-06 \\ \hline
+\textbf{Tên Use Case} & Xử lý xe ô tô vào \\ \hline
+\textbf{Actor} & Camera System Xe Ô Tô \\ \hline
+\textbf{Mô tả} & Hệ thống xử lý xe ô tô vào bãi đỗ, bao gồm chụp ảnh, nhận dạng biển số, logo xe, đặc trưng Siamese, ghi nhận vào log và hiển thị thông tin \\ \hline
+\textbf{Tiền điều kiện} & Camera hoạt động bình thường, hệ thống AI đã được khởi động \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Camera phát hiện xe ô tô tiếp cận
+\item Hệ thống chụp ảnh ô tô 
+\item Nhận dạng biển số 
+\item Nhận dạng logo xe 
+\item Nhận dạng đặc trưng xe Siamese 
+\item Ghi nhận vào log 
+\item Hiển thị thông tin trên màn hình 
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu nhận dạng thất bại, hiển thị lỗi và yêu cầu xử lý thủ công \\ \hline
+\textbf{Hậu điều kiện} & Thông tin xe được lưu vào database, ảnh xe được lưu trữ, barrier mở cho xe vào \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-07 - Chụp ảnh ô tô}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-07 \\ \hline
+\textbf{Tên Use Case} & Chụp ảnh ô tô \\ \hline
+\textbf{Actor} & Camera System \\ \hline
+\textbf{Mô tả} & Chụp ảnh toàn cảnh xe ô tô để lưu trữ và so sánh khi xe ra \\ \hline
+\textbf{Tiền điều kiện} & Camera hoạt động, xe trong tầm nhìn camera \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Camera chụp ảnh xe từ góc phù hợp
+\item Kiểm tra chất lượng ảnh
+\item Lưu ảnh vào storage
+\item Trả về đường dẫn ảnh
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu ảnh chất lượng kém, chụp lại \\ \hline
+\textbf{Hậu điều kiện} & Ảnh xe được lưu thành công \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-08 - Nhận dạng biển số xe}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-08 \\ \hline
+\textbf{Tên Use Case} & Nhận dạng biển số xe \\ \hline
+\textbf{Actor} & Hệ thống AI \\ \hline
+\textbf{Mô tả} & Sử dụng YOLOv8 và CNN để phát hiện và đọc biển số xe ô tô \\ \hline
+\textbf{Tiền điều kiện} & Có ảnh xe chất lượng tốt \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Nhận ảnh từ camera
+\item YOLOv8 phát hiện vị trí biển số
+\item CNN nhận diện từng ký tự
+\item Trả về chuỗi biển số
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu không phát hiện được biển số hoặc độ tin cậy thấp, trả về lỗi \\ \hline
+\textbf{Hậu điều kiện} & Biển số được trích xuất thành công \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-09 - Nhận dạng logo xe}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-09 \\ \hline
+\textbf{Tên Use Case} & Nhận dạng logo xe \\ \hline
+\textbf{Actor} & Hệ thống AI \\ \hline
+\textbf{Mô tả} & Sử dụng YOLOv8 để phát hiện và nhận diện logo thương hiệu xe \\ \hline
+\textbf{Tiền điều kiện} & Có ảnh xe, logo xe rõ ràng \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Nhận ảnh xe từ camera
+\item YOLOv8 phát hiện vị trí logo
+\item Phân loại thương hiệu xe
+\item Trả về tên thương hiệu và độ tin cậy
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu không phát hiện logo hoặc độ tin cậy thấp, bỏ qua bước này \\ \hline
+\textbf{Hậu điều kiện} & Thương hiệu xe được xác định  \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-10 - Nhận dạng đặc trưng xe Siamese}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-10 \\ \hline
+\textbf{Tên Use Case} & Nhận dạng đặc trưng xe Siamese \\ \hline
+\textbf{Actor} & Hệ thống AI \\ \hline
+\textbf{Mô tả} & Sử dụng Siamese Network để trích xuất đặc trưng xe phục vụ so sánh khi xe ra \\ \hline
+\textbf{Tiền điều kiện} & Có ảnh xe chất lượng tốt \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Nhận ảnh xe từ camera
+\item Siamese Network trích xuất vector đặc trưng
+\item Lưu vector đặc trưng vào database
+\item Trả về thông báo thành công
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu trích xuất thất bại, ghi log lỗi \\ \hline
+\textbf{Hậu điều kiện} & Đặc trưng xe được lưu thành công để so sánh sau này \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-11 - Xử lý xe ô tô ra}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-11 \\ \hline
+\textbf{Tên Use Case} & Xử lý xe ô tô ra \\ \hline
+\textbf{Actor} & Camera System Xe Ô Tô \\ \hline
+\textbf{Mô tả} & Hệ thống xử lý xe ô tô ra khỏi bãi đỗ, so sánh đặc trưng xe, kiểm tra logo \\ \hline
+\textbf{Tiền điều kiện} & Xe đang có trong bãi đỗ, camera hoạt động bình thường \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Camera phát hiện xe ô tô đến cổng ra
+\item Chụp ảnh xe ô tô 
+\item Nhận dạng biển số xe 
+\item Chụp đặc trưng xe hiện tại 
+\item Nhận diện logo xe hiện tại 
+\item Nhận diện đặc trưng xe hiện tại 
+\item Tra cứu thông tin xe vào
+\item So sánh đặc trưng xe Siamese 
+\item So sánh logo 
+\item Ghi nhận vào log 
+\item Hiển thị thông tin 
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu không tìm thấy xe: Hiển thị lỗi
+\item Nếu đặc trưng xe không khớp (similarity > 0.5) thì tạo cảnh báo 
+
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Phiên đỗ xe kết thúc, barrier mở, thông tin được cập nhật \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-12 - So sánh đặc trưng xe Siamese}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-12 \\ \hline
+\textbf{Tên Use Case} & So sánh đặc trưng xe Siamese \\ \hline
+\textbf{Actor} & Hệ thống AI \\ \hline
+\textbf{Mô tả} & Sử dụng Siamese Network để so sánh độ tương đồng giữa xe vào và xe ra \\ \hline
+\textbf{Tiền điều kiện} & Có ảnh xe vào và xe ra, đã trích xuất được đặc trưng \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Lấy vector đặc trưng xe vào từ database
+\item Trích xuất vector đặc trưng xe ra hiện tại
+\item Tính toán độ tương đồng (similarity score)
+\item So sánh với ngưỡng (threshold = 0.5)
+\item Trả về kết quả khớp/không khớp
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu similarity > 0.5, trả về không khớp và tạo cảnh báo \\ \hline
+\textbf{Hậu điều kiện} & Kết quả so sánh được trả về, quyết định cho xe ra hoặc cảnh báo \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-13 - Cảnh báo lỗi}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-13 \\ \hline
+\textbf{Tên Use Case} & Cảnh báo lỗi \\ \hline
+\textbf{Actor} & Camera System Xe Ô Tô \\ \hline
+\textbf{Mô tả} & Hệ thống phát hiện bất thường và gửi cảnh báo \\ \hline
+\textbf{Tiền điều kiện} & Có sự kiện bất thường xảy ra (đặc trưng xe không khớp, logo không khớp, xe không có trong database) \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Hệ thống phát hiện bất thường
+\item Tạo thông báo cảnh báo chi tiết
+\item Gửi cảnh báo đến bảo vệ và chủ xe
+\item Ghi log sự kiện
+\item Chờ xử lý thủ công
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Cảnh báo được ghi nhận, chờ bảo vệ hoặc chủ xe xử lý \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Sơ đồ Use Case chi tiết cho người dùng app mobile }
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/usecasse_user.jpg}
+    \caption{Sơ đồ Use Case chi tiết người dùng app mobile }
+    \label{fig:architecture}
+\end{figure}
+
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-14 - Đăng ký}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-14 \\ \hline
+\textbf{Tên Use Case} & Đăng ký \\ \hline
+\textbf{Actor} & Người dùng \\ \hline
+\textbf{Mô tả} & Người dùng tạo tài khoản mới trong hệ thống \\ \hline
+\textbf{Tiền điều kiện} & Người dùng chưa có tài khoản, có kết nối internet \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Người dùng mở ứng dụng và chọn "Đăng ký"
+\item Nhập thông tin: họ tên, email, mật khẩu
+\item Hệ thống kiểm tra tính hợp lệ dữ liệu
+\item Hệ thống kiểm tra email đã tồn tại chưa
+\item Tạo tài khoản mới
+\item Hiển thị thông báo đăng ký thành công
+\item Chuyển đến màn hình đăng nhập
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu email đã tồn tại: Hiển thị lỗi "Email đã được sử dụng"
+\item Nếu dữ liệu không hợp lệ: Hiển thị thông báo lỗi cụ thể
+\item Nếu mất kết nối: Hiển thị lỗi kết nối
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Tài khoản mới được tạo trong database \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-15 - Đăng nhập}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-15 \\ \hline
+\textbf{Tên Use Case} & Đăng nhập (extend từ UC-14) \\ \hline
+\textbf{Actor} & Người dùng \\ \hline
+\textbf{Mô tả} & Người dùng đăng nhập vào hệ thống để sử dụng các chức năng \\ \hline
+\textbf{Tiền điều kiện} & Người dùng đã có tài khoản, có kết nối internet \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Người dùng mở ứng dụng
+\item Nhập email và mật khẩu
+\item Hệ thống xác thực thông tin
+\item Tạo phiên đăng nhập (session/token)
+\item Lưu token vào local storage
+\item Chuyển đến trang chủ
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu sai email/mật khẩu: Hiển thị "Thông tin đăng nhập không chính xác"
+\item Nếu tài khoản bị khóa: Hiển thị thông báo và hướng dẫn
+\item Nếu quên mật khẩu: Chuyển đến màn hình đặt lại mật khẩu
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Người dùng đăng nhập thành công, có quyền truy cập các chức năng \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-16 - Xem trạng thái bãi đỗ}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-16 \\ \hline
+\textbf{Tên Use Case} & Xem trạng thái bãi đỗ \\ \hline
+\textbf{Actor} & Người dùng \\ \hline
+\textbf{Mô tả} & Người dùng xem thông tin các xe đang đỗ trong bãi của mình \\ \hline
+\textbf{Tiền điều kiện} & Người dùng đã đăng nhập, có ít nhất một xe đã đăng ký \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Người dùng chọn "Xe của tôi" hoặc "Trạng thái bãi đỗ"
+\item Hệ thống lấy danh sách xe đang đỗ của người dùng
+\item Hiển thị danh sách: biển số, loại xe, thời gian vào, vị trí
+\item Cập nhật real-time khi có thay đổi
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu không có xe nào đang đỗ: Hiển thị "Bạn chưa có xe nào trong bãi" \\ \hline
+\textbf{Hậu điều kiện} & Người dùng xem được thông tin xe đang đỗ \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-17 - Xác nhận "rời đi"}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-17 \\ \hline
+\textbf{Tên Use Case} & Xác nhận "rời đi" \\ \hline
+\textbf{Actor} & Người dùng \\ \hline
+\textbf{Mô tả} & Người dùng xác nhận sẽ lấy xe ra khỏi bãi đỗ \\ \hline
+\textbf{Tiền điều kiện} & Có ít nhất một xe đang đỗ trong bãi \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Người dùng vào màn hình "Xe của tôi"
+\item Chọn xe cần lấy ra
+\item Nhấn nút "Xác nhận rời đi"
+
+\item Gửi thông báo đến hệ thống camera
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu hết thời gian hiệu lực: Yêu cầu xác nhận lại
+\item Nếu xe đã được xác nhận: Hiển thị "Xe đã được xác nhận rời đi"
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Hệ thống ghi nhận xác nhận, cho phép xe ra khi camera phát hiện \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-18 - Cảnh báo phát hiện bất thường}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-18 \\ \hline
+\textbf{Tên Use Case} & Cảnh báo phát hiện bất thường \\ \hline
+\textbf{Actor} & Người dùng \\ \hline
+\textbf{Mô tả} & Người dùng nhận cảnh báo khi hệ thống phát hiện bất thường về xe của mình \\ \hline
+\textbf{Tiền điều kiện} & Hệ thống phát hiện bất thường (khuôn mặt không khớp, xe không khớp, xe vào/ra không xác nhận) \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Hệ thống phát hiện bất thường
+\item Gửi push notification đến điện thoại người dùng
+\item Người dùng mở thông báo
+\item Hiển thị chi tiết: loại cảnh báo, thời gian, ảnh/video
+\item Người dùng xác nhận "Đó là tôi" hoặc "Không phải tôi"
+\item Hệ thống ghi nhận phản hồi
+\item Cập nhật trạng thái cảnh báo
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu không phản hồi trong thời gian quy định: Barrier giữ đóng, thông báo bảo vệ
+\item Nếu xác nhận "Không phải tôi": Tạo báo cáo khẩn cấp, thông báo bảo vệ
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Cảnh báo được xử lý, quyết định cho xe ra hoặc giữ lại \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-19 - Đăng xuất}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-19 \\ \hline
+\textbf{Tên Use Case} & Đăng xuất \\ \hline
+\textbf{Actor} & Người dùng \\ \hline
+\textbf{Mô tả} & Người dùng đăng xuất khỏi ứng dụng \\ \hline
+\textbf{Tiền điều kiện} & Người dùng đã đăng nhập \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Người dùng vào menu "Tài khoản"
+\item Chọn "Đăng xuất"
+\item Hiển thị xác nhận "Bạn có chắc muốn đăng xuất?"
+\item Người dùng xác nhận
+\item Hệ thống xóa token khỏi local storage
+\item Hủy phiên đăng nhập
+\item Chuyển về màn hình đăng nhập
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & Nếu người dùng chọn "Hủy": Quay lại màn hình trước \\ \hline
+\textbf{Hậu điều kiện} & Người dùng đã đăng xuất, phải đăng nhập lại để sử dụng \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\subsection{Sơ đồ Use Case chi tiết cho bảo vệ}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/usecase_baove.jpg}
+    \caption{Sơ đồ Use Case chi tiết bảo vệ }
+    \label{fig:architecture}
+\end{figure}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-20 - Đăng nhập (Bảo vệ)}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-20 \\ \hline
+\textbf{Tên Use Case} & Đăng nhập \\ \hline
+\textbf{Actor} & Bảo vệ \\ \hline
+\textbf{Mô tả} & Bảo vệ đăng nhập vào ứng dụng để giám sát và quản lý bãi đỗ \\ \hline
+\textbf{Tiền điều kiện} & Bảo vệ đã có tài khoản được cấp bởi quản trị viên, có kết nối internet \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Bảo vệ mở ứng dụng
+\item Nhập tên đăng nhập và mật khẩu
+\item Hệ thống xác thực thông tin
+\item Kiểm tra quyền truy cập của bảo vệ
+\item Lưu token vào local storage
+\item Chuyển đến trang chủ giám sát
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu sai thông tin đăng nhập: Hiển thị "Thông tin không chính xác"
+\item Nếu tài khoản bị khóa: Hiển thị thông báo liên hệ quản trị viên
+
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Bảo vệ đăng nhập thành công, có quyền truy cập các chức năng giám sát \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-21 - Xem tất cả xe trong bãi đỗ}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-21 \\ \hline
+\textbf{Tên Use Case} & Xem tất cả xe trong bãi đỗ \\ \hline
+\textbf{Actor} & Bảo vệ \\ \hline
+\textbf{Mô tả} & Bảo vệ xem danh sách tất cả xe đang đỗ trong bãi với thông tin chi tiết \\ \hline
+\textbf{Tiền điều kiện} & Bảo vệ đã đăng nhập \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Bảo vệ chọn "Xe trong bãi" từ menu chính
+\item Hệ thống lấy danh sách tất cả xe đang đỗ
+\item Hiển thị thông tin: biển số, loại xe, chủ xe, thời gian vào, vị trí, ảnh xe
+\item Cập nhật real-time khi có xe vào/ra
+\item Bảo vệ có thể tìm kiếm theo biển số
+\item Bảo vệ có thể lọc theo loại xe, khu vực
+\item Chọn xe để xem chi tiết
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu bãi đỗ trống: Hiển thị "Hiện không có xe nào trong bãi"
+\item Nếu mất kết nối: Hiển thị lỗi và thử kết nối lại
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Bảo vệ nắm được tình trạng xe trong bãi đỗ \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-22 - Xem lịch sử ra vào}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-22 \\ \hline
+\textbf{Tên Use Case} & Xem lịch sử ra vào \\ \hline
+\textbf{Actor} & Bảo vệ \\ \hline
+\textbf{Mô tả} & Bảo vệ tra cứu lịch sử xe vào/ra bãi đỗ theo thời gian \\ \hline
+\textbf{Tiền điều kiện} & Bảo vệ đã đăng nhập, hệ thống có dữ liệu lịch sử \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Bảo vệ chọn "Lịch sử ra vào"
+\item Chọn khoảng thời gian (hôm nay, tuần này, tháng này, tùy chỉnh)
+\item Hệ thống lấy dữ liệu lịch sử
+\item Hiển thị danh sách: biển số, loại xe, thời gian vào, thời gian ra, thời gian đỗ, ảnh
+\item Bảo vệ có thể tìm kiếm theo biển số cụ thể
+\item Chọn bản ghi để xem chi tiết đầy đủ
+\item Xem ảnh/video khi xe vào và ra
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu không có dữ liệu trong khoảng thời gian: Hiển thị "Không có dữ liệu"
+\item Nếu tìm kiếm không có kết quả: Hiển thị "Không tìm thấy xe với biển số này"
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Bảo vệ xem được lịch sử chi tiết các xe ra vào \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-23 - Cảnh báo phát hiện bất thường (Bảo vệ)}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-23 \\ \hline
+\textbf{Tên Use Case} & Cảnh báo phát hiện bất thường \\ \hline
+\textbf{Actor} & Bảo vệ \\ \hline
+\textbf{Mô tả} & Bảo vệ nhận và xử lý cảnh báo bất thường từ hệ thống \\ \hline
+\textbf{Tiền điều kiện} & Hệ thống phát hiện bất thường (nhận dạng thất bại, xe không khớp, không có xác nhận rời đi) \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Hệ thống phát hiện bất thường
+\item Gửi push notification khẩn cấp đến điện thoại bảo vệ
+\item Bảo vệ mở thông báo
+\item Hiển thị chi tiết cảnh báo: loại, thời gian, biển số, ảnh/video, độ tương đồng (nếu có)
+\item Bảo vệ xem xét thông tin
+\item Bảo vệ quyết định: "Cho phép ra" hoặc "Giữ lại xe"
+\item Xác nhận quyết định
+\item Hệ thống cập nhật trạng thái cảnh báo
+\item Gửi lệnh đến barrier (mở/đóng)
+\item Ghi log sự kiện
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu bảo vệ không phản hồi trong 3 phút: Barrier giữ đóng, leo thang cảnh báo
+\item Nếu cần thêm thông tin: Gọi điện cho chủ xe để xác minh
+\item Nếu phát hiện gian lận: Báo cáo lên cấp trên, giữ xe lại
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Cảnh báo được xử lý, quyết định cho xe ra hoặc giữ lại được thực hiện, log được ghi nhận \\ \hline
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[H]
+\caption{Đặc tả UC-24 - Đăng xuất (Bảo vệ)}
+\centering
+\begin{tabular}{|p{4cm}|p{10cm}|}
+\hline
+\textbf{Mã Use Case} & UC-24 \\ \hline
+\textbf{Tên Use Case} & Đăng xuất \\ \hline
+\textbf{Actor} & Bảo vệ \\ \hline
+\textbf{Mô tả} & Bảo vệ đăng xuất khỏi ca làm việc \\ \hline
+\textbf{Tiền điều kiện} & Bảo vệ đã đăng nhập \\ \hline
+\textbf{Luồng chính} & 
+\begin{minipage}[t]{\linewidth}
+\begin{enumerate}[leftmargin=*,nosep]
+\item Bảo vệ chọn menu "Tài khoản"
+\item Chọn "Đăng xuất"
+\item Hiển thị xác nhận "Bạn có chắc muốn kết thúc ca làm việc?"
+\item Bảo vệ xác nhận
+\item Hệ thống ghi nhận thời gian kết thúc ca
+\item Xóa token khỏi local storage
+\item Hủy phiên làm việc
+\item Chuyển về màn hình đăng nhập
+\end{enumerate}
+\end{minipage} \\ \hline
+\textbf{Luồng thay thế} & 
+\begin{minipage}[t]{\linewidth}
+\begin{itemize}[leftmargin=*,nosep]
+\item Nếu còn cảnh báo chưa xử lý: Cảnh báo "Còn X cảnh báo chưa xử lý"
+\item Nếu chọn "Hủy": Quay lại màn hình trước
+\end{itemize}
+\end{minipage} \\ \hline
+\textbf{Hậu điều kiện} & Ca làm việc kết thúc, bảo vệ đã đăng xuất \\ \hline
+\end{tabular}
+\end{table}
+
+
+\section{Sơ đồ Activity}
+\subsection{Sơ đồ Activity người dùng đăng ký đăng nhập}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/ac_dkdn.jpg}
+    \caption{Sơ đồ Activity người dùng đăng ký đăng nhập}
+    \label{fig:architecture}
+\end{figure}
+
+
+Activity diagram mô tả quy trình đăng ký và đăng nhập của người dùng vào hệ thống, bao gồm các bước xác thực thông tin, xử lý dữ liệu và thông báo lỗi.
+
+Luồng xử lý bắt đầu khi người dùng mở ứng dụng và lựa chọn đăng nhập hoặc đăng ký tài khoản.  
+Đối với đăng nhập, người dùng nhập email và mật khẩu, hệ thống tiến hành xác thực thông tin. Nếu thông tin hợp lệ, hệ thống tạo phiên đăng nhập và chuyển người dùng đến trang chủ; ngược lại, hệ thống hiển thị thông báo lỗi và yêu cầu nhập lại.
+
+Đối với đăng ký, người dùng nhập thông tin cá nhân cần thiết, hệ thống kiểm tra tính hợp lệ của dữ liệu và xác nhận email chưa tồn tại trong hệ thống. Nếu thỏa điều kiện, hệ thống tạo tài khoản mới, khởi tạo phiên đăng nhập và chuyển đến trang chủ. Trường hợp dữ liệu không hợp lệ hoặc email đã tồn tại, hệ thống hiển thị lỗi và yêu cầu người dùng nhập lại thông tin.
+
+Kết quả cuối cùng của activity là người dùng truy cập thành công vào hệ thống với phiên đăng nhập hợp lệ hoặc nhận thông báo lỗi khi thao tác không thành công.
+
+\subsection{Sơ đồ Activity xử lý xe máy vào bãi đỗ}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/ac_xemay_vao.jpg}
+    \caption{Sơ đồ Activity xử lý xe máy vào bãi đỗ}
+    \label{fig:architecture}
+\end{figure}
+Mục đích: Activity diagram mô tả quy trình xử lý xe máy vào bãi đỗ, bao gồm nhận diện biển số xe, xác thực khuôn mặt người lái và quyết định cho phép xe vào bãi.
+
+Luồng xử lý bắt đầu khi camera phát hiện xe tiếp cận và chụp ảnh biển số. Hệ thống AI tiến hành nhận dạng biển số và kiểm tra tính hợp lệ. Nếu nhận dạng thất bại hoặc xe chưa đăng ký, hệ thống hiển thị lỗi, giữ barrier đóng và ghi nhận log.
+
+Trong trường hợp nhận dạng thành công, hệ thống ghi nhận thời gian vào, lấy thông tin chủ xe và chụp khuôn mặt người lái để so sánh với dữ liệu trong cơ sở dữ liệu. Nếu khuôn mặt khớp với chủ xe, hệ thống tạo phiên đỗ xe và mở barrier tự động.
+
+Nếu khuôn mặt không khớp, hệ thống tạo cảnh báo, gửi thông báo đến chủ xe và yêu cầu xác nhận. Dựa trên phản hồi của chủ xe, hệ thống quyết định cho phép xe vào bãi hoặc từ chối, đồng thời ghi nhận log tương ứng. Quy trình kết thúc khi barrier được mở hoặc giữ đóng và dữ liệu được cập nhật vào hệ thống.
+
+
+\subsection{Sơ đồ Activity xử lý xe oto vào bãi đỗ}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{figures/xeoto_vao.jpg}
+    \caption{Sơ đồ Activity xử lý xe oto vào bãi đỗ}
+    \label{fig:architecture}
+\end{figure}
+
+Mục đích: Activity diagram mô tả quy trình xử lý xe ô tô vào bãi đỗ, bao gồm nhận diện biển số xe, nhận diện logo xe, so sánh hình ảnh xe với cơ sở dữ liệu bằng Siamese Network và tạo phiên đỗ xe.
+
+Quy trình bắt đầu khi camera phát hiện xe ô tô tiếp cận và chụp ảnh. Hệ thống AI tiến hành nhận dạng biển số, logo xe và trích xuất đặc trưng xe để phục vụ so sánh. Nếu nhận dạng thất bại hoặc xe chưa đăng ký trong hệ thống, hệ thống hiển thị lỗi, giữ barrier đóng và ghi nhận log.
+
+Trong trường hợp xe đã đăng ký, hệ thống sử dụng Siamese Network để so sánh hình ảnh xe hiện tại với dữ liệu lưu trữ trong cơ sở dữ liệu. Nếu độ tương đồng vượt ngưỡng cho phép, hệ thống tạo phiên đỗ xe, mở barrier tự động và cập nhật thông tin xe vào hệ thống.
+
+Nếu độ tương đồng không đạt ngưỡng, hệ thống tạo cảnh báo và gửi thông báo đến chủ xe để xác nhận. Dựa trên phản hồi của chủ xe hoặc khi hết thời gian chờ, hệ thống quyết định cho phép xe vào bãi hoặc từ chối, đồng thời ghi nhận log tương ứng. Quy trình kết thúc khi barrier được mở hoặc giữ đóng và dữ liệu được cập nhật.
+
+\subsection{Sơ đồ Activity xử lý xe máy ra bãi đỗ}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/ac_xemay_ra.jpg}
+    \caption{Sơ đồ Activity xử lý xe máy ra bãi đỗ}
+    \label{fig:architecture}
+\end{figure}
+
+
+Mục đích: Activity diagram mô tả quy trình xử lý xe máy ra khỏi bãi đỗ, bao gồm nhận diện biển số xe, kiểm tra phiên đỗ xe, xác thực khuôn mặt người lái, kiểm tra xác nhận từ chủ xe.
+
+Quy trình bắt đầu khi camera phát hiện xe máy đến cổng ra và chụp ảnh biển số xe. Hệ thống AI tiến hành nhận dạng biển số xe. Nếu nhận dạng thành công, hệ thống tìm phiên đỗ xe đang hoạt động trong database. Nếu nhận dạng thất bại hoặc không tìm thấy phiên đỗ xe, hệ thống hiển thị lỗi, giữ barrier đóng và ghi nhận log lỗi.
+
+Khi tìm thấy phiên đỗ xe hợp lệ, hệ thống kiểm tra có xác nhận rời đi từ mobile app hay không. Nếu đã có xác nhận, hệ thống chụp khuôn mặt người lái và tiến hành so khớp với cơ sở dữ liệu. Nếu khuôn mặt khớp, hệ thống xác nhận thành công, lấy thông tin thời gian đỗ và chụp khuôn mặt người lái.
+
+Nếu chưa có xác nhận từ mobile app, hệ thống hiển thị thông báo "Chưa có xác nhận từ chủ xe", tạo cảnh báo và gửi thông báo đến chủ xe. Người dùng nhận thông báo  và xác nhận. Dựa trên xác nhận của chủ xe "Người đó là tôi" , hệ thống quyết định cho phép xe ra hoặc giữ barrier đóng.
+
+Quy trình kết thúc khi xe rời khỏi bãi đỗ và thông tin được hiển thị trống ra.
+\subsection{Sơ đồ Activity xử lý xe oto ra bãi đỗ}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/xeoto_ra.jpg}
+    \caption{Sơ đồ Activity xử lý xe oto ra bãi đỗ}
+    \label{fig:architecture}
+\end{figure}
+
+
+
+Mục đích: Activity diagram mô tả quy trình xử lý xe ô tô ra khỏi bãi đỗ, bao gồm nhận diện biển số xe, kiểm tra phiên đỗ xe, so sánh hình ảnh xe với Siamese Network, kiểm tra xác nhận từ chủ xe.
+
+Quy trình bắt đầu khi camera phát hiện xe ô tô đến cổng ra và chụp ảnh biển số xe. Hệ thống AI tiến hành nhận dạng biển số xe. Nếu nhận dạng thành công, hệ thống tìm phiên đỗ xe đang hoạt động trong database. Nếu nhận dạng thất bại hoặc không tìm thấy phiên đỗ xe, hệ thống hiển thị lỗi "Không tìm thấy thông tin xe", giữ barrier đóng và ghi nhận log lỗi.
+
+Khi tìm thấy phiên đỗ xe hợp lệ, hệ thống kiểm tra có xác nhận rời đi từ mobile app hay không. Nếu đã có xác nhận, hệ thống chụp ảnh xe hiện tại và lấy thông tin thời gian đỗ. Camera System ghi nhận khuôn mặt và tiến hành so sánh với khuôn mặt đã lưu sử dụng Siamese Network.
+
+Nếu chưa có xác nhận từ mobile app, hệ thống hiển thị thông báo "Chờ đang được xét ra - Chờ xác nhận", gọi cảnh báo đến chủ xe và chờ phản hồi. Người dùng nhận thông báo báo gộp và xem ảnh đặc trưng xe Siamese. Dựa trên xác nhận "Người đó là tôi" của chủ xe hoặc khi hết timeout, hệ thống quyết định xác nhận cho phép ra hoặc giữ barrier đóng.
+
+Sau khi xác thực thành công qua so sánh Siamese hoặc xác nhận của chủ xe. Hệ thống kết thúc phiên đỗ xe, cập nhật trạng thái trong database, mở barrier cho xe ra, ghi nhận vào log và cập nhật số lượng xe hiện tại trong bãi. Quy trình kết thúc khi xe rời khỏi bãi đỗ và thông tin trống ra được hiển thị.
+\subsection{Sơ đồ Activity người dùng sử dụng app mobile }
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/ac_user.jpg}
+    \caption{Sơ đồ Activity người dùng sử dụng app mobile}
+    \label{fig:architecture}
+\end{figure}
+Mục đích: Activity diagram mô tả quy trình người dùng tương tác với ứng dụng mobile để quản lý tài khoản, phương tiện, xác nhận rời bãi đỗ xe và nhận cảnh báo
+\subsection{Sơ đồ Activity bảo vệ sử dụng app mobile }
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/ac_baove.jpg}
+    \caption{Sơ đồ Activity bảo vệ sử dụng app mobile }
+    \label{fig:architecture}
+\end{figure}
+Mục đích: Activity diagram mô tả quy trình nhân viên bảo vệ sử dụng ứng dụng mobile để đăng nhập, giám sát xe trong bãi, xem lịch sử ra vào và xử lý cảnh báo.
+\section{Sơ đồ lớp}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/lop_tq.jpg}
+    \caption{Sơ đồ lớp hệ thống quản lý bãi đỗ xe thông minh}
+    \label{fig:architecture}
+\end{figure}
+
+
+\subsection{Nhóm AI/Computer Vision}
+\subsubsection{License Plate Recognition}
+
+Lớp chịu trách nhiệm nhận diện biển số xe sử dụng hai mô hình AI:
+\begin{itemize}
+    \item YOLOv8 yoloModel: Phát hiện vị trí biển số trong ảnh
+    \item CNN cnnModel: Nhận diện ký tự trên biển số
+\end{itemize}
+Cung cấp các phương thức:
+\begin{itemize}
+    \item detectLicensePlate(): Tìm vùng chứa biển số
+    \item detectCharacters(): Nhận diện từng ký tự
+    \item recognizeCharacters(): Chuyển đổi ký tự thành chuỗi
+    \item extractLicensePlate(): Trích xuất kết quả cuối cùng
+\end{itemize}
+
+\subsubsection{Face Recognition}
+Lớp xác thực khuôn mặt người dùng sử dụng:
+\begin{itemize}
+    \item DeepFace deepFaceModel: Mô hình nhận diện khuôn mặt
+\end{itemize}
+Các chức năng chính:
+\begin{itemize}
+    \item detectFace(): Phát hiện khuôn mặt trong ảnh
+    \item extractFaceEmbedding(): Trích xuất đặc trưng khuôn mặt
+    \item verifyFace(): So sánh hai khuôn mặt
+    \item matchFace(): Tìm khuôn mặt khớp trong cơ sở dữ liệu
+\end{itemize}
+
+\subsubsection{Vehicle Recognition}
+Lớp nhận diện loại xe:
+\begin{itemize}
+    \item SiameseNetwork siameseModel: Mạng Siamese để phân loại
+    \item YOLOv8 logoDetector: Phát hiện logo xe
+\end{itemize}
+Phương thức:
+\begin{itemize}
+    \item extractVehicleFeatures(): Trích xuất đặc trưng xe
+    \item matchVehicle(): Khớp với xe trong database
+    \item detectLogo(): Nhận diện thương hiệu xe
+\end{itemize}
+
+\subsection{Nhóm Service Layer}
+
+Lớp nghiệp vụ chính xử lý logic bãi đỗ xe:
+\begin{itemize}
+    \item processVehicleEntry(): Xử lý xe vào 
+    \item processVehicleExit(): Xử lý xe ra 
+    \item findActiveSession(): Tìm phiên đỗ xe đang hoạt động
+\end{itemize}
+
+\subsubsection{Image Service}
+Quản lý xử lý và lưu trữ ảnh:
+\begin{itemize}
+    \item uploadImage(): Upload ảnh lên cloud storage
+    \item getImageUrl(): Lấy URL ảnh đã lưu
+    \item deleteImage(): Xóa ảnh không cần thiết
+\end{itemize}
+
+\subsubsection{Notification Service}
+Gửi thông báo cho người dùng:
+\begin{itemize}
+    \item sendEntryNotification(): Thông báo xe vào bãi
+    \item sendExitNotification(): Thông báo xe ra 
+    \item sendAlertNotification(): Cảnh báo bất thường
+\end{itemize}
+
+\subsubsection{Cloudinary Service}
+Tích hợp với Cloudinary để lưu trữ ảnh:
+\begin{itemize}
+    \item upload(): Upload ảnh
+    \item delete(): Xóa ảnh
+    \item transform(): Chỉnh sửa/tối ưu ảnh
+\end{itemize}
+
+\subsubsection{Auth Service}
+Xác thực và quản lý người dùng:
+\begin{itemize}
+    \item authenticate(): Xác thực email/password
+    \item register(): Đăng ký tài khoản mới
+    \item logout(): Đăng xuất
+    \item resetPassword(): Đặt lại mật khẩu
+\end{itemize}
+
+\subsection{Nhóm Database}
+
+\subsubsection{Firebase Realtime DB}
+Lưu trữ real-time:
+\begin{itemize}
+    \item updateParkingLotStatus(): Cập nhật trạng thái bãi đỗ
+    \item getCurrentVehicles(): Lấy danh sách xe hiện tại
+    \item listenToChanges(): Lắng nghe thay đổi real-time
+\end{itemize}
+
+\subsubsection{Firestore DB}
+Lưu trữ dữ liệu cấu trúc:
+\begin{itemize}
+    \item saveParkingSession(): Lưu phiên đỗ xe
+    \item getParkingHistory(): Lấy lịch sử đỗ xe
+    \item updateSession(): Cập nhật thông tin phiên
+\end{itemize}
+
+\subsubsection{MongoDB}
+Lưu trữ thông tin người dùng:
+\begin{itemize}
+    \item saveUser(): Lưu thông tin user
+    \item getUser(): Lấy thông tin user
+    \item updateUser(): Cập nhật user
+    \item saveVehicle(): Lưu thông tin xe
+    \item getUserVehicles(): Lấy danh sách xe của user
+\end{itemize}
+
+\subsection{Luồng Hoạt Động}
+
+\begin{itemize}
+    
+
+    \item \textbf{Xe vào}: Camera chụp $\rightarrow$ LicensePlateRecognition (YOLO + CNN) $\rightarrow$ VehicleRecognition $\rightarrow$ ParkingService.processVehicleEntry() $\rightarrow$ ImageService.uploadImage() $\rightarrow$ FirestoreDB.saveParkingSession() + FirebaseRealtimeDB $\rightarrow$ NotificationService.sendEntryNotification()
+    
+    \item \textbf{Xe ra}: Camera chụp $\rightarrow$ LicensePlateRecognition $\rightarrow$ ParkingService.findActiveSession() $\rightarrow$ ParkingService.calculateParkingFee() $\rightarrow$ FirestoreDB.updateSession() $\rightarrow$ NotificationService.sendExitNotification()
+    
+    \item \textbf{Xác thực}: FaceRecognition.detectFace() $\rightarrow$ FaceRecognition.verifyFace() $\rightarrow$ AuthService.authenticate() $\rightarrow$ MongoDB.getUser() $\rightarrow$ Cấp quyền truy cập
+    
+    \item \textbf{Quản lý ảnh}: ImageService $\rightarrow$ Cloudinary.uploadImage() $\rightarrow$ Cloudinary.transformImage() $\rightarrow$ Trả về URL
+
+\end{itemize}
+\section{Thiết kế CSDL}
+% \subsection{Thiết kế cơ sở dữ liệu}
+
+Hệ thống sử dụng mô hình cơ sở dữ liệu NoSQL nhằm đáp ứng yêu cầu lưu trữ dữ liệu phi cấu trúc, mở rộng linh hoạt và xử lý thời gian thực. Cụ thể, hệ thống kết hợp ba công nghệ: MongoDB, Firebase Firestore và Firebase Realtime Database, trong đó mỗi loại đảm nhiệm một vai trò khác nhau.
+\subsection{MongoDB – Quản lý thông tin người dùng và phương tiện}
+
+MongoDB được sử dụng để lưu trữ thông tin người dùng và phương tiện do có cấu trúc dữ liệu rõ ràng, ổn định và phù hợp với các thao tác truy vấn phức tạp. Collection \texttt{User} bao gồm các thông tin như tài khoản người dùng, danh sách phương tiện đăng ký  và các thông tin liên quan khác. 
+
+\subsection{Firestore – Lưu trữ lịch sử hoạt động}
+
+Firebase Firestore được sử dụng để lưu trữ lịch sử hoạt động của hệ thống do khả năng mở rộng tốt và hỗ trợ cấu trúc dữ liệu phân cấp. Dữ liệu lịch sử được tổ chức theo dạng nhiều collection con như sau:
+
+\begin{itemize}
+    \item lichsuhoatdong (collection)
+    \item Ngày hoạt động (document)
+    \item xemay / xeoto (collection)
+    \item Biển số xe (document)
+    \item timeline (collection)
+\end{itemize}
+
+Mỗi document trong collection timeline lưu trữ một lần ra/vào của phương tiện, bao gồm các trường dữ liệu như biển số xe vào/ra, thời gian vào/ra, hình ảnh khuôn mặt và các thông tin xác thực liên quan. Ngoài ra, hệ thống còn lưu số lần ra/vào thông qua các trường solanvao và solanra để phục vụ thống kê và giám sát.
+
+\subsection{Realtime Database – Quản lý trạng thái xe trong bãi}
+
+Firebase Realtime Database được sử dụng để lưu trữ danh sách biển số xe đang có mặt trong bãi đỗ. Cơ sở dữ liệu này hỗ trợ cập nhật và đồng bộ dữ liệu theo thời gian thực, cho phép hệ thống nhanh chóng xác định trạng thái hiện tại của phương tiện (đang trong bãi hoặc đã rời đi), từ đó phục vụ cho việc kiểm soát ra vào và hiển thị thông tin tức thời trên giao diện quản lý.
+
+
+
+
+\section{Thiết kế giao diện}
+\subsection{Giao diện chính destop app }
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/giaodienchinh.jpg}
+    \caption{Giao diện chính desktop app }
+    \label{fig:architecture}
+\end{figure}
+\subsection{Giao diện xử lý xe máy ra vào bãi đỗ}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/giaodien_xemay.jpg}
+    \caption{Giao diện xử lý xe máy ra vào bãi đỗ}
+    \label{fig:parking_interface}
+\end{figure}
+Hình \ref{fig:parking_interface} mô tả giao diện quét xe máy của hệ thống. Giao diện hiển thị thông tin: thời gian vào , biển số xe , thời gian ra. Bên trái là ảnh xe máy và khuôn mặt khi vào, bên phải là ảnh xe máy và khuôn mặt khi ra, kèm trạng thái xác thực "Quét xe máy vào" và "Quét xe máy ra".
+\subsection{Giao diện xử lý xe ô tô ra vào bãi đỗ}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/giaodien_oto.jpg}
+    \caption{Giao diện xử lý xe ô tô ra vào bãi đỗ}
+    \label{fig:car_parking}
+\end{figure}
+Hình \ref{fig:car_parking} thể hiện giao diện quét xe ô tô. Hệ thống hiển thị biển số xe và thông báo xe hợp lệ được phép ra. Bên trái là hình ảnh xe vào (biển số, mặt trước và logo), bên phải là hình ảnh xe ra (biển số, mặt sau và logo). Hệ thống sử dụng mạng Siamese để so sánh đặt trừng của đầu xe và so sánh logo xe lúc ra vào.
+\subsection{Giao diện mobile app đăng ký}
+\begin{figure}[H]
+    \centering      
+    \includegraphics[width=0.5\textwidth]{figures/mh_dk.jpg}
+    \caption{Giao diện mobile app đăng ký}
+    \label{fig:register}
+\end{figure}
+Hình \ref{fig:register} hiển thị giao diện đăng ký với các trường thông tin: Email, Họ tên, CCCD, Biển số xe, Mật khẩu và Nhập lại mật khẩu. Người dùng nhấn nút "ĐĂNG KÝ" để hoàn tất hoặc chọn "Đăng nhập ngay" nếu đã có tài khoản.
+\subsection{Giao diện mobile app đăng nhập}
+\begin{figure}[H]
+    \centering      
+    \includegraphics[width=0.5\textwidth]{figures/dang_nhap.jpg}
+    \caption{Giao diện mobile app đăng nhập}
+    \label{fig:login}
+\end{figure}
+Hình \ref{fig:login} thể hiện giao diện đăng nhập gồm hai trường Email và Mật khẩu. Người dùng nhấn "ĐĂNG NHẬP" để truy cập hoặc chọn "Đăng ký ngay" để tạo tài khoản mới.
+\subsection{Giao diện mobile app người dùng khi chưa đỗ xe}
+\begin{figure}[H]
+    \centering      
+    \includegraphics[width=0.5\textwidth]{figures/mah_user_chua_do.jpg}
+    \caption{Giao diện mobile app người dùng khi chưa đỗ xe}
+    \label{fig:not_parked}
+\end{figure}
+
+\subsection{Giao diện mobile app người dùng khi đã đỗ xe}
+\begin{figure}[H]
+    \centering      
+    \includegraphics[width=0.5\textwidth]{figures/da_do.jpg}
+    \caption{Giao diện mobile app người dùng khi đã đỗ xe}
+    \label{fig:architecture}
+\end{figure}
+\subsection{Giao diện mobile cảnh báo gửi đến người dùng}
+\begin{figure}[H]
+    \centering      
+    \includegraphics[width=0.5\textwidth]{figures/canh_bao.jpg}
+    \caption{Giao diện mobile cảnh báo gửi tới người dùng}
+    \label{fig:warning}
+\end{figure}
+Hình \ref{fig:warning} hiển thị hộp thoại cảnh báo "Xe bạn đang ra cổng mà chưa cấp quyền!" với hai tùy chọn: "Vâng, là tôi" để xác nhận  hoặc "Không phải tôi" để từ chối.
+\subsection{Giao diện mobile app bảo vệ}
+\begin{figure}[H]
+    \centering      
+    \includegraphics[width=0.5\textwidth]{figures/bao_ve.jpg}
+    \caption{Giao diện mobile app bảo vệ}
+    \label{fig:dashboard}
+\end{figure}
+Hình \ref{fig:dashboard} mô tả dashboard của bảo vệ hiển thị trạng thái bãi đỗ (0 xe trong bãi, cổng MỞ) và lịch sử hoạt động 7 ngày gần nhất với số lượng phương tiện ra vào theo từng ngày.
