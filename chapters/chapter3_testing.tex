@@ -1,29 +1,105 @@
 \section{Kiểm thử hệ thống}
 
-\subsection{Công cụ kiểm thử}
+Để đánh giá hiệu quả của mô hình nhận diện té ngã, nhóm tiến hành kiểm thử bằng phương pháp \textbf{5-Fold Cross Validation}. Bộ dữ liệu được chia thành 5 phần bằng nhau, mỗi lần sử dụng 4 phần để huấn luyện và 1 phần để kiểm thử. Quá trình này được lặp lại 5 lần nhằm đảm bảo kết quả đánh giá có tính khách quan và hạn chế hiện tượng overfitting.
 
-\subsection{Kịch bản kiểm thử}
+\subsection{Đánh giá bằng ma trận nhầm lẫn}
+
+Hình \ref{fig:confusion_matrix} trình bày ma trận nhầm lẫn tổng hợp của mô hình sau 5 lần kiểm thử.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/testmodel/1_confusion_matrix.png}
+    \caption{Ma trận nhầm lẫn tổng hợp sau 5 lần kiểm thử}
+    \label{fig:confusion_matrix}
+\end{figure}
+
 \begin{itemize}
-    \item Kiểm thử chức năng đăng nhập
-    \item Kiểm thử quản lý camera
-    \item Kiểm thử phát hiện hành vi nguy hiểm
-    \item Kiểm thử gửi cảnh báo
-    \item Kiểm thử hiệu năng thời gian thực
+\item Số lượng mẫu không té ngã được dự đoán đúng (TN) là 198 mẫu, chiếm 97.1\%.
+\item Số lượng mẫu té ngã được dự đoán đúng (TP) là 199 mẫu, chiếm 98.0\%.
+\item Có 6 trường hợp báo động giả (FP), tức hệ thống nhận diện nhầm hành động bình thường thành té ngã.
+\item Có 4 trường hợp bỏ sót (FN), tức người thực sự té ngã nhưng hệ thống không phát hiện được.
 \end{itemize}
 
-\subsection{Đánh giá độ chính xác mô hình}
+Từ kết quả trên có thể thấy số lượng dự đoán sai rất thấp so với tổng số mẫu kiểm thử. Độ nhạy (Sensitivity) đạt 98.0\% cho thấy hệ thống phát hiện được hầu hết các trường hợp té ngã thực tế. Đồng thời độ đặc hiệu (Specificity) đạt 97.1\%, chứng minh khả năng phân biệt tốt giữa hành vi té ngã và các hoạt động sinh hoạt thông thường.
+
+\subsection{Đánh giá bằng đường cong ROC}
+
+Hình \ref{fig:roc_curve} thể hiện đường cong ROC (Receiver Operating Characteristic) của mô hình.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/testmodel/2_roc_curve.png}
+    \caption{Đường cong ROC của mô hình}
+    \label{fig:roc_curve}
+\end{figure}
+
+Đường cong ROC mô tả mối quan hệ giữa tỷ lệ phát hiện đúng té ngã (True Positive Rate - TPR) và tỷ lệ báo động giả (False Positive Rate - FPR) khi thay đổi ngưỡng phân loại. Kết quả cho thấy:
+
 \begin{itemize}
-    \item Precision
-    \item Recall
-    \item F1-Score
-    \item mAP
-    \item Đánh giá trực quan
+\item Diện tích dưới đường cong (AUC) đạt 0.9857.
+\item Điểm ngưỡng tối ưu đạt FPR = 0.025 và TPR = 0.980.
 \end{itemize}
 
-\subsection{Kết quả kiểm thử}
+Giá trị AUC gần bằng 1 chứng tỏ mô hình có khả năng phân biệt rất tốt giữa hai lớp \textit{fall} và \textit{non\_fall}. Đồng thời tỷ lệ báo động giả thấp nhưng vẫn duy trì được khả năng phát hiện té ngã cao, phù hợp với yêu cầu của hệ thống giám sát người cao tuổi trong thực tế.
+
+\subsection{Đánh giá độ ổn định qua từng Fold}
+
+Hình \ref{fig:fold_accuracy} trình bày độ chính xác đạt được trên từng Fold trong quá trình kiểm thử chéo 5-Fold.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/testmodel/3_fold_accuracy.png}
+    \caption{Độ chính xác đạt được trên từng Fold}
+    \label{fig:fold_accuracy}
+\end{figure}
+
+Kết quả cho thấy:
+
 \begin{itemize}
-    \item Kết quả kiểm thử chức năng
-    \item Kết quả kiểm thử hiệu năng
-    \item Kết quả đánh giá mô hình
-    \item Đánh giá chung hệ thống
+\item Fold 1 đạt 97.6\%.
+\item Fold 2 đạt 96.3\%.
+\item Fold 3 đạt 97.5\%.
+\item Fold 4 đạt 96.3\%.
+\item Fold 5 đạt 100.0\%.
 \end{itemize}
+
+Độ chính xác trung bình của mô hình đạt khoảng 97.5\% với sai số dao động nhỏ giữa các Fold. Điều này chứng tỏ mô hình có tính ổn định cao và khả năng tổng quát hóa tốt trên các tập dữ liệu khác nhau. Mặc dù Fold 5 đạt kết quả tối đa 100\%, các Fold còn lại vẫn duy trì mức trên 96\%, cho thấy mô hình không phụ thuộc quá nhiều vào một tập dữ liệu cụ thể.
+
+\subsection{Đánh giá tổng hợp các chỉ số}
+
+Hình \ref{fig:metrics_summary} trình bày các chỉ số đánh giá tổng hợp sau 5 lần kiểm thử.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/testmodel/4_metrics_bar.png}
+    \caption{Các chỉ số đánh giá tổng hợp}
+    \label{fig:metrics_summary}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Bảng tóm tắt các chỉ số đánh giá tổng hợp}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Chỉ số} & \textbf{Giá trị} \\
+\hline
+Accuracy & 97.54\% \\
+Precision & 97.07\% \\
+Recall (Sensitivity) & 98.03\% \\
+F1-Score & 97.55\% \\
+Specificity & 97.06\% \\
+\hline
+\end{tabular}
+\end{table}
+
+Tất cả các chỉ số đều vượt ngưỡng 95\%, cho thấy mô hình đạt hiệu năng cao trên cả hai lớp dữ liệu. Trong đó:
+
+\begin{itemize}
+\item Accuracy đạt 97.54\%, phản ánh tỷ lệ dự đoán đúng trên toàn bộ tập dữ liệu.
+\item Precision đạt 97.07\%, cho thấy phần lớn các cảnh báo té ngã được hệ thống đưa ra là chính xác.
+\item Recall đạt 98.03\%, thể hiện khả năng phát hiện gần như toàn bộ các trường hợp té ngã thực tế.
+\item F1-Score đạt 97.55\%, chứng minh sự cân bằng tốt giữa Precision và Recall.
+\item Specificity đạt 97.06\%, cho thấy hệ thống ít nhầm lẫn các hoạt động bình thường thành té ngã.
+\end{itemize}
+
+Kết quả kiểm thử cho thấy mô hình đạt độ chính xác cao, khả năng phát hiện té ngã hiệu quả và duy trì tính ổn định trên nhiều tập dữ liệu khác nhau. Điều này chứng minh mô hình hoàn toàn có khả năng triển khai trong hệ thống giám sát và cảnh báo té ngã thời gian thực dành cho người cao tuổi.
