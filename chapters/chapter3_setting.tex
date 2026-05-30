@@ -1,0 +1,102 @@
+\section{Cài đặt hệ thống}
+
+\subsection{Backend}
+
+Backend được xây dựng bằng FastAPI, đóng vai trò trung tâm trong kiến trúc hệ thống, chịu trách nhiệm
+xử lý yêu cầu từ người dùng, quản lý nghiệp vụ, xác thực, phân quyền và kết nối với các dịch vụ như
+cơ sở dữ liệu, ứng dụng AI Desktop và hệ thống cảnh báo.
+
+\noindent\textbf{Cách cài đặt:}
+\begin{itemize}
+\item Khởi tạo môi trường ảo Python bằng lệnh \texttt{python -m venv venv}, sau đó kích hoạt
+bằng lệnh \texttt{venv\textbackslash Scripts\textbackslash activate}.
+\item Cài đặt các thư viện cần thiết từ file \texttt{requirements.txt} bằng lệnh
+\texttt{pip install -r requirements.txt}.
+\item Cấu hình các biến môi trường trong file \texttt{.env} dựa theo file mẫu \texttt{.env.example}
+để thiết lập kết nối cơ sở dữ liệu, thông tin email và các tham số khác.
+\item Khởi động server bằng lệnh \texttt{.\textbackslash run.bat}, Uvicorn sẽ khởi chạy tại
+địa chỉ \texttt{localhost} cổng 8000.
+\item Kiểm tra các API tại \texttt{http://localhost:8000/docs}.
+\end{itemize}
+
+\subsection{Frontend}
+
+Giao diện người dùng gồm ba thành phần: ứng dụng di động Flutter dành cho người dùng cuối,
+trang quản trị Nuxt.js dành cho admin và ứng dụng desktop Tkinter tích hợp AI phục vụ giám sát
+và nhận diện hành vi.
+
+\textbf{Ứng dụng di động (Flutter):}
+\begin{itemize}
+\item Cài đặt Flutter SDK và thiết lập môi trường phát triển.
+\item Chạy lệnh \texttt{flutter pub get} để cài đặt các gói phụ thuộc.
+\item Cấu hình địa chỉ Backend trong file cấu hình của ứng dụng.
+\item Khởi chạy ứng dụng trên trình giả lập hoặc thiết bị thực bằng lệnh \texttt{flutter run}.
+\end{itemize}
+
+\textbf{Trang quản trị (Nuxt.js):}
+\begin{itemize}
+\item Cài đặt Node.js và chạy lệnh \texttt{npm install} để cài đặt các gói phụ thuộc.
+\item Cấu hình địa chỉ Backend trong file cấu hình của ứng dụng.
+\item Khởi chạy ứng dụng bằng lệnh \texttt{npm run dev}, giao diện sẽ chạy tại
+\texttt{http://localhost:3000}.
+\end{itemize}
+
+\textbf{Ứng dụng desktop AI (Tkinter):}
+\begin{itemize}
+\item Cài đặt môi trường Python và các thư viện cần thiết từ file
+\texttt{requirements.txt}.
+\item Đảm bảo mô hình AI đã được huấn luyện và file trọng số
+\texttt{.pth} được đặt đúng vị trí trong thư mục dự án.
+\item Cấu hình địa chỉ Backend trong file cấu hình của ứng dụng.
+\item Khởi chạy ứng dụng bằng lệnh \texttt{.\textbackslash run.bat}.
+Khi khởi động, hệ thống sẽ tự động tải mô hình AI từ file
+\texttt{.pth} và sẵn sàng thực hiện nhận diện, phân tích dữ liệu
+từ camera.
+\end{itemize}
+
+\subsection{Cơ sở dữ liệu}
+
+Hệ thống sử dụng PostgreSQL làm cơ sở dữ liệu quan hệ, truy cập thông qua SQLAlchemy kết hợp
+AsyncPG theo cơ chế bất đồng bộ. Backend tự động tạo các bảng khi khởi động lần đầu nếu chưa tồn tại.
+
+\noindent\textbf{Cách cài đặt:}
+\begin{itemize}
+\item Cài đặt PostgreSQL và tạo cơ sở dữ liệu mới cùng tài khoản người dùng với quyền truy cập phù hợp.
+\item Chạy các script SQL để tạo bảng và dữ liệu mẫu ban đầu.
+\item Cấu hình chuỗi kết nối trong file \texttt{.env}.
+\end{itemize}
+
+\subsection{Lưu trữ đám mây}
+
+Hệ thống sử dụng dịch vụ lưu trữ đám mây để quản lý ảnh chụp và video sinh ra trong quá trình giám sát.
+Khi ứng dụng AI phát hiện hành vi nguy hiểm, ảnh khung hình được tải lên tự động và đường dẫn được lưu
+vào cơ sở dữ liệu. Quyền truy cập tệp được bảo vệ thông qua signed URL có thời hạn.
+
+\noindent\textbf{Cách cài đặt:}
+\begin{itemize}
+\item Tạo tài khoản và bucket trên dịch vụ lưu trữ đám mây (AWS S3, Google Cloud Storage
+hoặc Azure Blob Storage).
+\item Cấu hình quyền truy cập và khóa API tương ứng.
+\item Cập nhật thông tin kết nối trong file \texttt{.env} và kiểm tra bằng cách tải lên
+một tệp thử nghiệm.
+\end{itemize}
+
+\subsection{Quy trình khởi động hệ thống}
+
+Các thành phần cần được khởi động theo thứ tự sau:
+
+\begin{itemize}
+\item \textbf{Backend}: Kích hoạt môi trường ảo và chạy
+\texttt{.\textbackslash run.bat}, đảm bảo cơ sở dữ liệu đã sẵn sàng trước
+khi khởi động.
+
+\item \textbf{Frontend}: Khởi chạy ứng dụng di động bằng
+\texttt{flutter run} và trang quản trị bằng
+\texttt{npm run dev}.
+
+\item \textbf{Ứng dụng desktop AI}: Chạy
+\texttt{.\textbackslash run.bat}. Khi khởi động, ứng dụng sẽ tự động
+nạp mô hình AI từ file \texttt{.pth}, kết nối với Backend và sẵn sàng
+xử lý dữ liệu camera.
+
+\end{itemize}
