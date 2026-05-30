@@ -1,39 +1,50 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Đặc tả UC-01 - Xử lý xe máy vào}}{33}{table.caption.24}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Đặc tả UC-02 - Nhận dạng biển số}}{33}{table.caption.25}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Đặc tả UC-03 - Chụp khuôn mặt người lái}}{34}{table.caption.26}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces Đặc tả UC-04 - Xử lý xe máy ra}}{34}{table.caption.27}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces Đặc tả UC-05 - Cảnh báo lỗi}}{35}{table.caption.28}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces Đặc tả UC-06 - Xử lý xe ô tô vào}}{37}{table.caption.30}%
-\contentsline {table}{\numberline {2.7}{\ignorespaces Đặc tả UC-07 - Chụp ảnh ô tô}}{37}{table.caption.31}%
-\contentsline {table}{\numberline {2.8}{\ignorespaces Đặc tả UC-08 - Nhận dạng biển số xe}}{38}{table.caption.32}%
-\contentsline {table}{\numberline {2.9}{\ignorespaces Đặc tả UC-09 - Nhận dạng logo xe}}{38}{table.caption.33}%
-\contentsline {table}{\numberline {2.10}{\ignorespaces Đặc tả UC-10 - Nhận dạng đặc trưng xe Siamese}}{39}{table.caption.34}%
-\contentsline {table}{\numberline {2.11}{\ignorespaces Đặc tả UC-11 - Xử lý xe ô tô ra}}{40}{table.caption.35}%
-\contentsline {table}{\numberline {2.12}{\ignorespaces Đặc tả UC-12 - So sánh đặc trưng xe Siamese}}{41}{table.caption.36}%
-\contentsline {table}{\numberline {2.13}{\ignorespaces Đặc tả UC-13 - Cảnh báo lỗi}}{41}{table.caption.37}%
-\contentsline {table}{\numberline {2.14}{\ignorespaces Đặc tả UC-14 - Đăng ký}}{43}{table.caption.39}%
-\contentsline {table}{\numberline {2.15}{\ignorespaces Đặc tả UC-15 - Đăng nhập}}{44}{table.caption.40}%
-\contentsline {table}{\numberline {2.16}{\ignorespaces Đặc tả UC-16 - Xem trạng thái bãi đỗ}}{44}{table.caption.41}%
-\contentsline {table}{\numberline {2.17}{\ignorespaces Đặc tả UC-17 - Xác nhận "rời đi"}}{45}{table.caption.42}%
-\contentsline {table}{\numberline {2.18}{\ignorespaces Đặc tả UC-18 - Cảnh báo phát hiện bất thường}}{46}{table.caption.43}%
-\contentsline {table}{\numberline {2.19}{\ignorespaces Đặc tả UC-19 - Đăng xuất}}{47}{table.caption.44}%
-\contentsline {table}{\numberline {2.20}{\ignorespaces Đặc tả UC-20 - Đăng nhập (Bảo vệ)}}{49}{table.caption.46}%
-\contentsline {table}{\numberline {2.21}{\ignorespaces Đặc tả UC-21 - Xem tất cả xe trong bãi đỗ}}{50}{table.caption.47}%
-\contentsline {table}{\numberline {2.22}{\ignorespaces Đặc tả UC-22 - Xem lịch sử ra vào}}{51}{table.caption.48}%
-\contentsline {table}{\numberline {2.23}{\ignorespaces Đặc tả UC-23 - Cảnh báo phát hiện bất thường (Bảo vệ)}}{52}{table.caption.49}%
-\contentsline {table}{\numberline {2.24}{\ignorespaces Đặc tả UC-24 - Đăng xuất (Bảo vệ)}}{53}{table.caption.50}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Đặc tả UC01 -- Đăng nhập}}{31}{table.caption.12}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Đặc tả UC02 -- Đăng ký}}{31}{table.caption.13}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Đặc tả UC03 -- Quên mật khẩu}}{32}{table.caption.14}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Đặc tả UC04 -- Hồ sơ cá nhân}}{32}{table.caption.15}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces Đặc tả UC05 -- Đăng xuất}}{33}{table.caption.16}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces Đặc tả UC06 -- Phát hiện té ngã}}{34}{table.caption.18}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces Đặc tả UC07 -- Nhận diện tư thế}}{34}{table.caption.19}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces Đặc tả UC08 -- Gửi thông báo}}{35}{table.caption.20}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces Đặc tả UC09 -- Gửi cảnh báo té ngã}}{35}{table.caption.21}%
+\contentsline {table}{\numberline {2.10}{\ignorespaces Đặc tả UC10 -- Gửi thông báo tư thế}}{36}{table.caption.22}%
+\contentsline {table}{\numberline {2.11}{\ignorespaces Đặc tả UC11 -- Nhận diện khuôn mặt}}{36}{table.caption.23}%
+\contentsline {table}{\numberline {2.12}{\ignorespaces Đặc tả UC12 -- Cập nhật thông số}}{37}{table.caption.24}%
+\contentsline {table}{\numberline {2.13}{\ignorespaces Đặc tả UC13 -- Xem lịch sử cảnh báo}}{38}{table.caption.26}%
+\contentsline {table}{\numberline {2.14}{\ignorespaces Đặc tả UC14 -- Lọc theo loại sự kiện}}{38}{table.caption.27}%
+\contentsline {table}{\numberline {2.15}{\ignorespaces Đặc tả UC15 -- Lọc theo thời gian}}{39}{table.caption.28}%
+\contentsline {table}{\numberline {2.16}{\ignorespaces Đặc tả UC16 -- Xem danh sách sự kiện té ngã}}{39}{table.caption.29}%
+\contentsline {table}{\numberline {2.17}{\ignorespaces Đặc tả UC17 -- Xem chi tiết sự kiện}}{40}{table.caption.30}%
+\contentsline {table}{\numberline {2.18}{\ignorespaces Đặc tả UC18 -- Báo cáo cảnh báo sai}}{40}{table.caption.31}%
+\contentsline {table}{\numberline {2.19}{\ignorespaces Đặc tả UC19 -- Tùy chỉnh camera}}{41}{table.caption.33}%
+\contentsline {table}{\numberline {2.20}{\ignorespaces Đặc tả UC20 -- Tùy chỉnh chức năng}}{42}{table.caption.34}%
+\contentsline {table}{\numberline {2.21}{\ignorespaces Đặc tả UC21 -- Camera cập nhật thông số}}{42}{table.caption.35}%
+\contentsline {table}{\numberline {2.22}{\ignorespaces Đặc tả UC22 -- Cài đặt theo dõi}}{43}{table.caption.37}%
+\contentsline {table}{\numberline {2.23}{\ignorespaces Đặc tả UC23 -- Quản lý danh sách theo dõi}}{44}{table.caption.38}%
+\contentsline {table}{\numberline {2.24}{\ignorespaces Đặc tả UC24 -- Đăng ký khuôn mặt}}{45}{table.caption.39}%
+\contentsline {table}{\numberline {2.25}{\ignorespaces Đặc tả UC25 -- Quản lý liên lạc khẩn cấp}}{46}{table.caption.40}%
+\contentsline {table}{\numberline {2.26}{\ignorespaces Đặc tả UC26 -- Camera nhận diện khuôn mặt đã đăng ký}}{46}{table.caption.41}%
+\contentsline {table}{\numberline {2.27}{\ignorespaces Đặc tả UC27 -- Nhận thông báo}}{47}{table.caption.43}%
+\contentsline {table}{\numberline {2.28}{\ignorespaces Đặc tả UC28 -- Nhận thông báo té ngã}}{48}{table.caption.44}%
+\contentsline {table}{\numberline {2.29}{\ignorespaces Đặc tả UC29 -- Xem chi tiết sự kiện}}{48}{table.caption.45}%
+\contentsline {table}{\numberline {2.30}{\ignorespaces Đặc tả UC30 -- Xem clip video té ngã}}{49}{table.caption.46}%
+\contentsline {table}{\numberline {2.31}{\ignorespaces Đặc tả UC31 -- Nhận thông báo tư thế}}{49}{table.caption.47}%
+\contentsline {table}{\numberline {2.32}{\ignorespaces Đặc tả UC32 -- Cài đặt thông báo}}{50}{table.caption.48}%
+\contentsline {table}{\numberline {2.33}{\ignorespaces Đặc tả UC33 -- Nhận thông báo từ Admin}}{50}{table.caption.49}%
+\contentsline {table}{\numberline {2.34}{\ignorespaces Đặc tả UC34 -- Gửi thông báo cho User}}{51}{table.caption.50}%
+\contentsline {table}{\numberline {2.35}{\ignorespaces Đặc tả UC35 -- Quản lý hồ sơ người giám sát}}{53}{table.caption.52}%
+\contentsline {table}{\numberline {2.36}{\ignorespaces Đặc tả UC36 -- Xem danh sách người giám sát}}{53}{table.caption.53}%
+\contentsline {table}{\numberline {2.37}{\ignorespaces Đặc tả UC37 -- Thống kê báo cáo}}{54}{table.caption.54}%
+\contentsline {table}{\numberline {2.38}{\ignorespaces Đặc tả UC38 -- Xem thống kê té ngã}}{54}{table.caption.55}%
+\contentsline {table}{\numberline {2.39}{\ignorespaces Đặc tả UC39 -- Quản lý người dùng}}{55}{table.caption.56}%
+\contentsline {table}{\numberline {2.40}{\ignorespaces Đặc tả UC40 -- Khóa/mở tài khoản}}{55}{table.caption.57}%
+\contentsline {table}{\numberline {2.41}{\ignorespaces Đặc tả UC41 -- Quản lý camera}}{56}{table.caption.58}%
+\contentsline {table}{\numberline {2.42}{\ignorespaces Đặc tả UC42 -- Xem trạng thái camera}}{56}{table.caption.59}%
+\contentsline {table}{\numberline {2.43}{\ignorespaces Đặc tả UC43 -- Bật/tắt Sleep as Fall}}{57}{table.caption.60}%
+\contentsline {table}{\numberline {2.44}{\ignorespaces Đặc tả UC44 -- Quản lý báo cáo người dùng}}{57}{table.caption.61}%
+\contentsline {table}{\numberline {2.45}{\ignorespaces Đặc tả UC45 -- Xem chi tiết báo cáo}}{58}{table.caption.62}%
+\contentsline {table}{\numberline {2.46}{\ignorespaces Đặc tả UC46 -- Phản hồi báo cáo}}{58}{table.caption.63}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Kết quả kiểm thử Desktop Application}}{78}{table.caption.78}%
-\contentsline {table}{\numberline {3.2}{\ignorespaces Kết quả kiểm thử Mobile Application}}{79}{table.caption.79}%
-\contentsline {table}{\numberline {3.3}{\ignorespaces Kết quả huấn luyện YOLO – Nhận diện biển số}}{79}{table.caption.80}%
-\contentsline {table}{\numberline {3.4}{\ignorespaces Kết quả huấn luyện YOLO – Nhận diện vùng ký tự}}{80}{table.caption.82}%
-\contentsline {table}{\numberline {3.5}{\ignorespaces Kết quả huấn luyện YOLO – Nhận diện logo xe}}{82}{table.caption.84}%
-\contentsline {table}{\numberline {3.6}{\ignorespaces Kết quả huấn luyện CNN – Đọc ký tự}}{83}{table.caption.86}%
-\contentsline {table}{\numberline {3.7}{\ignorespaces Kết quả huấn luyện Siamese Network – So sánh đầu xe ô tô}}{84}{table.caption.88}%
-\contentsline {table}{\numberline {3.8}{\ignorespaces Kết quả kiểm thử DeepFace}}{85}{table.caption.90}%
-\contentsline {table}{\numberline {3.9}{\ignorespaces Hiệu năng API}}{86}{table.caption.91}%
-\contentsline {table}{\numberline {3.10}{\ignorespaces Tương thích thiết bị}}{87}{table.caption.92}%
-\contentsline {table}{\numberline {3.11}{\ignorespaces Kiểm thử kết nối mạng}}{87}{table.caption.93}%
 \addvspace {10\p@ }

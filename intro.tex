@@ -1,76 +1,79 @@
-% \begin{center}
-%     \textbf{\MakeUppercase{Lời mở đầu}}
-% \end{center}
-% \chapter*{LỜI MỞ ĐẦU}
-% \addcontentsline{toc}{chapter}{Lời mở đầu}
-
-
+\chapter*{LỜI MỞ ĐẦU}
+\addcontentsline{toc}{chapter}{LỜI MỞ ĐẦU}
 
 \section*{1. Lý do chọn đề tài}
-Trong bối cảnh đô thị hóa diễn ra mạnh mẽ, số lượng phương tiện giao thông cá nhân ngày càng gia tăng, đặc biệt là tại các thành phố lớn. Việc quản lý bãi đỗ xe theo phương thức thủ công hiện nay còn tồn tại nhiều hạn chế như mất nhiều thời gian cho việc kiểm soát xe ra vào, khó khăn trong việc thống kê số lượng xe, dễ xảy ra sai sót và gian lận, đồng thời gây ùn tắc tại khu vực cổng bãi xe vào giờ cao điểm.
 
-Để đánh giá thực trạng quản lý bãi đỗ xe và nhu cầu sử dụng dịch vụ giữ xe thông minh, em thực hiện đã tiến hành khảo sát 151 người dùng tại khu vực thành phố Hồ Chí Minh. Kết quả khảo sát được thể hiện qua các biểu đồ sau:
+Trong bối cảnh xã hội hiện nay, nhu cầu chăm sóc và giám sát sức khỏe cho người cao tuổi, bệnh nhân và các đối tượng dễ bị tổn thương ngày càng trở nên cấp thiết. Theo Tổ chức Y tế Thế giới (WHO), té ngã là một trong những nguyên nhân hàng đầu gây chấn thương nghiêm trọng và tử vong ở người cao tuổi, đặc biệt trong các trường hợp không được phát hiện và xử lý kịp thời. Tại Việt Nam, cùng với tốc độ già hóa dân số nhanh chóng, việc ứng dụng công nghệ để hỗ trợ giám sát và cảnh báo tự động đang trở thành một hướng đi mang tính thực tiễn cao.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/mat_the.jpg}
-    \caption{Kết quả khảo sát về tình trạng mất thẻ xe}
-    \label{fig:khaosat1}
-\end{figure}
+Các hệ thống camera giám sát truyền thống chủ yếu chỉ dừng lại ở việc ghi hình thụ động, phụ thuộc hoàn toàn vào con người trong quá trình theo dõi. Điều này dẫn đến hạn chế lớn về hiệu quả và tính kịp thời trong việc phát hiện các tình huống nguy hiểm. Trong khi đó, sự phát triển mạnh mẽ của trí tuệ nhân tạo, đặc biệt trong lĩnh vực thị giác máy tính và học sâu, đã mở ra khả năng xây dựng các hệ thống giám sát thông minh có thể tự động phân tích hành vi con người theo thời gian thực.
 
-Kết quả cho thấy 76,2\% người tham gia chưa từng bị mất thẻ xe, trong khi 23,2\% đã có trải nghiệm mất thẻ từ 1-2 lần. Đặc biệt, trong số những người từng bị mất thẻ, 78,1\% không nhớ hoặc không có thẻ bảo giờ, điều này cho thấy sự bất tiện lớn của hệ thống thẻ từ truyền thống.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.9\textwidth]{figures/doi_dv.jpg}
-    \caption{Kết quả khảo sát về nhu cầu sử dụng dịch vụ không cần thẻ}
-    \label{fig:khaosat2}
-\end{figure}
-Về nhu cầu sử dụng công nghệ hiện đại, 44,4\% người được hỏi cho biết muốn sử dụng dịch vụ giữ xe không cần thẻ truyền thống , 46,4\% cũng đồng ý nếu tiện lợi hơn và chỉ 9,3\% cho rằng không cần thiết. Điều này chứng tỏ có nhu cầu thực tế cao (90,7\%) đối với giải pháp quản lý bãi đỗ xe thông minh.
-
-
-Bên cạnh đó, sự phát triển mạnh mẽ của trí tuệ nhân tạo đã mở ra nhiều hướng tiếp cận mới trong việc xây dựng các hệ thống quản lý thông minh. Việc ứng dụng các công nghệ này vào quản lý bãi đỗ xe không chỉ giúp tự động hóa quy trình vận hành mà còn nâng cao hiệu quả quản lý, giảm chi phí nhân lực và cải thiện trải nghiệm người sử dụng.
-
-Xuất phát từ những vấn đề thực tiễn và kết quả khảo sát nêu trên, đề tài Xây dựng hệ thống quản lý bãi đỗ xe thông minh được lựa chọn nhằm nghiên cứu và xây dựng một giải pháp ứng dụng công nghệ hiện đại vào công tác quản lý bãi đỗ xe, loại bỏ sự phụ thuộc vào thẻ từ vật lý, góp phần nâng cao hiệu quả khai thác và vận hành hệ thống.
+Xuất phát từ thực tiễn đó, nhóm thực hiện đề tài \textbf{"Hệ thống phát hiện và cảnh báo hành vi nguy hiểm từ camera giám sát theo thời gian thực"} nhằm ứng dụng AI vào bài toán giám sát thực tế. Hệ thống không chỉ phát hiện té ngã mà còn tích hợp nhận diện khuôn mặt để xác định đúng đối tượng cần theo dõi, đồng thời cung cấp nền tảng quản lý tập trung thông qua Web Admin và ứng dụng di động.
 
 \section*{2. Tình hình nghiên cứu}
-Trong những năm gần đây, nhiều hệ thống quản lý bãi đỗ xe thông minh đã được triển khai sử dụng thẻ từ, mã QR, camera nhận diện biển số và cảm biến phát hiện chỗ trống.
 
-Tại Việt Nam, phần lớn bãi đỗ xe vẫn dùng thẻ từ truyền thống. Theo khảo sát của em thực hiện với 151 người dùng, 23,2\% đã từng mất thẻ xe, trong đó 78,1\% không nhớ hoặc không còn thẻ khi cần lấy xe. Điều này cho thấy hệ thống thẻ từ còn nhiều bất cập.
+Trên thế giới, bài toán phát hiện té ngã đã được nghiên cứu rộng rãi với nhiều hướng tiếp cận khác nhau. Các phương pháp truyền thống dựa trên cảm biến đeo hoặc thiết bị gia tốc có ưu điểm về độ chính xác nhưng lại hạn chế do yêu cầu người dùng phải mang thiết bị liên tục.
 
-Một số giải pháp công nghệ cao đã được áp dụng như mã QR hoặc camera nhận diện biển số, nhưng vẫn còn hạn chế về chi phí, khả năng mở rộng và chưa tận dụng triệt để trí tuệ nhân tạo, học sâu cùng điện toán đám mây.
+Gần đây, các nghiên cứu tập trung vào phương pháp không tiếp xúc dựa trên camera, kết hợp các kỹ thuật như ước lượng tư thế người (pose estimation), nhận dạng hành động (action recognition) và các mô hình học sâu như LSTM, Transformer hoặc CNN. Một số hệ thống hiện đại còn kết hợp thêm các mô hình phát hiện đối tượng như YOLO và các framework như MediaPipe để trích xuất đặc trưng chuyển động theo thời gian thực.
 
-Khảo sát cho thấy 90,7\% người dùng có nhu cầu sử dụng dịch vụ giữ xe không cần thẻ vật lý, chứng tỏ thị trường có tiềm năng lớn cho giải pháp quản lý bãi đỗ xe thông minh.
+Tuy nhiên, tại Việt Nam, các nghiên cứu thường mới dừng ở mức thử nghiệm hoặc mô hình đơn lẻ trong môi trường phòng thí nghiệm. Việc xây dựng một hệ thống hoàn chỉnh có khả năng triển khai thực tế, tích hợp cảnh báo đa nền tảng, quản lý người dùng và theo dõi danh tính đối tượng vẫn còn hạn chế.
 
-Do đó, việc xây dựng hệ thống quản lý bãi đỗ xe thông minh sử dụng công nghệ nhận diện biển số và khuôn mặt với chi phí hợp lý là cần thiết và có ý nghĩa thực tiễn tại Việt Nam.
-\section*{4. Nhiệm vụ nghiên cứu}
-Để đạt được mục tiêu đề ra, đề tài tập trung thực hiện các nhiệm vụ sau:
+\section*{3. Mục tiêu nghiên cứu}
+
+Đề tài hướng đến xây dựng một hệ thống giám sát thông minh có khả năng:
+
 \begin{itemize}
-    \item Khảo sát và phân tích thực trạng quản lý bãi đỗ xe hiện nay.
-    \item Nghiên cứu các công nghệ và giải pháp liên quan đến hệ thống quản lý bãi đỗ xe thông minh.
-    \item Phân tích yêu cầu chức năng và phi chức năng của hệ thống.
-    \item Thiết kế kiến trúc tổng thể, cơ sở dữ liệu và giao diện hệ thống.
-    \item Xây dựng và cài đặt hệ thống quản lý bãi đỗ xe thông minh.
-    \item Thực hiện kiểm thử và đánh giá kết quả đạt được của hệ thống.
+    \item Phát hiện hành vi té ngã theo thời gian thực từ luồng video camera với độ chính xác cao.
+    \item Nhận diện khuôn mặt để xác định đúng người cần giám sát trong môi trường có nhiều người.
+    \item Theo dõi trạng thái và tư thế của đối tượng theo thời gian, phân tích sự thay đổi bất thường trong khung hình.
+    \item Tự động gửi cảnh báo tức thời đến người dùng thông qua ứng dụng di động (FCM, WebSocket).
+    \item Lưu trữ lịch sử sự kiện kèm video minh chứng phục vụ truy xuất và phân tích sau này.
+    \item Xây dựng hệ thống quản trị Web Admin để cấu hình camera, người dùng và theo dõi toàn bộ hoạt động hệ thống.
+\end{itemize}
+
+\section*{4. Nhiệm vụ nghiên cứu}
+
+Để đạt được các mục tiêu trên, đề tài tập trung thực hiện các nhiệm vụ chính sau:
+
+\begin{itemize}
+    \item Nghiên cứu các kỹ thuật ước lượng tư thế người (MediaPipe, YOLOv8 Pose) và các phương pháp nhận dạng hành vi trong video.
+    \item Xây dựng pipeline phát hiện té ngã kết hợp giữa rule-based và mô hình học sâu Transformer.
+    \item Thiết kế và triển khai hệ thống backend sử dụng FastAPI kết hợp cơ sở dữ liệu PostgreSQL, hỗ trợ WebSocket và dịch vụ thông báo thời gian thực.
+    \item Phát triển ứng dụng di động (Flutter) để nhận cảnh báo, xem lịch sử và quản lý thông tin người dùng.
+    \item Xây dựng hệ thống Web Admin để quản lý camera, người dùng, cấu hình giám sát và theo dõi trạng thái hệ thống.
+    \item Tích hợp module nhận diện khuôn mặt nhằm xác định danh tính đối tượng trong vùng giám sát và kích hoạt cơ chế theo dõi tương ứng.
 \end{itemize}
 
 \section*{5. Phương pháp nghiên cứu}
-Trong quá trình thực hiện đề tài, các phương pháp nghiên cứu sau được sử dụng:
+
+Đề tài sử dụng kết hợp các phương pháp nghiên cứu sau:
+
 \begin{itemize}
-    \item Phương pháp nghiên cứu tài liệu: Thu thập, phân tích các tài liệu, bài báo khoa học và các hệ thống liên quan đến quản lý bãi đỗ xe.
-    \item Phương pháp phân tích và thiết kế hệ thống: Phân tích yêu cầu, xây dựng mô hình hệ thống và các sơ đồ UML.
-    \item Phương pháp thực nghiệm: Triển khai cài đặt hệ thống, kiểm thử các chức năng và đánh giá hiệu quả hoạt động.
+    \item \textbf{Nghiên cứu lý thuyết:} Tổng hợp và phân tích các công trình nghiên cứu liên quan đến thị giác máy tính, phát hiện té ngã và hệ thống giám sát thông minh.
+    \item \textbf{Nghiên cứu thực nghiệm:} Xây dựng mô hình học sâu dựa trên Transformer và huấn luyện trên tập dữ liệu hành vi người, đánh giá bằng các chỉ số Accuracy, Recall và F1-score.
+    \item \textbf{Phát triển hệ thống:} Thiết kế kiến trúc client-server gồm ba thành phần chính: camera processing system, backend server,ứng dụng người dùng (app mobile) và trang web quản lý hệ thống (web admin).
+    \item \textbf{Kiểm thử hệ thống:} Thực hiện kiểm thử với nhiều kịch bản thực tế như té ngã đột ngột, nằm từ từ, ngồi xuống, cúi người nhằm đánh giá độ chính xác và tính ổn định.
 \end{itemize}
 
-\section*{5. Các kết quả đạt được}
-Kết quả của đề tài là xây dựng được một hệ thống quản lý bãi đỗ xe thông minh đáp ứng các yêu cầu đề ra. Hệ thống cho phép quản lý xe ra vào một cách tự động, lưu trữ và xử lý dữ liệu chính xác, hỗ trợ giám sát, thống kê và báo cáo tình trạng bãi đỗ xe.
+\section*{6. Các kết quả đạt được}
 
-Ngoài ra, đề tài giúp em củng cố và vận dụng kiến thức đã học về lập trình và phân tích thiết kế hệ thống vào thực tế, đồng thời nâng cao kỹ năng nghiên cứu, triển khai và làm việc với các công nghệ mới.
-\section*{6. Kết cấu của TTTN}
-Bố cục của TTTN được tổ chức thành 5 chương như sau:
+Sau quá trình nghiên cứu và triển khai, đề tài đạt được các kết quả chính như sau:
+
 \begin{itemize}
-    \item \textbf{Chương 1: Cơ sở lý thuyết} - Trình bày các khái niệm, công nghệ và phương pháp liên quan đến hệ thống quản lý bãi đỗ xe thông minh.
-    \item \textbf{Chương 2: Phân tích và thiết kế và xây dựng hệ thống} - Phân tích yêu cầu, thiết kế kiến trúc hệ thống và giao diện người dùng.
-    \item \textbf{Chương 3: Cài đặt và kiểm thử} - Mô tả quá trình cài đặt, cấu hình và triển khai hệ thống quản lý bãi đỗ xe thông minh.
-    \item \textbf{Chương 4: Kết luận và hướng phát triển} - Tổng kết kết quả đạt được, đánh giá hiệu quả của hệ thống và đề xuất hướng phát triển trong tương lai.
+    \item Xây dựng thành công hệ thống phát hiện té ngã theo thời gian thực với độ chính xác đạt \textbf{97.8\%} (cross-validation) và \textbf{98.8\%} trên tập validation.
+    \item Tích hợp thành công nhận diện khuôn mặt giúp xác định chính xác đối tượng cần giám sát trong môi trường nhiều người.
+    \item Hệ thống có khả năng theo dõi sự thay đổi tư thế theo thời gian và phát hiện các hành vi bất thường.
+    \item Cảnh báo được gửi tức thời đến người dùng thông qua ứng dụng di động với video clip minh chứng kèm theo.
+    \item Xây dựng Web Admin hỗ trợ quản lý người dùng, camera, cấu hình hệ thống và theo dõi lịch sử sự kiện.
+    \item Lưu trữ toàn bộ lịch sử giám sát trên hệ thống backend phục vụ truy xuất và phân tích.
+\end{itemize}
+
+\section*{7. Kết cấu của LVTN}
+
+Bố cục của báo cáo được chia thành 4 chương như sau:
+
+\begin{itemize}
+    \item \textbf{Chương 1: Cơ sở lý thuyết} — Trình bày các khái niệm nền tảng về thị giác máy tính, nhận diện hành vi và kiến trúc hệ thống giám sát thông minh.
+    \item \textbf{Chương 2: Phân tích và thiết kế hệ thống} — Phân tích yêu cầu, mô tả use case, thiết kế kiến trúc tổng thể và cơ sở dữ liệu .
+    \item \textbf{Chương 3: Cài đặt và triển khai} — Trình bày quá trình xây dựng hệ thống, tích hợp các module AI và giao diện hệ thống desktop app, mobile và web.
+    \item \textbf{Chương 4: Kiểm thử và đánh giá} — Đánh giá hiệu năng hệ thống, kết quả thực nghiệm và đề xuất hướng phát triển.
 \end{itemize}

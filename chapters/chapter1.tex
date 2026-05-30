@@ -1,549 +1,230 @@
-\begin{center}
-    \chapter{CƠ SỞ LÝ THUYẾT}
-\end{center}
+\chapter{CƠ SỞ LÝ THUYẾT}
 
-% \section{Tổng quan về hệ thống quản lý bãi đỗ xe thông minh}
+\section{Tổng quan bài toán phát hiện hành vi nguy hiểm}
 
-% \subsection{Khái niệm hệ thống quản lý bãi đỗ xe thông minh}
-% Hệ thống quản lý bãi đỗ xe thông minh là một giải pháp ứng dụng công nghệ thông tin và trí tuệ nhân tạo nhằm tự động hóa quy trình quản lý, giám sát xe ra vào bãi đỗ. Hệ thống sử dụng các công nghệ như thị giác máy tính, học sâu và cơ sở dữ liệu phân tán để nhận diện phương tiện, xác thực người dùng và quản lý thông tin một cách hiệu quả.
+\subsection{Định nghĩa và phạm vi bài toán}
 
-% \subsection{Các thành phần chính của hệ thống}
-% Hệ thống quản lý hai loại bãi đỗ xe riêng biệt với các module chuyên biệt:
-% \begin{itemize}
-%     \item Module nhận diện biển số xe: Sử dụng camera và các thuật toán học sâu (YOLOv8 và CNN) để tự động nhận diện biển số xe khi ra vào bãi đỗ, áp dụng cho cả xe máy và ô tô.
-    
-%     \item Ứng dụng quản lý trên máy tính: Cung cấp giao diện desktop thống nhất, hỗ trợ nhân viên quản lý theo dõi và vận hành đồng thời cả hai loại bãi đỗ.
-    
-%     \item Ứng dụng di động: Cho phép người dùng theo dõi lịch sử ra vào, trạng thái phương tiện và nhận các cảnh báo liên quan đến xe trong bãi đỗ. Đồng thời, ứng dụng hỗ trợ nhân viên bảo vệ theo dõi toàn bộ phương tiện trong bãi, tra cứu lịch sử ra vào của từng xe và tiếp nhận các cảnh báo hệ thống.
-% \end{itemize}
+Phát hiện hành vi nguy hiểm từ camera giám sát là bài toán thuộc lĩnh vực thị giác máy tính, nhằm tự động nhận dạng các tình huống đe dọa đến sức khỏe hoặc tính mạng con người thông qua phân tích luồng video theo thời gian thực. Trong phạm vi đề tài này, hành vi nguy hiểm được tập trung vào sự kiện té ngã — một trong những nguyên nhân hàng đầu gây thương tích nghiêm trọng ở người cao tuổi và bệnh nhân.
 
-% \begin{itemize}
-%     \item Module chuyên biệt cho bãi xe máy: Hệ thống tích hợp chức năng xác thực khuôn mặt sử dụng công nghệ DeepFace nhằm nhận diện và xác thực người điều khiển xe máy, đảm bảo phương tiện ra vào bãi đúng với chủ xe đã đăng ký.
-% \end{itemize}
+Bài toán được định nghĩa chính thức như sau: cho một chuỗi khung hình video $\{f_1, f_2, \ldots, f_T\}$ từ camera giám sát, hệ thống cần xác định tại mỗi thời điểm $t$ liệu người trong khung hình có đang thực hiện hành vi té ngã hay không, đồng thời phát cảnh báo tức thời khi phát hiện sự kiện.
 
-% \begin{itemize}
-%     \item Module chuyên biệt cho bãi ô tô: Hệ thống bao gồm chức năng nhận diện logo nhãn hiệu xe ô tô bằng thuật toán YOLOv8, đồng thời sử dụng mạng Siamese để trích xuất và so khớp đặc trưng đầu xe, đảm bảo phương tiện rời khỏi bãi là cùng một phương tiện đã vào trước đó.
-% \end{itemize}
+\subsection{Các hướng tiếp cận hiện có}
 
-% \begin{itemize}
-%     \item Hệ thống cơ sở dữ liệu: Thực hiện lưu trữ và quản lý dữ liệu riêng biệt cho từng loại bãi đỗ, đồng thời hỗ trợ đồng bộ hóa thời gian thực trạng thái hoạt động và lịch sử ra vào của cả hai bãi đỗ.
-% \end{itemize}
+Các phương pháp phát hiện té ngã hiện nay có thể phân thành ba nhóm chính:
 
-% \subsection{Kiến trúc tổng thể hệ thống}
-% Hệ thống được xây dựng theo mô hình Client-Server với kiến trúc phân tán. Ứng dụng desktop đóng vai trò là client chính xử lý các tác vụ trí tuệ nhân tạo nặng, trong khi ứng dụng mobile đóng vai trò client để hiển thị thông tin và tương tác với người dùng cuối. Dữ liệu được lưu trữ trên các nền tảng đám mây khác nhau tùy theo đặc thù và yêu cầu của từng loại dữ liệu.
-
-\section{Công nghệ thị giác máy tính và học sâu}
-\subsection{Giới thiệu về Deep Learning}
-
-Deep Learning (Học sâu) là một nhánh của Machine Learning sử dụng mạng nơ-ron nhân tạo với nhiều lớp ẩn để học các đặc trưng từ dữ liệu. Deep Learning đã đạt được những thành công vượt bậc trong nhiều lĩnh vực như thị giác máy tính, xử lý ngôn ngữ tự nhiên, nhận dạng giọng nói và nhiều ứng dụng khác.
-
-Trong lĩnh vực thị giác máy tính, Deep Learning cho phép máy tính "nhìn" và "hiểu" nội dung của hình ảnh và video một cách tự động, từ đó có thể thực hiện các tác vụ như phân loại ảnh, phát hiện đối tượng, phân đoạn ảnh và nhận dạng khuôn mặt.
-
-Quá trình huấn luyện mô hình Deep Learning bao gồm các bước chính:
 \begin{itemize}
-    \item Chuẩn bị dữ liệu: Thu thập, làm sạch và gán nhãn dữ liệu huấn luyện. Dữ liệu thường được chia thành tập huấn luyện (training set), tập validation và tập kiểm tra (test set).
-    \item Khởi tạo mô hình: Thiết kế kiến trúc mạng nơ-ron và khởi tạo các trọng số ban đầu.
-    \item Forward propagation: Đưa dữ liệu qua mạng để tính toán đầu ra dự đoán.
-    \item Tính toán loss: So sánh đầu ra dự đoán với nhãn thực tế thông qua hàm loss.
-    \item Backward propagation: Tính gradient của loss theo các tham số và cập nhật trọng số bằng thuật toán tối ưu.
-    \item Đánh giá và tinh chỉnh: Đánh giá hiệu suất mô hình trên tập validation và điều chỉnh các siêu tham số.
+    \item \textbf{Dựa trên cảm biến (Sensor-based):} Sử dụng gia tốc kế, con quay hồi chuyển hoặc thiết bị đeo tay để đo chuyển động cơ thể. Ưu điểm là độ chính xác cao trong môi trường kiểm soát, nhưng nhược điểm là yêu cầu người dùng phải luôn mang thiết bị.
+
+    \item \textbf{Dựa trên thị giác máy tính (Vision-based):} Phân tích hình ảnh từ camera mà không cần tiếp xúc trực tiếp. Hướng tiếp cận này đang được nghiên cứu rộng rãi nhờ sự phát triển của các kỹ thuật học sâu.
+
+    \item \textbf{Kết hợp đa phương thức (Multimodal):} Tích hợp nhiều nguồn dữ liệu như camera, cảm biến âm thanh và cảm biến môi trường để tăng độ tin cậy.
 \end{itemize}
 
-\subsection{YOLO}
+Đề tài này tập trung vào hướng tiếp cận vision-based, kết hợp ước lượng tư thế người, phân tích luật và mô hình học sâu để đạt được sự cân bằng giữa độ chính xác và tốc độ xử lý thời gian thực.
 
-YOLO (You Only Look Once) là một thuật toán phát hiện đối tượng thời gian thực, trong đó toàn bộ ảnh đầu vào được xử lý chỉ trong một lần lan truyền xuôi (forward pass) của mạng nơ-ron. Nhờ cơ chế dự đoán đồng thời vị trí và nhãn đối tượng, YOLO cho phép đạt tốc độ xử lý cao nhưng vẫn đảm bảo độ chính xác. Hiệu năng của mô hình YOLO sau huấn luyện không được đánh giá qua hàm mất mát mà thông qua các chỉ số định lượng dựa trên sự so sánh giữa dự đoán và ground truth.
+\subsection{Thách thức và hướng giải quyết}
 
-\paragraph{Đầu ra của mô hình YOLO}
-Mô hình YOLO chia ảnh thành lưới $S \times S$. Mỗi ô lưới dự đoán $B$ bounding boxes. Mỗi box bao gồm tọa độ tâm $(x, y)$, chiều rộng và chiều cao $(w, h)$, cùng độ tin cậy (confidence score) $C$ thể hiện xác suất tồn tại đối tượng và độ chính xác của box đó:
-\begin{equation}
-C = \text{Pr(Object)} \times \text{IoU}_{\text{pred}}^{\text{truth}}
-\end{equation}
-Đồng thời, mỗi ô lưới dự đoán phân phối xác suất điều kiện cho các lớp: $\text{Pr(Class}i | \text{Object)}$. Điểm số cuối cùng cho mỗi bounding box và lớp được kết hợp như sau:
-\begin{equation}
-\text{Score}{\text{class}} = C \times \text{Pr(Class}_i | \text{Object)}
-\end{equation}
-Các dự đoán đầu ra sẽ được lọc thông qua Ngưỡng Độ Tin Cậy (Confidence Threshold) và thuật toán Ức chế Không cực đại (Non-Maximum Suppression - NMS) để loại bỏ các box trùng lặp, cho ra tập kết quả cuối cùng.
+Bài toán phát hiện té ngã từ camera đối mặt với nhiều thách thức:
 
-\subsubsection{Các chỉ số đánh giá hiệu năng phát hiện đối tượng}
-
-\paragraph{Intersection over Union (IoU)}
-IoU đo lường mức độ chồng lấp giữa khung bao dự đoán $B_{\text{pred}}$ và khung bao thực tế (ground truth) $B_{\text{gt}}$:
-\begin{equation}
-\text{IoU} = \frac{\text{Area}(B_{\text{pred}} \cap B_{\text{gt}})}{\text{Area}(B_{\text{pred}} \cup B_{\text{gt}})}
-\end{equation}
-Một dự đoán được coi là \textit{đúng} (True Positive) nếu IoU của nó với một ground truth lớn hơn một ngưỡng xác định (thường là 0.5) và phân loại đúng lớp.
-
-\paragraph{Precision và Recall}
-Dựa trên số lượng True Positive (TP), False Positive (FP) và False Negative (FN), ta tính:
-\begin{align}
-\text{Precision} &= \frac{TP}{TP + FP} \quad \text{(Độ chính xác)} \
-\text{Recall} &= \frac{TP}{TP + FN} \quad \text{(Độ bao phủ)}
-\end{align}
 \begin{itemize}
-\item \textbf{TP}: Dự đoán có IoU $\ge$ ngưỡng (vd: 0.5) và phân loại đúng.
-\item \textbf{FP}: Dự đoán có IoU $\ge$ ngưỡng nhưng phân loại sai, hoặc IoU $<$ ngưỡng, hoặc là box dư thừa sau NMS.
-\item \textbf{FN}: Đối tượng thật không được phát hiện bởi bất kỳ dự đoán đủ tốt nào.
-\end{itemize}
-
-\paragraph{Đường cong Precision--Recall và Average Precision (AP)}
-Bằng cách thay đổi ngưỡng confidence, ta có thể vẽ đường cong Precision--Recall ($P = f(R)$). Average Precision (AP) cho một lớp là diện tích dưới đường cong này:
-\begin{equation}
-\text{AP} = \int_{0}^{1} P(R), dR \approx \sum_{k=1}^{n} P(k) \Delta R(k)
-\end{equation}
-
-\paragraph{Mean Average Precision (mAP)}
-mAP là chỉ số tổng hợp quan trọng nhất, được tính bằng trung bình AP của tất cả các lớp.
-\begin{itemize}
-\item \textbf{mAP@50}: Sử dụng ngưỡng IoU cố định là 0.5.
-\begin{equation}
-\text{mAP@50} = \frac{1}{N} \sum_{c=1}^{N} \text{AP}c \quad \text{với } \text{IoU} \ge 0.5
-\end{equation}
-\item \textbf{mAP@50:95}: Chỉ số toàn diện hơn, tính trung bình mAP tại các ngưỡng IoU từ 0.5 đến 0.95 với bước nhảy 0.05.
-\begin{equation}
-\text{mAP@50:95} = \frac{1}{10} \sum{k=0}^{9} \text{mAP@}(0.5 + 0.05k)
-\end{equation}
-\end{itemize}
-
-\paragraph{Nhận xét}
-mAP@50:95 là thước đo nghiêm ngặt, đánh giá đồng thời khả năng phân loại và định vị chính xác của mô hình ở nhiều mức độ khắt khe khác nhau. Do đó, nó được xem là chỉ số chính để đánh giá hiệu năng tổng thể của các mô hình phát hiện đối tượng như YOLO. 
-\subsubsection{Ứng dụng trong hệ thống}
-
-Trong hệ thống đề xuất, ba mô hình YOLO được triển khai nhằm phục vụ các
-nhiệm vụ nhận dạng khác nhau, bao gồm phát hiện biển số xe, nhận dạng ký tự
-trên biển số và phát hiện logo phương tiện.
-
-\textbf{1. Mô hình YOLO 1 – Phát hiện biển số xe:}
-\begin{itemize}
-    \item Đầu vào: Ảnh phương tiện đầy đủ, kích thước $640 \times 640$, tập dữ liệu gồm khoảng 4.500 ảnh;
-    \item Số lớp: 1 lớp (license\_plate);
-    \item Đầu ra: Tọa độ bounding box của biển số xe trong ảnh.
-\end{itemize}
-
-\textbf{2. Mô hình YOLO 2 – Phát hiện và phân tách ký tự:}
-\begin{itemize}
-    \item Đầu vào: Ảnh biển số đã được cắt (crop), kích thước $416 \times 416$, tập dữ liệu gồm khoảng 2.000 ảnh;
-    \item Số lớp: 1 lớp (character\_area);
-    \item Đầu ra: Vị trí và nhãn của từng ký tự trên biển số.
-\end{itemize}
-
-\textbf{3. Mô hình YOLO 3 – Phát hiện logo hãng xe:}
-\begin{itemize}
-    \item Đầu vào: Ảnh phần đầu xe ô tô, kích thước $640 \times 640$, tập dữ liệu gồm khoảng 18.000 ảnh;
-    \item Số lớp: 20 lớp logo thương hiệu (Toyota, Honda, Mazda, \ldots);
-    \item Đầu ra: Bounding box và nhãn thương hiệu logo tương ứng.
-\end{itemize}
-
-\textbf{Cấu hình huấn luyện và triển khai:}
-\begin{itemize}
-    \item Backbone: CSPDarknet53;
-    \item Phiên bản mô hình: YOLOv8;
-    \item Tốc độ xử lý: từ 60 đến 140 FPS khi triển khai trên GPU;
-    \item Độ chính xác: mAP@0.5 đạt trên 90\%.
-    
-
-\end{itemize}
+    \item \textbf{Phân biệt té ngã với hành động tương tự:} Các hành động như ngồi xuống nhanh hoặc cúi người dễ bị nhầm lẫn với té ngã. Hệ thống kết hợp MediaPipe và YOLOv8-Pose để trích xuất keypoints cơ thể, tính vận tốc và góc nghiêng cơ thể theo thời gian thực. Mô hình Transformer được sử dụng để phân tích chuỗi chuyển động theo thời gian nhằm phân biệt quá trình té ngã với các hoạt động bình thường.
 
 
+    \item \textbf{Biến đổi góc nhìn và chiếu sáng:} Camera đặt ở các góc độ khác nhau ảnh hưởng đến chất lượng ước lượng tư thế. Giải pháp là fusion hai mô hình MediaPipe và YOLOv8 để bù trừ lỗi.
 
-
-
-
-
-\subsection{CNN}
-
-CNN là kiến trúc mạng neural chuyên xử lý dữ liệu dạng lưới như hình ảnh. Kiến trúc CNN cho bài toán OCR thường gồm nhiều lớp tích chập xen kẽ lớp pooling nhằm trích xuất đặc trưng và giảm kích thước dữ liệu.
-\subsubsection{Kiến trúc cơ bản}
-
-1. Convolutional Layer:
-\begin{equation}
-Y_{i,j} = \sigma\left(\sum_{m}\sum_{n} W_{m,n} \cdot X_{i+m,j+n} + b\right)
-\end{equation}
-
-trong đó $X$ là ảnh đầu vào, $W$ là kernel (bộ lọc), $b$ là bias, 
-$\sigma(\cdot)$ là hàm kích hoạt (ReLU), và $Y_{i,j}$ là giá trị đặc trưng tại vị trí $(i,j)$.
-
-2. Pooling Layer:
-\begin{equation}
-Y_{i,j} = \max_{m,n \in R} X_{i+m,j+n}
-\end{equation}
-
-trong đó $R$ là vùng pooling (thường kích thước $2 \times 2$), 
-và $Y_{i,j}$ là giá trị sau khi giảm kích thước không gian.
-
-3. Fully Connected Layer:
-\begin{equation}
-y = \sigma(W \cdot x + b)
-\end{equation}
-
-trong đó $x$ là vector đặc trưng đầu vào, $W$ là ma trận trọng số, 
-$b$ là bias và $y$ là đầu ra của lớp kết nối đầy đủ.
-
-4. Softmax (Output):
-\begin{equation}
-P(y=k) = \frac{e^{z_k}}{\sum_{j=1}^{K} e^{z_j}}
-\end{equation}
-
-trong đó $z_k$ là giá trị logit của lớp $k$, $K$ là tổng số lớp,
-và $P(y=k)$ là xác suất dự đoán mẫu thuộc về lớp $k$.\\
-
-5. Hàm mất mát (Loss Function) - Cross Entropy:
-\begin{equation}
-\mathcal{L} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} y_{i,k} \cdot \log(P(y_i=k))
-\end{equation}
-
-trong đó:
-
-$N$: số lượng mẫu trong batch
-
-$K$: tổng số lớp (số ký tự cần nhận dạng)
-
-$y_{i,k}$: giá trị one-hot của nhãn thật (1 nếu mẫu $i$ thuộc lớp $k$, 0 nếu không)
-
-$P(y_i=k)$: xác suất dự đoán từ công thức (4)\\
-6. Độ chính xác (Accuracy):
-\begin{equation}
-\text{Accuracy} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I}\left(\arg\max_k P(y_i=k) = \arg\max_k y_{i,k}\right)
-\end{equation}
-
-trong đó:
-
-$\mathbb{I}(\cdot)$: hàm chỉ thị (trả về 1 nếu điều kiện đúng, 0 nếu sai)
-
-$\arg\max_k P(y_i=k)$: lớp có xác suất dự đoán cao nhất
-
-$\arg\max_k y_{i,k}$: lớp thật của mẫu $i$\\
-7. Cập nhật tham số (Parameter Update):
-\begin{equation}
-W^{(t+1)} = W^{(t)} - \eta \cdot \nabla_W \mathcal{L}
-\end{equation}
-\begin{equation}
-b^{(t+1)} = b^{(t)} - \eta \cdot \nabla_b \mathcal{L}
-\end{equation}
-
-trong đó:
-
-$W^{(t)}, b^{(t)}$: trọng số và bias tại bước thời gian $t$
-
-$\eta$: tốc độ học (learning rate)
-
-$\nabla_W \mathcal{L}, \nabla_b \mathcal{L}$: gradient của hàm mất mát theo $W$ và $b$, tính được thông qua thuật toán lan truyền ngược (backpropagation)
-
-
-\subsubsection{Ứng dụng trong hệ thống}
-
-Nhiệm vụ: Nhận dạng ký tự trên biển số xe
-
-Kiến trúc mô hình:
-\begin{center}
-\begin{tabular}{l}
-Đầu vào (32×32×1) \\
-$\rightarrow$ Conv2D(32, 3×3) $\rightarrow$ ReLU $\rightarrow$ MaxPool(2×2) \\
-$\rightarrow$ Conv2D(64, 3×3) $\rightarrow$ ReLU $\rightarrow$ MaxPool(2×2) \\
-$\rightarrow$ Flatten $\rightarrow$ Dense(128) $\rightarrow$ Dropout(0.5) \\
-$\rightarrow$ Dense(36) $\rightarrow$ Softmax
-\end{tabular}
-\end{center}
-
-Đầu ra: 36 lớp ký tự (A–Z và 0–9)
-
-Quá trình huấn luyện:
-\begin{itemize}
-    \item Hàm mất mát: Categorical Cross-Entropy
-    \item Thuật toán tối ưu: Adam (learning rate = 0.001)
-    \item Tập dữ liệu: hơn 100.000 ảnh ký tự, có áp dụng tăng cường dữ liệu (data augmentation)
-    \item Trước giai đoạn huấn luyện bằng Adam, thuật toán di truyền được sử dụng ở mức độ hạn chế để tối ưu trọng số ban đầu, góp phần tăng độ ổn định của mô hình.
-
-\end{itemize}
-
-
-
-\subsection{Mạng Siamese Network}
-
-Siamese Network là kiến trúc mạng nơ-ron gồm hai nhánh CNN chia sẻ trọng số,
-được thiết kế để học độ tương đồng giữa hai ảnh đầu vào thông qua khoảng cách
-trong không gian đặc trưng.
-
-\subsubsection{Kiến trúc và hàm mất mát}
-
-Hai ảnh đầu vào $I_1$ và $I_2$ được đưa qua mạng CNN để trích xuất embedding $\mathbf{f}_1$
-và $\mathbf{f}_2$. Khoảng cách Euclid giữa hai embedding được tính:
-\begin{equation}
-d(\mathbf{f}_1, \mathbf{f}_2) = |\mathbf{f}1 - \mathbf{f}2|2 = \sqrt{\sum{i=1}^n (f{1,i} - f{2,i})^2}
-\end{equation}
-
-Hàm mất mát Contrastive Loss được sử dụng để huấn luyện:
-\begin{equation}
-\mathcal{L}_{contrastive} = y \cdot d^2 + (1-y) \cdot \max(0, m - d)^2
-\end{equation}
-
-trong đó:
-\begin{itemize}
-\item $y \in {0,1}$: nhãn của cặp ảnh ($y=1$ nếu cùng lớp, $y=0$ nếu khác lớp)
-\item $d$: khoảng cách giữa hai embedding từ công thức (1)
-\item $m > 0$: margin - khoảng cách tối thiểu mong muốn giữa các cặp khác lớp
-\end{itemize}
-
-\subsubsection{Các chỉ số đánh giá sau huấn luyện}
-
-\paragraph{Train Loss và Test Loss}
-\begin{equation}
-\text{Train Loss} = \frac{1}{N_{\text{train}}} \sum_{i=1}^{N_{\text{train}}} \mathcal{L}{\text{contrastive}}^{(i)}
-\end{equation}
-\begin{equation}
-\text{Test Loss} = \frac{1}{N{\text{test}}} \sum_{i=1}^{N_{\text{test}}} \mathcal{L}{\text{contrastive}}^{(i)}
-\end{equation}
-trong đó $N{\text{train}}$ và $N_{\text{test}}$ là số cặp ảnh trong tập huấn luyện và kiểm tra.
-
-\paragraph{Test Accuracy}
-Độ chính xác được tính dựa trên ngưỡng khoảng cách $t$:
-\begin{equation}
-\text{Prediction} =
-\begin{cases}
-1 & \text{nếu } d \le t \quad (\text{cùng lớp}) \\
-0 & \text{nếu } d > t \quad (\text{khác lớp})
-\end{cases}
-\end{equation}
-\begin{equation}
-\text{Test Accuracy} = \frac{TP + TN}{TP + TN + FP + FN} = \frac{\text{Số dự đoán đúng}}{N_{\text{test}}} \times 100%
-\end{equation}
-với:
-\begin{itemize}
-\item $TP$: True Positive (dự đoán cùng lớp và đúng)
-\item $TN$: True Negative (dự đoán khác lớp và đúng)
-\item $FP$: False Positive (dự đoán cùng lớp nhưng sai)
-\item $FN$: False Negative (dự đoán khác lớp nhưng sai)
-\end{itemize}
-
-\paragraph{AUC ROC}
-Đường cong ROC (Receiver Operating Characteristic) thể hiện mối quan hệ giữa:
-\begin{equation}
-TPR = \frac{TP}{TP + FN} \quad \text{(True Positive Rate)}
-\end{equation}
-\begin{equation}
-FPR = \frac{FP}{FP + TN} \quad \text{(False Positive Rate)}
-\end{equation}
-
-Diện tích dưới đường cong ROC (AUC ROC) được tính:
-\begin{equation}
-\text{AUC ROC} = \int_{0}^{1} TPR(FPR) , d(FPR)
-\end{equation}
-
-Trong thực tế, AUC ROC được tính xấp xỉ bằng phương pháp hình thang:
-\begin{equation}
-\text{AUC ROC} \approx \sum_{i=1}^{n-1} \frac{(FPR_{i+1} - FPR_i) \cdot (TPR_i + TPR_{i+1})}{2}
-\end{equation}
-với $n$ là số điểm ngưỡng được thử nghiệm.
-
-
-\textbf{Ứng dụng vào hệ thống bãi đỗ xe thông minh:}
-\begin{itemize}
-    \item Mạng Siamese Network được huấn luyện trên tập dữ liệu VeRi-776, bao gồm khoảng 32.000 ảnh đầu xe, nhằm phục vụ việc so sánh và xác thực phương tiện khi ra vào bãi đỗ.
-    \item Các tham số của mạng được khởi tạo thông qua một bước tối ưu sơ bộ bằng thuật toán di truyền, sau đó tiếp tục được cập nhật bằng lan truyền ngược với hàm mất mát contrastive.
-    \item Khi xe đi vào bãi, hệ thống camera chụp ảnh đầu xe và trích xuất vector đặc trưng (embedding) $\mathbf{f}_{in}$; embedding này được lưu trữ trong cơ sở dữ liệu.
-    
+    \item \textbf{Yêu cầu thời gian thực:} Hệ thống phải phản hồi trong vài giây để cảnh báo kịp thời. Giải pháp là tối ưu pipeline trên GPU và giảm độ trễ WebSocket.
 
     
-    \item Khi xe rời khỏi bãi, hệ thống tiếp tục trích xuất embedding $\mathbf{f}_{out}$ từ ảnh đầu xe tại cổng ra và tiến hành so sánh với embedding $\mathbf{f}_{in}$ đã lưu.
-    
-    \item Nếu khoảng cách $d(\mathbf{f}_{in}, \mathbf{f}_{out}) < \tau$ (với $\tau$ là ngưỡng xác định trước), phương tiện được xác nhận là cùng một xe.
-    
-    \item Ngược lại, nếu khoảng cách lớn hơn hoặc bằng ngưỡng $\tau$, hệ thống sẽ phát hiện và cảnh báo hành vi bất thường.
 \end{itemize}
 
-\subsection{DeepFace}
+% ─────────────────────────────────────────────────────────────────────────────
 
-DeepFace là kiến trúc CNN được phát triển bởi 
-Facebook, đạt độ chính xác 97.35\% trên bộ dữ liệu LFW, gần với khả năng 
-nhận dạng của con người.
+\section{Ước lượng tư thế người}
 
-Các bước xử lý trong DeepFace:
+Ước lượng tư thế người (Human Pose Estimation) là kỹ thuật xác định vị trí các điểm khớp (keypoints) trên cơ thể người trong ảnh hoặc video, bao gồm vai, hông, gối, cổ tay và các khớp khác. Đây là nền tảng để phân tích chuyển động và nhận dạng hành vi.
+
+\subsection{MediaPipe Pose}
+
+MediaPipe Pose là framework ước lượng tư thế người được phát triển bởi Google, hoạt động theo thời gian thực với 33 điểm keypoint trên toàn thân. Framework sử dụng kiến trúc BlazePose — một mạng nơ-ron nhẹ được tối ưu cho thiết bị di động và máy tính cá nhân.
+
+Quá trình xử lý của MediaPipe Pose gồm hai giai đoạn:
+
 \begin{itemize}
-    \item Phát hiện khuôn mặt: Xác định vị trí khuôn mặt trong ảnh đầu vào.
-    \item Chuẩn hóa (Alignment): Căn chỉnh khuôn mặt về tư thế chuẩn 
-    dựa trên các điểm đặc trưng.
-    \item Trích xuất đặc trưng: Đưa ảnh qua mạng CNN để tạo vector 
-    đặc trưng (embedding).
-    \item So khớp (Verification): Đánh giá độ tương đồng giữa các 
-    vector đặc trưng.
+    \item \textbf{Giai đoạn phát hiện (Detection):} Một mạng detector nhẹ xác định vùng chứa người trong khung hình.
+    \item \textbf{Giai đoạn ước lượng (Estimation):} Mạng chính dự đoán tọa độ $(x, y, z)$ và độ tin cậy (visibility) của 33 keypoint.
 \end{itemize}
 
-Độ tương đồng giữa hai vector đặc trưng $\mathbf{f}_1$ và $\mathbf{f}_2$ 
-được tính bằng độ đo cosine:
+Mỗi keypoint được biểu diễn bởi vector 4 chiều $(x, y, z, v)$ trong đó $x, y$ là tọa độ pixel đã chuẩn hóa, $z$ là độ sâu tương đối và $v \in [0, 1]$ là độ tin cậy. Trong đề tài này, MediaPipe được sử dụng như mô hình chính để trích xuất tư thế do khả năng xử lý nhanh và ổn định trên CPU.
+
+\subsection{YOLOv8 Pose và ByteTrack}
+
+YOLOv8 Pose là phiên bản mở rộng của kiến trúc YOLO (You Only Look Once) kết hợp phát hiện đối tượng và ước lượng tư thế trong một mô hình duy nhất. Mô hình dự đoán đồng thời bounding box của người và 17 keypoint theo chuẩn COCO.
+
+Kiến trúc YOLOv8 gồm ba thành phần chính:
+\begin{itemize}
+    \item \textbf{Backbone:} Mạng trích xuất đặc trưng dựa trên CSPNet cải tiến.
+    \item \textbf{Neck:} Mạng PAN-FPN tổng hợp đặc trưng đa tỉ lệ.
+    \item \textbf{Head:} Đầu ra song song cho bounding box và keypoints.
+\end{itemize}
+
+ByteTrack là thuật toán theo dõi đa đối tượng (Multi-Object Tracking) được tích hợp vào YOLOv8 để duy trì ID ổn định cho mỗi người qua các khung hình. Thuật toán sử dụng IoU (Intersection over Union) kết hợp với bộ lọc Kalman để dự đoán vị trí và liên kết detection giữa các frame liên tiếp.
+
+\subsection{Fusion đa mô hình}
+
+Để tận dụng ưu điểm của cả hai mô hình, hệ thống thực hiện fusion có trọng số theo độ tin cậy:
+
 \begin{equation}
-\text{sim}(\mathbf{f}_1, \mathbf{f}_2) =
-\frac{\mathbf{f}_1 \cdot \mathbf{f}_2}
-{\|\mathbf{f}_1\| \|\mathbf{f}_2\|}
+    m_{fused} = \frac{w_{mp} \cdot m_{mp} + w_{yolo} \cdot m_{yolo}}{w_{mp} + w_{yolo}}
 \end{equation}
 
-Giá trị $\text{sim}(\mathbf{f}_1, \mathbf{f}_2) \in [-1,1]$, giá trị càng 
-nhỏ thể hiện độ tương đồng càng cao. Việc xác thực được thực hiện bằng cách 
-so sánh giá trị này với ngưỡng xác định trước.\\
-\textbf{Ứng dụng trong hệ thống bãi đỗ xe máy:}
+trong đó $w_{mp}$ và $w_{yolo}$ lần lượt là độ tin cậy của MediaPipe và YOLOv8, $m$ là các chỉ số tư thế cần fusion (góc cơ thể, tỉ lệ bounding box). Vector đặc trưng thô được ghép nối từ 33 keypoint MediaPipe và 17 keypoint YOLO tạo thành vector 200 chiều đầu vào cho mô hình Transformer.
+
+% ─────────────────────────────────────────────────────────────────────────────
+
+\section{Phát hiện té ngã}
+
+\subsection{Phương pháp dựa trên luật}
+
+Phương pháp rule-based phát hiện té ngã dựa trên việc phân tích các đặc trưng hình học và vận tốc của cơ thể người theo thời gian. Phương pháp này có ưu điểm là có thể giải thích được (explainable) và không yêu cầu dữ liệu huấn luyện.
+
+\subsection{Phân loại tư thế và phân tích vận tốc}
+
+Hệ thống phân loại tư thế người thành bốn trạng thái: STANDING (đứng), SITTING (ngồi), LYING (nằm) và WALKING (đi lại). Việc phân loại dựa trên hai chỉ số chính:
+
 \begin{itemize}
-    \item DeepFace được tích hợp để xác thực khuôn mặt người lái xe máy, nhằm tăng cường bảo mật cho hệ thống.
-    
-    \item Khi xe máy vào bãi, camera chụp ảnh khuôn mặt người lái và trích xuất vector đặc trưng (embedding) $\mathbf{f}_{in}$, sau đó lưu cùng với thông tin biển số xe vào cơ sở dữ liệu.
-    
-    \item Khi xe ra bãi, hệ thống chụp lại khuôn mặt người lái hiện tại, trích xuất embedding $\mathbf{f}_{out}$ và tính độ tương đồng giữa hai embedding bằng công thức:
-    
-    \[
-    \text{sim}(\mathbf{f}_{in}, \mathbf{f}_{out}) > \tau_{face}
-    \]
-    
-    \item Nếu độ tương đồng nhỏ hơn ngưỡng $\tau_{face}$ (thường $\tau_{face} < 0.35$), người lái được xác nhận là chủ xe hợp lệ và cổng sẽ tự động mở.
-    
-    \item Ngược lại, hệ thống cảnh báo hành vi bất thường và gửi thông báo đến ứng dụng Mobile của chủ xe, giúp phát hiện các trường hợp xe bị trộm hoặc sử dụng trái phép.
+    \item \textbf{Góc cơ thể (body\_angle):} Góc giữa vector cột sống (từ vai đến hông) và trục thẳng đứng, tính theo công thức:
+    \begin{equation}
+        \theta = \arctan\left(\frac{|\Delta x_{spine}|}{|\Delta y_{spine}| + \epsilon}\right)
+    \end{equation}
+    Khi $\theta \geq 75°$, người được phân loại là LYING.
+
+    \item \textbf{Tỉ lệ bounding box (aspect\_ratio):} Tỉ lệ chiều cao trên chiều rộng của bounding box $r = h/w$. Khi $r \leq 0.45$, người được phân loại là LYING.
 \end{itemize}
 
-\section{Ngôn ngữ lập trình}
+Vận tốc hướng xuống của trọng tâm cơ thể được tính theo cửa sổ trượt:
+\begin{equation}
+    v_y = \frac{y_{center}(t) - y_{center}(t - \Delta t)}{\Delta t}
+\end{equation}
 
-\subsection{Python}
+Sự kiện té ngã được xác nhận khi thỏa mãn đồng thời các điều kiện: vận tốc đủ lớn ($v_y > v_{threshold}$), có lịch sử tư thế đứng/ngồi/đi, trạng thái LYING duy trì đủ số frame, thời gian chuyển trạng thái đủ ngắn, và không phải hành động cúi người.
 
-Python là ngôn ngữ lập trình bậc cao, thông dịch, đa mục đích, ra đời năm 1991. Python nổi bật với cú pháp đơn giản, dễ đọc và sử dụng indent để định nghĩa khối lệnh.
+\subsection{Mạng Transformer cho nhận dạng hành động}
 
-Đặc điểm:
+Kiến trúc Transformer, được giới thiệu bởi Vaswani et al. (2017) trong bài báo ``Attention is All You Need'', ban đầu được thiết kế cho xử lý ngôn ngữ tự nhiên nhưng đã chứng minh hiệu quả vượt trội trong nhận dạng hành động từ chuỗi tư thế. Ưu điểm của Transformer so với RNN/LSTM là khả năng học mối quan hệ dài hạn giữa các frame thông qua cơ chế Self-Attention mà không bị giới hạn bởi độ dài chuỗi.
+
+\textbf{Cơ chế Self-Attention} cho phép mô hình học được mối quan hệ giữa các frame trong chuỗi thời gian. Cho chuỗi đầu vào $X \in \mathbb{R}^{T \times d}$, Self-Attention được tính:
+
+\begin{equation}
+    \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\end{equation}
+
+trong đó $Q = XW^Q$, $K = XW^K$, $V = XW^V$ là các ma trận Query, Key, Value; $d_k$ là chiều của không gian key. Multi-Head Attention kết hợp $h$ đầu attention song song để học nhiều mối quan hệ khác nhau:
+
+\begin{equation}
+    \text{MultiHead}(Q,K,V) = \text{Concat}(\text{head}_1, \ldots, \text{head}_h)W^O
+\end{equation}
+
+\textbf{Positional Embedding} là tham số học được $P \in \mathbb{R}^{(T+1) \times d_{model}}$ được cộng vào biểu diễn đầu vào để đưa thông tin vị trí thời gian vào mô hình, do Transformer không có tính chất tuần tự như RNN.
+
+\textbf{CLS Token} là một vector đặc biệt $\mathbf{c} \in \mathbb{R}^{d_{model}}$ được thêm vào đầu chuỗi, học cách tổng hợp thông tin toàn chuỗi để phục vụ phân loại:
+
+\begin{equation}
+    \hat{y} = \text{MLP}(\text{TransformerEncoder}([\mathbf{c}; x_1; \ldots; x_T])[0])
+\end{equation}
+
+\subsection{Kết hợp Rule-based và AI}
+
+Hệ thống sử dụng chiến lược AND logic — cả hai thành phần phải đồng ý mới phát cảnh báo:
+
+\begin{equation}
+    \text{fall\_detected} = \text{rule\_fall} \wedge \text{ai\_fall}
+\end{equation}
+
+Trong đó $\text{rule\_fall}$ là kết quả từ FallDetector (rule-based) và $\text{ai\_fall}$ là kết quả từ TransformerEngine với ngưỡng xác suất $p_{fall} \geq 0.65$. Chiến lược này giúp giảm cả false positive lẫn false negative so với dùng từng phương pháp riêng lẻ.
+
+\subsection{Đánh giá mô hình với K-Fold Cross Validation}
+
+K-Fold Cross Validation là kỹ thuật đánh giá mô hình học máy nhằm giảm thiểu sự phụ thuộc vào cách phân chia tập dữ liệu, đặc biệt hữu ích khi dữ liệu có kích thước giới hạn.
+
+Quy trình K-Fold Cross Validation gồm các bước sau:
+
+\begin{enumerate}
+    \item Chia toàn bộ dataset $\mathcal{D}$ thành $K$ phần (fold) có kích thước xấp xỉ bằng nhau: $\mathcal{D} = \{D_1, D_2, \ldots, D_K\}$.
+    \item Lặp $K$ lần: ở vòng lặp thứ $i$, sử dụng $D_i$ làm tập validation và $K-1$ phần còn lại làm tập huấn luyện.
+    \item Huấn luyện và đánh giá mô hình tại mỗi fold, thu được độ chính xác $\text{acc}_i$.
+    \item Tính độ chính xác trung bình và độ lệch chuẩn:
+    \begin{equation}
+        \overline{\text{acc}} = \frac{1}{K}\sum_{i=1}^{K}\text{acc}_i, \qquad
+        \sigma = \sqrt{\frac{1}{K}\sum_{i=1}^{K}(\text{acc}_i - \overline{\text{acc}})^2}
+    \end{equation}
+\end{enumerate}
+
+Ưu điểm của K-Fold so với phân chia train/test đơn giản:
+
 \begin{itemize}
-    \item Cú pháp đơn giản, gần với ngôn ngữ tự nhiên.
-    \item Động, không cần khai báo kiểu dữ liệu trước.
-    \item Đa nền tảng, chạy trên nhiều hệ điều hành.
-    \item Thư viện phong phú cho nhiều lĩnh vực.
-    \item Cộng đồng lớn, nhiều tài liệu hỗ trợ.
+    \item \textbf{Đánh giá tin cậy hơn:} Mỗi mẫu dữ liệu được dùng làm validation đúng một lần, tránh sự ngẫu nhiên của một lần phân chia.
+    \item \textbf{Phát hiện overfitting:} Độ lệch chuẩn $\sigma$ cao giữa các fold cho thấy mô hình không ổn định và có thể đang overfit trên một phần dữ liệu.
+    \item \textbf{Tận dụng toàn bộ dữ liệu:} Đặc biệt quan trọng khi tập dữ liệu nhỏ, vì tất cả các mẫu đều được dùng cho cả huấn luyện lẫn đánh giá.
 \end{itemize}
 
-\subsubsection{Ưu điểm trong phát triển AI/ML}
-\begin{itemize}
-    \item Thư viện và framework mạnh như TensorFlow, PyTorch, Scikit-learn, Keras, OpenCV, NumPy, Pandas.
-    \item Tốc độ phát triển nhanh nhờ cú pháp đơn giản.
-\end{itemize}
+Đề tài sử dụng Stratified K-Fold với $K = 5$, đảm bảo tỉ lệ nhãn \textit{fall}/\textit{non\_fall} được giữ nguyên trong mỗi fold để tránh mất cân bằng dữ liệu ảnh hưởng đến kết quả đánh giá. Ngoài ra, kỹ thuật data augmentation (lật ngang, thay đổi tốc độ, thêm nhiễu Gaussian) chỉ được áp dụng trên tập huấn luyện của từng fold, không áp dụng trên tập validation, đảm bảo đánh giá khách quan.
 
-Các thư viện và công cụ hỗ trợ:
-\begin{itemize}
-    \item Ultralytics: thư viện chính cho YOLOv8, hỗ trợ detection, segmentation, classification.
-    \item OpenCV: xử lý ảnh, tiền xử lý, vẽ bounding box, camera real-time.
-    \item PyTorch: xây dựng và huấn luyện CNN nhận dạng ký tự.
-    \item DeepFace: tích hợp nhiều mô hình nhận diện khuôn mặt.
-    \item NumPy: xử lý mảng đa chiều, tính toán số học.
-    \item Pillow: xử lý ảnh cơ bản, hỗ trợ nhiều định dạng.
-    \item Tkinter: thư viện để phát triển ứng dụng desktop giao diện đồ họa.
-    \item Flask: framework nhẹ dùng để xây dựng backend API.
-\end{itemize}
+% ─────────────────────────────────────────────────────────────────────────────
 
-\subsection{Kotlin}
+\section{Nhận diện khuôn mặt}
 
+\subsection{RetinaFace và ArcFace}
 
-Kotlin là ngôn ngữ lập trình đa nền tảng, phát triển bởi JetBrains, tương thích 100\% với Java và chạy trên JVM. Google chọn Kotlin làm ngôn ngữ chính cho Android từ năm 2017.
+RetinaFace là mô hình phát hiện khuôn mặt (face detection) đa tác vụ, đồng thời dự đoán bounding box khuôn mặt, 5 điểm landmark (mắt, mũi, miệng) và điểm tin cậy. Mô hình sử dụng kiến trúc Feature Pyramid Network để phát hiện khuôn mặt ở nhiều tỉ lệ khác nhau, phù hợp với môi trường camera giám sát có nhiều người ở các khoảng cách khác nhau.
 
-Đặc điểm:
-\begin{itemize}
-    \item Cú pháp ngắn gọn, giảm boilerplate.
-    \item Hỗ trợ null safety, giảm lỗi NullPointerException.
-    \item Tương thích hoàn toàn với Java.
-    \item Hỗ trợ tốt từ IDE, đặc biệt Android Studio.
-\end{itemize}
+ArcFace (Additive Angular Margin Loss) là phương pháp học biểu diễn khuôn mặt (face representation) hiện đại, huấn luyện mạng để tạo ra vector đặc trưng 512 chiều cho mỗi khuôn mặt. ArcFace thêm margin góc $m$ vào hàm loss để tăng khả năng phân biệt giữa các danh tính:
 
-Ưu điểm trong phát triển Android
-\begin{itemize}
-    \item Null Safety giúp phát hiện lỗi tại compile-time.
-    \item Coroutines hỗ trợ xử lý bất đồng bộ hiệu quả.
-    \item Extension Functions thêm chức năng cho class sẵn có.
-    \item Data Classes tự động sinh các phương thức cơ bản.
-    \item Smart Casts tự động cast kiểu sau kiểm tra.
-    \item Lambda Expressions hỗ trợ lập trình hàm, code rõ ràng.
-\end{itemize}
+\begin{equation}
+    \mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}\log\frac{e^{s\cos(\theta_{y_i} + m)}}{e^{s\cos(\theta_{y_i}+m)} + \sum_{j \neq y_i} e^{s\cos\theta_j}}
+\end{equation}
 
+trong đó $\theta_{y_i}$ là góc giữa vector đặc trưng và trọng số lớp, $s$ là hệ số tỉ lệ và $m$ là margin góc.
 
+\subsection{Cosine Similarity}
 
-Jetpack Compose: UI toolkit hiện đại dùng lập trình khai báo, viết UI bằng Kotlin, phát triển nhanh với preview và hot reload.
-Android SDK: cung cấp thư viện và API cần thiết như Activity, ViewModel, LiveData, Retrofit.
+Để so sánh hai vector đặc trưng khuôn mặt $\mathbf{u}$ và $\mathbf{v}$, hệ thống sử dụng độ tương đồng cosine:
 
+\begin{equation}
+    \text{sim}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \cdot \|\mathbf{v}\|}
+\end{equation}
 
-\section{Cơ sở dữ liệu và dịch vụ lưu ảnh}
+Giá trị $\text{sim} \in [-1, 1]$, trong đó giá trị càng gần 1 thì hai khuôn mặt càng giống nhau. Ngưỡng nhận dạng được đặt tại $\text{sim} \geq 0.6$ để cân bằng giữa false accept rate và false reject rate.
 
-\subsection{Firebase Realtime Database}
+% ─────────────────────────────────────────────────────────────────────────────
 
-Firebase Realtime Database là cơ sở dữ liệu NoSQL trên cloud của Google, lưu trữ và đồng bộ dữ liệu JSON giữa các client theo thời gian thực.
+% ─────────────────────────────────────────────────────────────────────────────
 
-Đặc điểm chính:
-\begin{itemize}
-    \item Đồng bộ thay đổi với tất cả client trong vài mili giây.
-    \item Hỗ trợ hoạt động offline và tự động đồng bộ khi có kết nối.
-    \item Tự động mở rộng theo nhu cầu.
-\end{itemize}
+\section{Các công nghệ sử dụng}
 
-Cơ chế hoạt động:
-\begin{itemize}
-    \item Dữ liệu được tổ chức dưới dạng cây JSON với các node chứa key và giá trị.
-    \item Client đăng ký các listeners để theo dõi thay đổi.
-    \item Khi dữ liệu thay đổi, server tự động đẩy cập nhật đến tất cả client đang nghe.
-\end{itemize}
+\subsection{FastAPI}
 
-Ứng dụng trong quản lý bãi đỗ:
-\begin{itemize}
-    \item Lưu danh sách xe đang đỗ gồm biển số, thời gian, vị trí.
-    \item Cảnh báo sự cố theo thời gian thực.
-\end{itemize}
+FastAPI là framework Python hiện đại để xây dựng REST API, dựa trên tiêu chuẩn OpenAPI và JSON Schema. FastAPI sử dụng type hints của Python và Pydantic để tự động xác thực dữ liệu đầu vào, đồng thời tự động sinh tài liệu API tương tác (Swagger UI). Framework hỗ trợ lập trình bất đồng bộ (async/await) với ASGI, cho phép xử lý hàng nghìn kết nối đồng thời với hiệu năng cao.
 
-Lợi ích:
-\begin{itemize}
-    \item Ứng dụng mobile nhận cập nhật tức thì khi xe vào hoặc ra.
-    \item Dashboard hiển thị số chỗ trống liên tục.
-    \item Giảm băng thông nhờ không cần polling.
-\end{itemize}
+\subsection{Flutter}
 
-\subsection{Cloud Firestore}
+Flutter là framework phát triển ứng dụng đa nền tảng của Google, sử dụng ngôn ngữ Dart. Flutter biên dịch trực tiếp sang mã máy native, cho hiệu năng gần tương đương ứng dụng native. Hệ thống widget phong phú cho phép xây dựng giao diện đẹp, nhất quán trên cả Android và iOS từ một codebase duy nhất. Ứng dụng mobile trong đề tài sử dụng Provider cho quản lý trạng thái và GoRouter cho điều hướng.
 
-Cloud Firestore là cơ sở dữ liệu NoSQL dạng document do Firebase phát triển, kế thừa và cải tiến từ Realtime Database với cấu trúc linh hoạt và khả năng truy vấn mạnh hơn.
+\subsection{NuxtJS}
 
-Đặc điểm chính:
-\begin{itemize}
-    \item Dữ liệu tổ chức theo mô hình document và collection.
-    \item Hỗ trợ truy vấn phức tạp như truy vấn kết hợp, thao tác mảng, và subcollections.
-    \item Tự động tạo chỉ mục cho truy vấn.
-    \item Khả năng mở rộng tốt hơn cho dữ liệu lớn.
-    \item Hỗ trợ giao dịch (transaction) để đảm bảo tính nguyên tử.
-\end{itemize}
+NuxtJS là framework Vue.js cho phát triển ứng dụng web, hỗ trợ Server-Side Rendering (SSR) và Static Site Generation (SSG). Trong đề tài, NuxtJS được dùng để xây dựng giao diện web quản trị cho phép admin theo dõi và quản lý hệ thống từ trình duyệt.
 
+\subsection{PostgreSQL và Neon}
 
+PostgreSQL là hệ quản trị cơ sở dữ liệu quan hệ mã nguồn mở, nổi tiếng với tính ổn định, hỗ trợ ACID và khả năng mở rộng. Neon là dịch vụ PostgreSQL serverless trên đám mây, cho phép tự động mở rộng theo tải và tách biệt môi trường đọc/ghi để tối ưu hiệu năng. Hệ thống sử dụng SQLAlchemy với chế độ async (asyncpg) để truy vấn không đồng bộ.
 
-\subsection{MongoDB}
+\subsection{Firebase Authentication}
 
-MongoDB là hệ quản trị cơ sở dữ liệu NoSQL dạng document mã nguồn mở, lưu trữ dữ liệu dưới dạng documents tương tự JSON.
-
-NoSQL là các hệ quản trị không theo mô hình quan hệ, phù hợp với:
-\begin{itemize}
-    \item Dữ liệu lớn, phi cấu trúc hoặc bán cấu trúc.
-    \item Yêu cầu mở rộng ngang (horizontal scaling).
-    \item Schema linh hoạt, thay đổi dễ dàng.
-\end{itemize}
-
-MongoDB dùng định dạng BSON để lưu trữ documents gồm các cặp key-value, có thể chứa nested documents và mảng.
-
-Đặc điểm chính:
-\begin{itemize}
-    \item Schema linh hoạt, documents trong cùng collection có thể khác nhau.
-    \item Hỗ trợ nested documents và arrays.
-    \item Dễ dàng mở rộng hoặc thay đổi schema mà không cần migrate.
-\end{itemize}
-
-Cấu trúc dữ liệu trong MongoDB:
-\begin{itemize}
-    \item Database: Tập hợp các collection.
-    \item Collection: Tập hợp các document (tương tự bảng trong SQL).
-    \item Document: Tập hợp các trường dữ liệu (field), tương tự bản ghi (row).
-    \item Field: Cặp khóa - giá trị, có thể là giá trị đơn hoặc nested document.
-\end{itemize}
-
-Ưu điểm trong quản lý dữ liệu người dùng:
-\begin{itemize}
-    \item Linh hoạt lưu trữ các thông tin đa dạng và thay đổi.
-    \item Cho phép nhúng dữ liệu con (embedded documents) để giảm join.
-    \item Hỗ trợ nhiều loại chỉ mục (index) giúp truy vấn nhanh.
-    \item Khả năng tổng hợp dữ liệu (aggregation) mạnh mẽ.
-    \item Dễ dàng mở rộng nhờ replication và sharding.
-\end{itemize}
-
-Python kết nối với MongoDB qua thư viện PyMongo, cung cấp API đơn giản để thực hiện các thao tác CRUD, tạo chỉ mục và truy vấn phức tạp.
+Firebase Authentication là dịch vụ xác thực của Google, cung cấp cơ chế đăng nhập an toàn với nhiều phương thức như email/mật khẩu và OAuth. Hệ thống sử dụng JWT (JSON Web Token) từ Firebase để xác thực người dùng tại backend, đảm bảo mỗi request đều được kiểm tra quyền truy cập.
 
 \subsection{Cloudinary}
 
-Cloudinary là dịch vụ quản lý và lưu trữ ảnh trực tuyến, cung cấp API để tải lên, xử lý và phân phối hình ảnh nhanh chóng và hiệu quả. Cloudinary hỗ trợ lưu trữ ảnh, chuyển đổi định dạng, thay đổi kích thước, tối ưu hóa và CDN để phục vụ nội dung toàn cầu.
+Cloudinary là dịch vụ lưu trữ và quản lý media trên đám mây, hỗ trợ upload, chuyển đổi và phân phối ảnh/video qua CDN toàn cầu. Khi phát hiện té ngã, hệ thống cắt đoạn video 6 giây (90 frame trước + 90 frame sau sự kiện) và upload lên Cloudinary để lưu trữ và chia sẻ qua URL với người thân.
+
+% \subsection{ONNX Runtime}
+
+% ONNX (Open Neural Network Exchange) là định dạng chuẩn mở để lưu trữ và triển khai mô hình học máy. ONNX Runtime là engine tối ưu hóa thực thi mô hình ONNX, hỗ trợ tăng tốc trên nhiều loại phần cứng (CPU, GPU, NPU). Trong hệ thống, ONNX Runtime được sử dụng để triển khai mô hình nhận diện khuôn mặt (RetinaFace/ArcFace) với hiệu năng cao mà không cần framework học sâu đầy đủ.

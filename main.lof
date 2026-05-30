@@ -1,35 +1,26 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces Kết quả khảo sát về tình trạng mất thẻ xe}}{1}{figure.caption.2}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Kết quả khảo sát về nhu cầu sử dụng dịch vụ không cần thẻ}}{2}{figure.caption.3}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Sơ đồ phân tách chức năng hệ thống (FDD)}}{22}{figure.caption.20}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Kiến trúc tổng thể hệ thống quản lý bãi đỗ xe thông minh}}{30}{figure.caption.21}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Sơ đồ Use Case tổng quát}}{30}{figure.caption.22}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Sơ đồ Use Case chi tiết cho camera system xe máy }}{32}{figure.caption.23}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Sơ đồ Use Case chi tiết cho camera system xe oto }}{36}{figure.caption.29}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Sơ đồ Use Case chi tiết người dùng app mobile }}{42}{figure.caption.38}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Sơ đồ Use Case chi tiết bảo vệ }}{48}{figure.caption.45}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Sơ đồ Activity người dùng đăng ký đăng nhập}}{54}{figure.caption.51}%
-\contentsline {figure}{\numberline {2.9}{\ignorespaces Sơ đồ Activity xử lý xe máy vào bãi đỗ}}{55}{figure.caption.52}%
-\contentsline {figure}{\numberline {2.10}{\ignorespaces Sơ đồ Activity xử lý xe oto vào bãi đỗ}}{56}{figure.caption.53}%
-\contentsline {figure}{\numberline {2.11}{\ignorespaces Sơ đồ Activity xử lý xe máy ra bãi đỗ}}{58}{figure.caption.54}%
-\contentsline {figure}{\numberline {2.12}{\ignorespaces Sơ đồ Activity xử lý xe oto ra bãi đỗ}}{59}{figure.caption.55}%
-\contentsline {figure}{\numberline {2.13}{\ignorespaces Sơ đồ Activity người dùng sử dụng app mobile}}{61}{figure.caption.56}%
-\contentsline {figure}{\numberline {2.14}{\ignorespaces Sơ đồ Activity bảo vệ sử dụng app mobile }}{62}{figure.caption.57}%
-\contentsline {figure}{\numberline {2.15}{\ignorespaces Sơ đồ lớp hệ thống quản lý bãi đỗ xe thông minh}}{63}{figure.caption.58}%
-\contentsline {figure}{\numberline {2.16}{\ignorespaces Giao diện chính desktop app }}{69}{figure.caption.69}%
-\contentsline {figure}{\numberline {2.17}{\ignorespaces Giao diện xử lý xe máy ra vào bãi đỗ}}{69}{figure.caption.70}%
-\contentsline {figure}{\numberline {2.18}{\ignorespaces Giao diện xử lý xe ô tô ra vào bãi đỗ}}{70}{figure.caption.71}%
-\contentsline {figure}{\numberline {2.19}{\ignorespaces Giao diện mobile app đăng ký}}{71}{figure.caption.72}%
-\contentsline {figure}{\numberline {2.20}{\ignorespaces Giao diện mobile app đăng nhập}}{72}{figure.caption.73}%
-\contentsline {figure}{\numberline {2.21}{\ignorespaces Giao diện mobile app người dùng khi chưa đỗ xe}}{73}{figure.caption.74}%
-\contentsline {figure}{\numberline {2.22}{\ignorespaces Giao diện mobile app người dùng khi đã đỗ xe}}{74}{figure.caption.75}%
-\contentsline {figure}{\numberline {2.23}{\ignorespaces Giao diện mobile cảnh báo gửi tới người dùng}}{75}{figure.caption.76}%
-\contentsline {figure}{\numberline {2.24}{\ignorespaces Giao diện mobile app bảo vệ}}{76}{figure.caption.77}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Sơ đồ phân rã chức năng hệ thống}}{15}{figure.caption.2}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Kiến trúc tổng thể hệ thống}}{20}{figure.caption.3}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Pipeline phát hiện té ngã}}{23}{figure.caption.4}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Pipeline theo dõi người thân}}{24}{figure.caption.5}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Sơ đồ Use Case tổng quát}}{26}{figure.caption.6}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Sơ đồ Use Case chi tiết xác thực}}{30}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Sơ đồ Use Case chi tiết camera system}}{33}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Sơ đồ Use Case chi tiết xem lịch sử}}{37}{figure.caption.25}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Sơ đồ Use Case chi tiết tùy chỉnh camera}}{41}{figure.caption.32}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Sơ đồ Use Case chi tiết cài đặt theo dõi}}{43}{figure.caption.36}%
+\contentsline {figure}{\numberline {2.11}{\ignorespaces Sơ đồ Use Case chi tiết xử lý thông báo}}{47}{figure.caption.42}%
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Sơ đồ Use Case chi tiết quản lý hệ thống- Admin}}{52}{figure.caption.51}%
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Sơ đồ Activity về chức năng xác thực}}{59}{figure.caption.64}%
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Sơ đồ Activity về chức năng phát hiện té ngã}}{60}{figure.caption.65}%
+\contentsline {figure}{\numberline {2.15}{\ignorespaces Sơ đồ Activity về chức năng nhận diện khuôn mặt và thông báo tư thế}}{62}{figure.caption.66}%
+\contentsline {figure}{\numberline {2.16}{\ignorespaces Sơ đồ Activity về chức năng lưu lịch sử}}{64}{figure.caption.67}%
+\contentsline {figure}{\numberline {2.17}{\ignorespaces Sơ đồ Activity về chức năng xử lý thông báo}}{65}{figure.caption.68}%
+\contentsline {figure}{\numberline {2.18}{\ignorespaces Sơ đồ Activity về chức năng đăng ký theo dõi người thân}}{67}{figure.caption.69}%
+\contentsline {figure}{\numberline {2.19}{\ignorespaces Sơ đồ Activity về chức năng tuỳ chỉnh camera}}{68}{figure.caption.70}%
+\contentsline {figure}{\numberline {2.20}{\ignorespaces Sơ đồ Activity về chức năng quản lý hệ thống của Admin}}{69}{figure.caption.71}%
+\contentsline {figure}{\numberline {2.21}{\ignorespaces Sơ đồ Class Diagram}}{71}{figure.caption.72}%
+\contentsline {figure}{\numberline {2.22}{\ignorespaces Sơ đồ ERD}}{75}{figure.caption.73}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện biển số}}{80}{figure.caption.81}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện vùng ký tự}}{81}{figure.caption.83}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces biểu đồ biểu diễn quá trình huấn luyện YOLO - Nhận diện logo xe oto}}{82}{figure.caption.85}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Biểu đồ biểu diễn quá trình huấn luyện CNN - Đọc ký tự}}{83}{figure.caption.87}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Biểu đồ biểu diễn quá trình huấn luyện Siamese - So sánh đầu xe oto}}{84}{figure.caption.89}%
 \addvspace {10\p@ }

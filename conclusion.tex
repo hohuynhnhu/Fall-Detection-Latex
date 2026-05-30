@@ -2,32 +2,57 @@
 
 \section{Kết quả đạt được}
 
-Đề tài đã xây dựng thành công hệ thống quản lý bãi đỗ xe thông minh ứng dụng trí tuệ nhân tạo, đáp ứng các mục tiêu nghiên cứu và yêu cầu thực tiễn đặt ra.
+Đề tài đã xây dựng thành công hệ thống phát hiện và cảnh báo hành vi nguy hiểm
+từ camera giám sát theo thời gian thực, đáp ứng các mục tiêu nghiên cứu và yêu
+cầu thực tiễn đặt ra.
 
 \begin{itemize}
-    \item Xây dựng hệ thống nhận diện biển số xe sử dụng YOLO, đạt độ chính xác mAP@50--95 = 91.35\%, đáp ứng yêu cầu bài toán.
-    \item Mô hình YOLO nhận diện vùng ký tự trên biển số đạt độ chính xác 66.3\%, cho thấy khả năng phát hiện tốt nhưng vẫn còn hạn chế với các ký tự nhỏ và nhiễu.
-    \item Bài toán nhận diện logo xe đạt độ chính xác 35\% (mAP@50--95), phản ánh tính phức tạp cao do kích thước logo nhỏ và sự đa dạng về hình dạng.
-    \item Mô hình CNN đọc ký tự đạt độ chính xác 99.7\%, đảm bảo độ tin cậy cao trong giai đoạn nhận dạng ký tự.
-    \item Ứng dụng Siamese Network để so sánh và xác thực phương tiện, đạt độ chính xác 100\% trên tập dữ liệu thử nghiệm.
-    \item Phát triển hệ thống phần mềm hoàn chỉnh gồm ứng dụng desktop, backend server và mobile app, đáp ứng yêu cầu xử lý real-time.
-    \item Tự động hóa quy trình xe vào/ra bãi, giảm thiểu can thiệp thủ công và nâng cao mức độ an toàn, bảo mật hệ thống.
-    \item Hệ thống hoạt động ổn định trong điều kiện mạng 4G và WiFi với thời gian phản hồi đáp ứng yêu cầu thực tế.
+    \item Xây dựng module phát hiện té ngã kết hợp hai cơ chế FallDetector
+    (rule-based) và TransformerEngine (AI), cho phép xác nhận sự kiện chính xác
+    hơn so với phương pháp đơn lẻ, đồng thời giảm thiểu tỉ lệ cảnh báo sai.
+
+    \item Tích hợp PoseEngine kết hợp MediaPipe và YOLO để trích xuất keypoints
+    và phân loại tư thế người dùng theo thời gian thực với các trạng thái
+    STANDING, SITTING, LYING và WALKING.
+
+    \item Xây dựng module nhận diện khuôn mặt sử dụng dlib, cho phép xác định
+    danh tính người được giám sát và theo dõi tư thế theo từng cá nhân đã đăng ký.
+
+    \item Phát triển hệ thống phần mềm hoàn chỉnh gồm Camera System (Python),
+    Backend API, ứng dụng Mobile (Android) và Web Admin, đáp ứng yêu cầu xử lý
+    và cảnh báo theo thời gian thực.
+
+    \item Xây dựng cơ chế cảnh báo đa kênh gồm thông báo đẩy FCM, WebSocket,
+    cuộc gọi điện thoại và SMS, đảm bảo người dùng nhận được cảnh báo kịp thời
+    trong mọi tình huống.
+
+    \item Tự động cắt và lưu trữ clip video 6 giây (3 giây trước và 3 giây sau
+    sự kiện) lên Cloudinary, hỗ trợ người dùng xem lại và xác minh sự kiện té ngã.
+
+    \item Xây dựng tính năng báo cáo nhận diện sai và luồng duyệt báo cáo từ
+    phía Admin, góp phần cải thiện độ tin cậy của hệ thống theo thời gian.
 \end{itemize}
-
-
-
 
 \section{Hướng phát triển}
 
 Trong thời gian tới, hệ thống có thể được tiếp tục phát triển theo các hướng sau:
 
-    \begin{itemize}
-        \item Mở rộng và cải thiện dữ liệu huấn luyện nhằm nâng cao độ chính xác nhận diện trong các điều kiện phức tạp.
-        \item Tối ưu mô hình và khai thác GPU để cải thiện hiệu năng xử lý thời gian thực.
-        \item Tích hợp các chức năng thanh toán tự động và đăng ký phương tiện trực tuyến.
-        \item Xây dựng dashboard web cho quản trị viên để quản lý tập trung và theo dõi hệ thống.
-        \item Phát triển hệ thống theo kiến trúc linh hoạt, hỗ trợ mở rộng quy mô và quản lý đa bãi đỗ.
-    \end{itemize}
+\begin{itemize}
+    \item Mở rộng tập dữ liệu huấn luyện nhằm nâng cao độ chính xác phát hiện
+    té ngã trong các điều kiện ánh sáng yếu, góc camera bất lợi và môi trường
+    phức tạp.
 
-Với các kết quả đạt được cùng định hướng phát triển rõ ràng, hệ thống quản lý bãi đỗ xe thông minh có tiềm năng ứng dụng thực tiễn cao, góp phần nâng cao hiệu quả quản lý và cải thiện trải nghiệm người dùng.
+    \item Tối ưu hóa mô hình TransformerEngine và khai thác GPU để cải thiện
+    hiệu năng xử lý, giảm độ trễ trong các tình huống yêu cầu phản hồi tức thì.
+
+    \item Mở rộng khả năng phát hiện sang các hành vi nguy hiểm khác ngoài té
+    ngã, như bất động kéo dài, co giật hoặc mất ý thức.
+
+    \item Tích hợp thêm các kênh cảnh báo và hỗ trợ kết nối với các thiết bị
+    nhà thông minh để phản ứng tự động khi phát hiện sự kiện nguy hiểm.
+
+    \item Phát triển hệ thống theo kiến trúc linh hoạt, hỗ trợ quản lý đa camera
+    và mở rộng quy mô triển khai trong các môi trường lớn hơn như bệnh viện,
+    trung tâm dưỡng lão hoặc trường học.
+\end{itemize}
+

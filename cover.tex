@@ -1,56 +1,56 @@
-
-\thispagestyle{empty} % không đánh số trang
-\usetikzlibrary{calc}
-
-\begin{tikzpicture}[remember picture, overlay]
-  \draw[line width=3pt, rounded corners=5pt]
-    ($(current page.north west) + (1cm,-1cm)$) rectangle
-    ($(current page.south east) + (-1cm,1cm)$);
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+% Khung ngoài
+\draw[line width=5pt, blue!50!black]
+  ([shift={(1.5cm,-1.5cm)}]current page.north west) rectangle
+  ([shift={(-1.5cm,1.5cm)}]current page.south east);
+% Khung trong
+\draw[line width=0.8pt, blue!50!black]
+  ([shift={(1.8cm,-1.8cm)}]current page.north west) rectangle
+  ([shift={(-1.8cm,1.8cm)}]current page.south east);
 \end{tikzpicture}
-\vspace{-2.5cm}
-% Nội dung bìa
-\begin{center}
-\textbf{TRƯỜNG ĐẠI HỌC GIAO THÔNG VẬN TẢI TP. HỒ CHÍ MINH}\\[0.3cm]
-\textbf{VIỆN CÔNG NGHỆ THÔNG TIN VÀ ĐIỆN, ĐIỆN TỬ}
-\end{center}
-
-\vspace{1cm}
 
 \begin{center}
-\includegraphics[width=12cm]{figures/logo_uth.png}
-\end{center}
-
-
-
-\begin{center}
-\vspace{0.5cm}
-\textbf{\Large THỰC TẬP TỐT NGHIỆP}
-\end{center}
-
-\vspace{0.5cm}
-
-\begin{center}
-\makebox[\textwidth][c]{\Large\textbf{XÂY DỰNG HỆ THỐNG QUẢN LÝ BÃI ĐỖ XE THÔNG MINH}}\\[0.3cm]
-
-\end{center}
+\vspace*{-0.5cm}
+{\fontsize{13}{15}\selectfont\bfseries
+TRƯỜNG ĐẠI HỌC GIAO THÔNG VẬN TẢI TP. HỒ CHÍ MINH\\
+VIỆN CNTT VÀ ĐIỆN, ĐIỆN TỬ}
 
 \vspace{1.5cm}
+{\fontsize{17}{17}\selectfont\bfseries
+LUẬN VĂN TỐT NGHIỆP}
 
-\begin{flushleft}
-\hspace{3.2cm}Ngành: \hspace{0.5cm}\textbf{CÔNG NGHỆ THÔNG TIN}\\[0.3cm]
-\hspace{3.2cm}Chuyên ngành: \textbf{CÔNG NGHỆ THÔNG TIN}\\[0.3cm]
+\vspace{1.8cm}
+\includegraphics[width=0.8\textwidth]{figures/logo_uth.png}
+
+\vspace{1.8cm}
+{\fontsize{14}{17}\selectfont\bfseries
+HỆ THỐNG PHÁT HIỆN VÀ CẢNH BÁO HÀNH VI NGUY HIỂM\\
+ TỪ CAMERA GIÁM SÁT THEO THỜI GIAN THỰC}
+
 \vspace{0.8cm}
-\hspace{3.2cm}Giảng viên hướng dẫn:Th.S Trần Thị Mỹ Tiên\\
-\hspace{2.5cm}Sinh viên thực hiện: Hồ Huỳnh Nhu \\
-\hspace{2.5cm}MSSV: 2251120433 \hspace{1cm}Lớp: CN22H\\
-\end{flushleft}
+{\fontsize{13}{15}\selectfont
+\begin{tabular}{ll}
+Ngành: & \textbf{CÔNG NGHỆ THÔNG TIN} \\[0.3cm]
+Chuyên ngành: & \textbf{CÔNG NGHỆ THÔNG TIN} \\
+\end{tabular}}
+
+\vspace{1.8cm}
+{\fontsize{13}{15}\selectfont
+Giảng viên hướng dẫn : Bùi Văn Thượng}
+
+\vspace{1.5cm}
+{\fontsize{13}{15}\selectfont
+\begin{tabular}{lll}
+Sinh viên thực hiện & MSSV & Lớp \\[0.3cm]
+Hồ Huỳnh Nhu & 2251120433 & CN22H \\[0.2cm]
+
+\end{tabular}}
 
 \vfill
+{\fontsize{13}{15}\selectfont\bfseries
+TP. Hồ Chí Minh, 2026}
+\vspace{0.5cm}
 
-\begin{center}
-TP. Hồ Chí Minh, 2025
 \end{center}
-
-
-
-\clearpage
+\end{titlepage}
